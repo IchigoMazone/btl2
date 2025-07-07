@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Requests>
+    <Request>
+        <id>REQ9E823</id>
+        <userName>ivy</userName>
+        <fullName>Ivy Taylor</fullName>
+        <email>ivy@example.com</email>
+        <phone>0987999888</phone>
+        <cccd>123456789000</cccd>
+        <roomId>112</roomId>
+        <checkIn>2025-07-06T14:00:00</checkIn>
+        <checkOut>2025-07-08T12:00:00</checkOut>
+        <submittedAt>2025-07-07T21:21:16</submittedAt>
+        <status>Đã trả phòng</status>
+        <amount>2000000.0</amount>
+        <historyList>
+            <history>
+                <type>Gửi yêu cầu</type>
+                <by>ivy</by>
+                <time>2025-07-07T21:02:52</time>
+            </history>
+            <history>
+                <type>Duyệt yêu cầu</type>
+                <by>admin01</by>
+                <time>2025-07-07T21:05:21</time>
+            </history>
+            <history>
+                <type>Xác nhận no-show</type>
+                <by>admin01</by>
+                <time>2025-07-07T21:05:21</time>
+            </history>
+            <history>
+                <type>Check-in</type>
+                <by>admin01</by>
+                <time>2025-07-07T21:05:21</time>
+            </history>
+            <history>
+                <type>Check-out</type>
+                <by>admin01</by>
+                <time>2025-07-07T21:05:21</time>
+            </history>
+            <history>
+                <type>Duyệt yêu cầu</type>
+                <by>admin01</by>
+                <time>2025-07-07T21:21:16</time>
+            </history>
+            <history>
+                <type>Xác nhận no-show</type>
+                <by>admin01</by>
+                <time>2025-07-07T21:21:16</time>
+            </history>
+            <history>
+                <type>Check-in</type>
+                <by>admin01</by>
+                <time>2025-07-07T21:21:16</time>
+            </history>
+            <history>
+                <type>Check-out</type>
+                <by>admin01</by>
+                <time>2025-07-07T21:21:16</time>
+            </history>
+        </historyList>
+    </Request>
+    <Request>
+        <id>REQF37BC</id>
+        <userName>ivy</userName>
+        <fullName>Ivy Taylor</fullName>
+        <email>ivy@example.com</email>
+        <phone>0987999888</phone>
+        <cccd>123456789000</cccd>
+        <roomId>112</roomId>
+        <checkIn>2025-07-06T14:00:00</checkIn>
+        <checkOut>2025-07-08T12:00:00</checkOut>
+        <submittedAt>2025-07-07T21:05:21</submittedAt>
+        <status>Chờ duyệt</status>
+        <amount>2000000.0</amount>
+        <historyList>
+            <history>
+                <type>Gửi yêu cầu</type>
+                <by>ivy</by>
+                <time>2025-07-07T21:05:21</time>
+            </history>
+        </historyList>
+    </Request>
+    <Request>
+        <id>REQ0F9DD</id>
+        <userName>ivy</userName>
+        <fullName>Ivy Taylor</fullName>
+        <email>ivy@example.com</email>
+        <phone>0987999888</phone>
+        <cccd>123456789000</cccd>
+        <roomId>112</roomId>
+        <checkIn>2025-07-06T14:00:00</checkIn>
+        <checkOut>2025-07-08T12:00:00</checkOut>
+        <submittedAt>2025-07-07T21:21:16</submittedAt>
+        <status>Chờ duyệt</status>
+        <amount>2000000.0</amount>
+        <historyList>
+            <history>
+                <type>Gửi yêu cầu</type>
+                <by>ivy</by>
+                <time>2025-07-07T21:21:16</time>
+            </history>
+        </historyList>
+    </Request>
+</Requests>
