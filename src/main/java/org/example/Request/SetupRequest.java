@@ -1,14 +1,16 @@
-package org.example.Test;
+package org.example.Request;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 public class SetupRequest {
 
     private static final String FILE_PATH = "requests.xml";
 
-    public static void createRequest(String userName, String fullName, String email, String phone, String cccd,
-                                     String roomId, LocalDateTime checkIn, LocalDateTime checkOut, double amount) {
+    public static void createRequest(String userName, String fullName, String email, String phone, String roomId,
+                                     LocalDateTime checkIn, LocalDateTime checkOut, double amount,
+                                     List<Person> persons) {
 
         RequestXML requestXML = XMLUtil.readFromFile(FILE_PATH, RequestXML.class);
         if (requestXML == null) {
@@ -18,18 +20,18 @@ public class SetupRequest {
         List<Request> requests = requestXML.getRequests();
 
         Request request = new Request();
-        request.setRequestId(generateRequestId());
+        String requestId = generateRequestId();
+        request.setRequestId(requestId);
         request.setUserName(userName);
         request.setFullName(fullName);
         request.setEmail(email);
         request.setPhone(phone);
-        request.setCccd(cccd);
         request.setRoomId(roomId);
         request.setCheckIn(checkIn);
         request.setCheckOut(checkOut);
         request.setAmount(amount);
+        request.setPersons(persons);
 
-        // Lịch sử gửi yêu cầu
         LocalDateTime now = LocalDateTime.now();
         request.addRequestHistory("Gửi yêu cầu", now);
 
@@ -40,10 +42,10 @@ public class SetupRequest {
         requestXML.setRequests(requests);
         XMLUtil.writeToFile(FILE_PATH, requestXML);
 
-        System.out.println("✅ Đã gửi yêu cầu thành công: " + request.getRequestId());
+        System.out.println("✅ Đã gửi yêu cầu thành công: " + requestId);
     }
 
-    public static void reviewRequest(String requestId, String admin, boolean approved) {
+    public static void reviewRequest(String requestId, boolean approved) {
         RequestXML requestXML = XMLUtil.readFromFile(FILE_PATH, RequestXML.class);
         if (requestXML == null) return;
 
@@ -52,9 +54,9 @@ public class SetupRequest {
 
         for (Request req : requests) {
             if (req.getRequestId().equals(requestId)) {
-                String type = approved ? "Duyệt yêu cầu" : "Từ chối yêu cầu";
-                req.addRequestHistory(type, LocalDateTime.now());
-                updateStatusAndSubmittedAtFromHistory(req);
+                String status = approved ? "Duyệt yêu cầu" : "Từ chối yêu cầu";
+                req.addRequestHistory(status, LocalDateTime.now());
+                updateStatusAndSubmittedAt(req);
                 found = true;
                 break;
             }
@@ -62,30 +64,29 @@ public class SetupRequest {
 
         if (found) {
             XMLUtil.writeToFile(FILE_PATH, requestXML);
-            System.out.println((approved ? "✅ Đã duyệt" : "❌ Đã từ chối") + " yêu cầu: " + requestId);
+            System.out.println((approved ? "✅ Đã duyệt " : "❌ Đã từ chối ") + "yêu cầu: " + requestId);
         } else {
             System.out.println("⚠️ Không tìm thấy yêu cầu: " + requestId);
         }
     }
 
-    public static void updateStatus(String requestId, String actionType, String by) {
+    public static void updateStatus(String requestId, String action) {
         RequestXML requestXML = XMLUtil.readFromFile(FILE_PATH, RequestXML.class);
         if (requestXML == null) return;
 
         for (Request req : requestXML.getRequests()) {
             if (req.getRequestId().equals(requestId)) {
-                req.addRequestHistory(actionType, LocalDateTime.now());
-                updateStatusAndSubmittedAtFromHistory(req);
+                req.addRequestHistory(action, LocalDateTime.now());
+                updateStatusAndSubmittedAt(req);
                 XMLUtil.writeToFile(FILE_PATH, requestXML);
-                System.out.println("✅ Đã cập nhật trạng thái: " + actionType + " cho " + requestId);
+                System.out.println("✅ Đã cập nhật trạng thái: " + action + " cho yêu cầu " + requestId);
                 return;
             }
         }
-
         System.out.println("❌ Không tìm thấy yêu cầu với ID: " + requestId);
     }
 
-    private static void updateStatusAndSubmittedAtFromHistory(Request request) {
+    private static void updateStatusAndSubmittedAt(Request request) {
         List<HistoryEntry> histories = request.getHistory();
         if (!histories.isEmpty()) {
             HistoryEntry latest = histories.get(histories.size() - 1);

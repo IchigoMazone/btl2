@@ -1,35 +1,63 @@
 package org.example.Test;
 
-
 import java.time.LocalDateTime;
 
 public class Test2 {
     public static void main(String[] args) {
-        // Gửi yêu cầu mới
+        // 1. Gửi yêu cầu mới
         SetupRequest.createRequest(
-                "ivy", "Ivy Taylor", "ivy@example.com", "0987999888", "123456789000",
-                "112",
-                LocalDateTime.of(2025, 7, 6, 14, 0),
-                LocalDateTime.of(2025, 7, 8, 12, 0),
-                2000000.0
+                "user01",
+                "Nguyễn Văn A",
+                "vana@example.com",
+                "0912345678",
+                "123456789012",
+                "P101",
+                LocalDateTime.now().plusDays(1),
+                LocalDateTime.now().plusDays(3),
+                2000000
         );
 
-        String requestId = "REQ9E823"; // ← sửa lại đúng với ID thực tế bạn đã tạo
+        // 2. Đọc lại danh sách yêu cầu từ file
+        RequestXML requestXML = XMLUtil.readFromFile("requests.xml", RequestXML.class);
 
-        // Nếu không chắc ID, bạn có thể đọc file XML và lấy ID cuối cùng.
+        if (requestXML == null || requestXML.getRequests().isEmpty()) {
+            System.out.println("❌ Không tìm thấy yêu cầu nào để test.");
+            return;
+        }
 
-        SetupRequest.reviewRequest(requestId, "admin01", true); // duyệt
-        // SetupRequest.reviewRequest(requestId, "admin01", false); // từ chối
+        // 3. Lấy yêu cầu mới nhất (vừa gửi)
+        Request request = requestXML.getRequests().get(requestXML.getRequests().size() - 1);
+        String requestId = request.getRequestId();
+        System.out.println("🆔 Đang test với request ID: " + requestId);
 
-        // ✅ 3. Cập nhật trạng thái khác (ví dụ No-show)
-        SetupRequest.updateStatus(requestId, "Xác nhận no-show", "admin01");
+        // 4. Admin duyệt yêu cầu
+        SetupRequest.reviewRequest(requestId, "admin01", true);
 
-        // ✅ 4. Cập nhật trạng thái check-in
+        // 5. Cập nhật trạng thái: Check-in
         SetupRequest.updateStatus(requestId, "Check-in", "admin01");
 
-        // ✅ 5. Cập nhật trạng thái check-out
+        // 6. Cập nhật trạng thái: Check-out
         SetupRequest.updateStatus(requestId, "Check-out", "admin01");
 
-        System.out.println("✅ Test hoàn tất!");
+        // 7. Test từ chối yêu cầu khác (nếu cần tạo thêm)
+        SetupRequest.createRequest(
+                "user02",
+                "Trần Thị B",
+                "tranb@example.com",
+                "0987654321",
+                "987654321098",
+                "P102",
+                LocalDateTime.now().plusDays(2),
+                LocalDateTime.now().plusDays(5),
+                2500000
+        );
+
+        Request newRequest = XMLUtil.readFromFile("requests.xml", RequestXML.class)
+                .getRequests().getLast();
+        String newRequestId = newRequest.getRequestId();
+        SetupRequest.reviewRequest(newRequestId, "admin02", false); // từ chối
+
+        // 8. In kết thúc
+        System.out.println("\n✅ Test hoàn tất.");
     }
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Bookings>
+    <Booking>
+        <bookingId>KBW12321</bookingId>
+        <requestId>REQ1BF9B</requestId>
+        <userName>user1</userName>
+        <fullName>Nguyen Van A</fullName>
+        <email>user1@example.com</email>
+        <phone>0123456789</phone>
+        <roomId>R101</roomId>
+        <checkIn>2025-07-10T14:00:00</checkIn>
+        <checkOut>2025-07-15T12:00:00</checkOut>
+        <amount>1500.0</amount>
+        <submittedAt>2025-07-08T13:47:55</submittedAt>
+        <status>Đã trả phòng</status>
+        <Person>
+            <name>Nguyen Van A</name>
+            <cccd>123456789</cccd>
+        </Person>
+        <Person>
+            <name>Tran Thi B</name>
+            <cccd>987654321</cccd>
+        </Person>
+        <History>
+            <timestamp>2025-07-08T13:47:54</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-08T13:47:54</timestamp>
+            <status>Duyệt yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-08T13:47:55</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-08T13:47:55</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+</Bookings>

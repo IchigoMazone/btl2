@@ -5,20 +5,23 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class BookingHistoryEntry {
+public class HistoryEntry {
 
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime timestamp;
 
     private String status;
 
-    public BookingHistoryEntry() {}
+    // === Constructor không tham số (bắt buộc cho JAXB) ===
+    public HistoryEntry() {}
 
-    public BookingHistoryEntry(LocalDateTime timestamp, String status) {
+    // === Constructor có tham số ===
+    public HistoryEntry(LocalDateTime timestamp, String status) {
         this.timestamp = timestamp;
         this.status = status;
     }
 
+    // === Getter & Setter ===
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
