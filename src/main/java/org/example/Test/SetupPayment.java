@@ -8,7 +8,7 @@ import java.util.UUID;
 public class SetupPayment {
 
     public static void createPayment(String bookingId, String userName, double amount, String method) {
-        String path = "payment.xml";
+        String path = "payments.xml";
         PaymentXML paymentXML = XMLUtil.readFromFile(path, PaymentXML.class);
         if (paymentXML == null) {
             paymentXML = new PaymentXML();
