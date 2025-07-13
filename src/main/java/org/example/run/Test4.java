@@ -17,7 +17,7 @@ public class Test4 {
         // Khoảng thời gian cần tìm phòng
         LocalDateTime checkIn = LocalDateTime.of(2025, 7, 10, 14, 0);
         LocalDateTime checkOut = LocalDateTime.of(2025, 7, 12, 12, 0);
-        String roomType = "Phòng đơn";
+        String roomType = "Phòng đôi";
 
         // Tìm phòng trống
         List<Room> availableRooms = finder.findAvailableRooms(checkIn, checkOut, roomType);
