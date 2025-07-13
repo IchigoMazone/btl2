@@ -201,11 +201,13 @@ public class Test2 extends JFrame {
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Thông tin tìm kiếm", TitledBorder.LEFT, TitledBorder.TOP));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 10, 15, 10);
+        gbc.insets = new Insets(5, 10, 15, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
         // Hàng 1: Ngày đến + giờ + phút
         gbc.gridx = 0; gbc.gridy = 0;
+        gbc.insets = new Insets(5, 10, 15, 20);
+
         formPanel.add(new JLabel("Ngày đến:"), gbc);
         gbc.gridx = 1;
         formPanel.add(dpCheckIn, gbc);
@@ -220,7 +222,7 @@ public class Test2 extends JFrame {
 
         // Hàng 1 tiếp: Loại phòng lùi phải
         gbc.gridx = 7;
-        gbc.weightx = 0.5;  // để đẩy sang phải
+        gbc.weightx = 0;  // để đẩy sang phải
         gbc.anchor = GridBagConstraints.EAST;
         formPanel.add(new JLabel("Loại phòng:"), gbc);
 
