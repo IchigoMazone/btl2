@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Payments>
     <Payment>
+        <paymentId>PMTF7D81</paymentId>
+        <bookingId>BK20250708</bookingId>
+        <fullName>Nguyen Van A</fullName>
+        <amount>2500.0</amount>
+        <method>Credit Card</method>
+        <status>Đã thanh toán</status>
+        <paidAt>2025-07-13T18:06:44</paidAt>
+    </Payment>
+    <Payment>
         <paymentId>PMTEC9AE</paymentId>
         <bookingId>BK20250708</bookingId>
         <fullName>Nguyen Van A</fullName>
