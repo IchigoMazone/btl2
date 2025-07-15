@@ -17,7 +17,7 @@ public class UserInfoService {
         } else {
             list = data.getUserInfos();
         }
-        list.add(newUser);
+        list.add(0, newUser);
         UserInfoXML newData = new UserInfoXML();
         newData.setUserInfos(list);
         FileUtils.writeToFile(fileName, newData);
@@ -44,4 +44,44 @@ public class UserInfoService {
             FileUtils.writeToFile(fileName, data);
         }
     }
+    public static UserInfo getUserByUsername(String fileName, String username) {
+        List<UserInfo> users = readAllUsers(fileName);
+        for (UserInfo user : users) {
+            if (user.getUserName().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public static String getEmail(String fileName, String userName) {
+        List<UserInfo> list = readAllUsers(fileName);
+        for (UserInfo user : list) {
+            if (user.getUserName().equals(userName)) {
+                return user.getEmail();
+            }
+        }
+        return "";
+    }
+
+    public static String getPhone(String fileName, String userName) {
+        List<UserInfo> list = readAllUsers(fileName);
+        for (UserInfo user : list) {
+            if (user.getUserName().equals(userName)) {
+                return user.getPhoneNumber();
+            }
+        }
+        return "";
+    }
+
+    public static String getFullName(String fileName, String userName) {
+        List<UserInfo> list = readAllUsers(fileName);
+        for (UserInfo user : list) {
+            if (user.getUserName().equals(userName)) {
+                return user.getFullName();
+            }
+        }
+        return "";
+    }
+
 }

@@ -7,7 +7,7 @@ import org.kordamp.ikonli.swing.FontIcon;
 import javax.swing.*;
 import java.awt.*;
 
-public class AdminDashboard {
+public class AdminDashboardView {
     public static JPanel createDashboardPanel() {
         // Panel chính chứa Grid và viền
         JPanel mainContent = new JPanel(new BorderLayout());

@@ -1,7 +1,6 @@
 package org.example.view;
 
-import org.example.action.CheckAccount;
-import org.example.service.UserInfoService;
+import org.example.controller.PasswordResetController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +19,8 @@ public class PasswordResetView extends JPanel {
         this.mainFrame = mainFrame;
         setLayout(null);
         initComponents();
+
+        btnConfirm.addActionListener(e -> PasswordResetController.handlePasswordReset(this));
     }
 
     private void initComponents() {
@@ -57,40 +58,35 @@ public class PasswordResetView extends JPanel {
         btnConfirm.setForeground(Color.WHITE);
         btnConfirm.setBounds(440, 570, 320, 33);
         background.add(btnConfirm);
-
-        btnConfirm.addActionListener(e -> confirmAction());
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    private void confirmAction() {
-        String password = String.valueOf(passwordField.getPassword()).trim();
-        String confirmPassword = String.valueOf(confirmPasswordField.getPassword()).trim();
-
-        String error = CheckAccount.validateNewPassword(password, confirmPassword);
-        if (error != null) {
-            showError(error);
-        } else {
-            UserInfoService.updatePassword("userinfos.xml", username, password);
-            clearFields();
-            clearError();
-            mainFrame.showFinishPanel();
-        }
+    public String getPassword() {
+        return String.valueOf(passwordField.getPassword()).trim();
     }
 
-    private void showError(String message) {
+    public String getConfirmPassword() {
+        return String.valueOf(confirmPasswordField.getPassword()).trim();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void showError(String message) {
         lblInfo.setText(message);
         int width = lblInfo.getFontMetrics(lblInfo.getFont()).stringWidth(message);
         lblInfo.setBounds(600 - width / 2, 630, width, 30);
     }
 
-    private void clearError() {
+    public void clearError() {
         lblInfo.setText("");
     }
 
-    private void clearFields() {
+    public void clearFields() {
         passwordField.setText("");
         confirmPasswordField.setText("");
     }
@@ -99,5 +95,9 @@ public class PasswordResetView extends JPanel {
         passwordField.setText("");
         confirmPasswordField.setText("");
         lblInfo.setText("");
+    }
+
+    public MainFrameView getMainFrame() {
+        return mainFrame;
     }
 }

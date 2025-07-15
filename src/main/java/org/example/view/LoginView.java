@@ -1,6 +1,8 @@
 package org.example.view;
 
 import org.example.entity.User;
+import org.example.controller.LoginController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -130,34 +132,5 @@ public class LoginView extends JPanel {
         userNameField.setText("");
         passwordField.setText("");
         lblInfor.setText("");
-    }
-
-    public static class LoginController {
-
-        public static void handleLogin(LoginView view) {
-            User user = view.getUser();
-
-            if (user.getUserName().isEmpty() || user.getPassword().isEmpty()) {
-                view.showError("Vui lòng nhập đầy đủ thông tin!");
-                return;
-            }
-
-            // Giả lập xác thực
-            if ("admin".equals(user.getUserName()) && "admin".equals(user.getPassword())) {
-                view.getMainFrame().showAdminContainerPanel(user.getUserName());
-            } else if ("user".equals(user.getUserName()) && "user".equals(user.getPassword())) {
-                view.getMainFrame().showUserContainerPanel(user.getUserName());
-            } else {
-                view.showError("Sai tên đăng nhập hoặc mật khẩu!");
-            }
-        }
-
-        public static void openRegister(LoginView view) {
-            view.getMainFrame().showRegisterPanel();
-        }
-
-        public static void openForgotPassword(LoginView view) {
-            view.getMainFrame().showForgotPasswordPanel();
-        }
     }
 }

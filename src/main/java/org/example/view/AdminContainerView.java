@@ -44,7 +44,7 @@ public class AdminContainerView extends JPanel {
         drawerMenu.add(accountBtn);
 
         drawerMenu.add(Box.createVerticalStrut(20));
-        drawerMenu.add(createNavButton("home", "Trang chủ", false, AdminDashboard::createDashboardPanel));
+        drawerMenu.add(createNavButton("home", "Trang chủ", false, AdminDashboardView::createDashboardPanel));
         drawerMenu.add(Box.createVerticalStrut(8));
         drawerMenu.add(createNavButton("magnify", "Tìm kiếm", false, AdminSearchView::createSearchPanel));
         drawerMenu.add(Box.createVerticalStrut(8));
@@ -156,7 +156,7 @@ public class AdminContainerView extends JPanel {
 
     public void resetToDefault() {
         mainContentPanel.removeAll();
-        mainContentPanel.add(AdminDashboard.createDashboardPanel(), BorderLayout.CENTER);
+        mainContentPanel.add(AdminDashboardView.createDashboardPanel(), BorderLayout.CENTER);
         mainContentPanel.revalidate();
         mainContentPanel.repaint();
 

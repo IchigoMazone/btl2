@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <UserInfos>
     <UserInfo>
+        <userName>nhat2112</userName>
+        <password>77778888z</password>
+        <fullName>triasdas</fullName>
+        <email>qw23@gmail.com</email>
+        <phoneNumber>0999999999</phoneNumber>
+    </UserInfo>
+    <UserInfo>
         <userName>alice</userName>
         <password>alice123</password>
         <fullName>Alice Smith</fullName>
@@ -149,9 +156,16 @@
     </UserInfo>
     <UserInfo>
         <userName>husky123</userName>
-        <password>admin123</password>
+        <password>nhat1234</password>
         <fullName>Trinh Nhu Nhat</fullName>
         <email>asd23@gmail.com</email>
         <phoneNumber>0999999999</phoneNumber>
+    </UserInfo>
+    <UserInfo>
+        <userName>hakimi123</userName>
+        <password>12345678z</password>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>23@gmail.com</email>
+        <phoneNumber>0234666777</phoneNumber>
     </UserInfo>
 </UserInfos>

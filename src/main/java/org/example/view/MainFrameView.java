@@ -1,12 +1,12 @@
+
 package org.example.view;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrameView extends JFrame {
-    private CardLayout mainCardLayout;
-    private JPanel mainPanel;
+    private final CardLayout mainCardLayout;
+    private final JPanel mainPanel;
 
     public static final String LOGIN = "LOGIN";
     public static final String REGISTER = "REGISTER";
@@ -15,6 +15,7 @@ public class MainFrameView extends JFrame {
     public static final String FINISH = "FINISH";
     public static final String ADMIN_CONTAINER = "ADMIN_CONTAINER";
     public static final String USER_CONTAINER = "USER_CONTAINER";
+    public static final String CUSTOMER_BOOKING = "CUSTOMER_BOOKING";
 
     private LoginView loginPanel;
     private RegisterView registerPanel;
@@ -23,10 +24,8 @@ public class MainFrameView extends JFrame {
     private FinishView finishPanel;
 
     private AdminContainerView adminContainerPanel;
-    private CustomerContainerPanel userContainerPanel;
-
+    private CustomerContainerView userContainerPanel;
     private String loggedInUsername;
-    private boolean isAdmin;
 
     public MainFrameView() {
         setTitle("Hotel Management System");
@@ -43,9 +42,8 @@ public class MainFrameView extends JFrame {
         forgotPasswordPanel = new ForgotPasswordView(this);
         passwordResetPanel = new PasswordResetView(this);
         finishPanel = new FinishView(this);
-
         adminContainerPanel = new AdminContainerView(this);
-        userContainerPanel = new CustomerContainerPanel(this);
+        userContainerPanel = new CustomerContainerView(this, "");
 
         mainPanel.add(loginPanel, LOGIN);
         mainPanel.add(registerPanel, REGISTER);
@@ -87,25 +85,28 @@ public class MainFrameView extends JFrame {
 
     public void showAdminContainerPanel(String username) {
         this.loggedInUsername = username;
-        this.isAdmin = true;
         adminContainerPanel.loadData(username);
-        adminContainerPanel.resetToDefault(); // Đặt lại về giao diện Trang chủ mỗi lần vào
+        adminContainerPanel.resetToDefault();
         mainCardLayout.show(mainPanel, ADMIN_CONTAINER);
     }
 
     public void showUserContainerPanel(String username) {
         this.loggedInUsername = username;
-        this.isAdmin = false;
+        userContainerPanel = new CustomerContainerView(this, username);
+        mainPanel.add(userContainerPanel, USER_CONTAINER);
         userContainerPanel.loadData(username);
-        userContainerPanel.resetToDefault(); // Nếu UserPanel có hàm tương tự
+        userContainerPanel.resetToDefault();
         mainCardLayout.show(mainPanel, USER_CONTAINER);
+    }
+
+    public void setCustomerDynamicContent(JPanel panel) {
+        if (userContainerPanel != null) {
+            userContainerPanel.setMainContent(panel);
+            mainCardLayout.show(mainPanel, USER_CONTAINER);
+        }
     }
 
     public String getLoggedInUsername() {
         return loggedInUsername;
-    }
-
-    public boolean isAdmin() {
-        return isAdmin;
     }
 }

@@ -1,3 +1,4 @@
+
 package org.example.view;
 
 import org.kordamp.ikonli.materialdesign.MaterialDesign;
@@ -9,8 +10,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.function.Supplier;
 
-public class CustomerContainerPanel extends JPanel {
+public class CustomerContainerView extends JPanel {
     private MainFrameView mainFrame;
+    private String username;
+
     private Color backgroundColor;
     private Color hoverColor;
     private Color pressedColor;
@@ -21,8 +24,10 @@ public class CustomerContainerPanel extends JPanel {
     private JPanel mainContentPanel;
     private static final int LEFT_PADDING = 65;
 
-    public CustomerContainerPanel(MainFrameView mainFrame) {
+    public CustomerContainerView(MainFrameView mainFrame, String username) {
         this.mainFrame = mainFrame;
+        this.username = username;
+
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(1200, 800));
 
@@ -38,26 +43,37 @@ public class CustomerContainerPanel extends JPanel {
         drawerMenu.setPreferredSize(new Dimension(250, 800));
         drawerMenu.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
-        JButton accountBtn = createNavButton("account-circle", "DiuLyh612", true);
+        // Avatar / username
+        JButton accountBtn = createNavButton("account-circle", username, true);
         accountBtn.setEnabled(false);
         drawerMenu.add(accountBtn);
 
         drawerMenu.add(Box.createVerticalStrut(20));
-        drawerMenu.add(createNavButton("home", "Trang chủ", false, CustomerDashboard::createUserHomePanel));
-        drawerMenu.add(Box.createVerticalStrut(8));
-        drawerMenu.add(createNavButton("magnify", "Tìm kiếm", false, CustomerSearchView::createSearchPanel));
-        drawerMenu.add(Box.createVerticalStrut(8));
-        drawerMenu.add(createNavButton("clipboard-check", "Thông báo", false, NotificationView::createUserNotificationPanel));
-        drawerMenu.add(Box.createVerticalStrut(8));
-        drawerMenu.add(createNavButton("calendar-check", "Lịch sử", false, HistoryView::createPaymentHistoryPanel));
+
+        // === Menu ===
+        drawerMenu.add(createNavButton("home", "Trang chủ", false, CustomerDashboardView::createUserHomePanel));
         drawerMenu.add(Box.createVerticalStrut(8));
 
+        drawerMenu.add(createNavButton("magnify", "Tìm kiếm", false,
+                () -> CustomerSearchView.createSearchPanel(mainFrame)));
+        drawerMenu.add(Box.createVerticalStrut(8));
+
+        drawerMenu.add(createNavButton("clipboard-check", "Thông báo", false,
+                NotificationView::createUserNotificationPanel));
+        drawerMenu.add(Box.createVerticalStrut(8));
+
+        drawerMenu.add(createNavButton("calendar-check", "Lịch sử", false,
+                HistoryView::createPaymentHistoryPanel));
+        drawerMenu.add(Box.createVerticalStrut(8));
+
+        // === Logout ===
         drawerMenu.add(Box.createVerticalGlue());
         drawerMenu.add(createNavButton("logout", "Đăng xuất", false, () -> {
             mainFrame.showLoginPanel();
             return new JPanel();
         }));
 
+        // === Nội dung chính (panel phải) ===
         mainContentPanel = new JPanel(new BorderLayout());
         mainContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         mainContentPanel.setBackground(Color.WHITE);
@@ -65,10 +81,12 @@ public class CustomerContainerPanel extends JPanel {
         add(drawerMenu, BorderLayout.WEST);
         add(mainContentPanel, BorderLayout.CENTER);
 
-        mainContentPanel.add(CustomerDashboard.createUserHomePanel(), BorderLayout.CENTER);
+        // Mặc định: Trang chủ
+        mainContentPanel.add(CustomerDashboardView.createUserHomePanel(), BorderLayout.CENTER);
         mainContentPanel.revalidate();
         mainContentPanel.repaint();
 
+        // Chọn mặc định "Trang chủ"
         for (Component comp : drawerMenu.getComponents()) {
             if (comp instanceof JButton btn && btn.getText().equals("Trang chủ")) {
                 selectButton(btn);
@@ -91,6 +109,7 @@ public class CustomerContainerPanel extends JPanel {
         button.setOpaque(true);
         button.setMaximumSize(new Dimension(250, 40));
 
+        // Icon
         MaterialDesign mdiIcon;
         try {
             mdiIcon = MaterialDesign.valueOf("MDI_" + iconName.toUpperCase().replace("-", "_"));
@@ -112,21 +131,26 @@ public class CustomerContainerPanel extends JPanel {
             button.setBorder(BorderFactory.createEmptyBorder(10, LEFT_PADDING, 10, 0));
         }
 
+        // Mouse hover & click
         if (button.isEnabled()) {
             button.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent e) {
                     if (button != selectedButton) button.setBackground(hoverColor);
                 }
+
                 public void mouseExited(MouseEvent e) {
                     if (button != selectedButton) button.setBackground(backgroundColor);
                 }
+
                 public void mousePressed(MouseEvent e) {
                     if (button != selectedButton) button.setBackground(pressedColor);
                 }
+
                 public void mouseReleased(MouseEvent e) {
                     if (button != selectedButton) button.setBackground(hoverColor);
                 }
             });
+
             button.addActionListener(e -> {
                 selectButton(button);
                 if (panelSupplier != null) {
@@ -153,14 +177,28 @@ public class CustomerContainerPanel extends JPanel {
         selectedButton = button;
     }
 
-    public void loadData(String username) {
-        // Load user info if needed
-    }
-
-    public void resetToDefault() {
+    // 📌 Cho phép lớp khác cập nhật nội dung động bên phải
+    public void setDynamicContent(JPanel panel) {
         mainContentPanel.removeAll();
-        mainContentPanel.add(CustomerDashboard.createUserHomePanel(), BorderLayout.CENTER);
+        mainContentPanel.add(panel, BorderLayout.CENTER);
         mainContentPanel.revalidate();
         mainContentPanel.repaint();
     }
+
+    public void loadData(String username) {
+        this.username = username;
+        // nếu cần load thêm dữ liệu người dùng
+    }
+
+    public void resetToDefault() {
+        setDynamicContent(CustomerDashboardView.createUserHomePanel());
+    }
+
+    public void setMainContent(JPanel panel) {
+        mainContentPanel.removeAll();
+        mainContentPanel.add(panel, BorderLayout.CENTER);
+        mainContentPanel.revalidate();
+        mainContentPanel.repaint();
+    }
+
 }

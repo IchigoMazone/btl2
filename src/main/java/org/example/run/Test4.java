@@ -1,7 +1,9 @@
+
 package org.example.run;
 
 import org.example.service.RoomFinderService;
 import org.example.entity.Room;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,20 +17,20 @@ public class Test4 {
         RoomFinderService finder = new RoomFinderService(roomPath, bookingPath);
 
         // Khoảng thời gian cần tìm phòng
-        LocalDateTime checkIn = LocalDateTime.of(2025, 7, 10, 14, 0);
-        LocalDateTime checkOut = LocalDateTime.of(2025, 7, 12, 12, 0);
-        String roomType = "Phòng đôi";
+        LocalDateTime checkIn = LocalDateTime.of(2025, 7, 20, 14, 0);
+        LocalDateTime checkOut = LocalDateTime.of(2025, 7, 22, 12, 0);
 
-        // Tìm phòng trống
-        List<Room> availableRooms = finder.findAvailableRooms(checkIn, checkOut, roomType);
+        // Gọi tìm kiếm với loại phòng là "Tất cả"
+        List<Room> availableRooms = finder.findAvailableRooms(checkIn, checkOut, "Phòng đơn");
 
         // In kết quả
         if (availableRooms.isEmpty()) {
-            System.out.println("Không có phòng trống phù hợp.");
+            System.out.println("❌ Không có phòng trống phù hợp.");
         } else {
-            System.out.println("Danh sách phòng trống:");
+            System.out.println("✅ Danh sách phòng trống:");
             for (Room room : availableRooms) {
-                System.out.println("- Phòng " + room.getRoomId() + " | " + room.getDescription() + " | Giá: " + room.getPrice());
+                System.out.printf("- Mã: %s | Loại: %s | Mô tả: %s | Giá: %.2f\n",
+                        room.getRoomId(), room.getType(), room.getDescription(), room.getPrice());
             }
         }
     }

@@ -2,7 +2,6 @@ package org.example.run;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import org.example.view.MainFrameView;
-
 import javax.swing.*;
 
 public class Main {

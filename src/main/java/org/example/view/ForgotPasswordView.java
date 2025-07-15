@@ -1,11 +1,12 @@
 package org.example.view;
 
-import org.example.action.CheckAccount;
+import org.example.controller.ForgotPasswordController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class ForgotPasswordView extends JPanel {
-    private MainFrameView mainFrame;
+    private final MainFrameView mainFrame;
 
     private JTextField userNameField;
     private JTextField emailField;
@@ -18,6 +19,9 @@ public class ForgotPasswordView extends JPanel {
         this.mainFrame = mainFrame;
         setLayout(null);
         initComponents();
+
+        btnBack.addActionListener(e -> mainFrame.showLoginPanel());
+        btnConfirm.addActionListener(e -> ForgotPasswordController.handleForgotPassword(this));
     }
 
     private void initComponents() {
@@ -62,32 +66,23 @@ public class ForgotPasswordView extends JPanel {
         btnConfirm.setForeground(Color.WHITE);
         btnConfirm.setBounds(440, 570, 150, 33);
         background.add(btnConfirm);
-
-        // Action: Quay lại
-        btnBack.addActionListener(e -> mainFrame.showLoginPanel());
-
-        // Action: Xác nhận
-        btnConfirm.addActionListener(e -> {
-            String username = userNameField.getText().trim();
-            String email = emailField.getText().trim();
-
-            String error = CheckAccount.checkForgotPassword("userinfos.xml", username, email);
-            if (error != null) {
-                showError(error);
-            } else {
-                clearError();
-                mainFrame.showPasswordResetPanel(username);
-            }
-        });
     }
 
-    private void showError(String message) {
+    public String getUsername() {
+        return userNameField.getText().trim();
+    }
+
+    public String getEmail() {
+        return emailField.getText().trim();
+    }
+
+    public void showError(String message) {
         lblInfo.setText(message);
         int width = lblInfo.getFontMetrics(lblInfo.getFont()).stringWidth(message);
         lblInfo.setBounds(600 - width / 2, 630, width, 30);
     }
 
-    private void clearError() {
+    public void clearError() {
         lblInfo.setText("");
     }
 
@@ -95,5 +90,9 @@ public class ForgotPasswordView extends JPanel {
         userNameField.setText("");
         emailField.setText("");
         lblInfo.setText("");
+    }
+
+    public MainFrameView getMainFrame() {
+        return mainFrame;
     }
 }

@@ -1,20 +1,218 @@
+//
+//package org.example.view;
+//
+//import com.github.lgooddatepicker.components.DatePicker;
+//import com.github.lgooddatepicker.components.DatePickerSettings;
+//import org.example.entity.Room;
+//import org.example.service.RoomFinderService;
+//
+//import javax.swing.*;
+//import javax.swing.border.TitledBorder;
+//import javax.swing.table.DefaultTableModel;
+//import java.awt.*;
+//import java.time.LocalDate;
+//import java.time.LocalDateTime;
+//import java.text.DecimalFormat;
+//import java.util.List;
+//
+//public class CustomerSearchView {
+//
+//    public static JPanel createSearchPanel(MainFrameView mainFrame) {
+//        JPanel panel = new JPanel(new BorderLayout(10, 10));
+//        panel.setBackground(Color.WHITE);
+//        panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+//
+//        // === Date Pickers ===
+//        DatePickerSettings dateSettingsCheckIn = new DatePickerSettings();
+//        dateSettingsCheckIn.setFormatForDatesCommonEra("dd-MM-yyyy");
+//        DatePicker dpCheckIn = new DatePicker(dateSettingsCheckIn);
+//
+//        DatePickerSettings dateSettingsCheckOut = new DatePickerSettings();
+//        dateSettingsCheckOut.setFormatForDatesCommonEra("dd-MM-yyyy");
+//        DatePicker dpCheckOut = new DatePicker(dateSettingsCheckOut);
+//
+//        Integer[] hours = new Integer[24];
+//        for (int i = 0; i < 24; i++) hours[i] = i;
+//        Integer[] minutes = new Integer[60];
+//        for (int i = 0; i < 60; i++) minutes[i] = i;
+//
+//        JComboBox<Integer> cbCheckInHour = new JComboBox<>(hours);
+//        JComboBox<Integer> cbCheckInMinute = new JComboBox<>(minutes);
+//        JComboBox<Integer> cbCheckOutHour = new JComboBox<>(hours);
+//        JComboBox<Integer> cbCheckOutMinute = new JComboBox<>(minutes);
+//
+//        Dimension comboSize = new Dimension(60, cbCheckInHour.getPreferredSize().height);
+//        cbCheckInHour.setPreferredSize(comboSize);
+//        cbCheckInMinute.setPreferredSize(comboSize);
+//        cbCheckOutHour.setPreferredSize(comboSize);
+//        cbCheckOutMinute.setPreferredSize(comboSize);
+//
+//        JComboBox<String> cbLoaiPhong = new JComboBox<>(new String[]{
+//                "Tất cả", "Phòng đơn", "Phòng đôi", "Phòng đặc biệt", "Phòng gia đình"
+//        });
+//
+//        // === Form Panel ===
+//        JPanel formPanel = new JPanel(new GridBagLayout());
+//        formPanel.setBorder(BorderFactory.createTitledBorder(
+//                BorderFactory.createEtchedBorder(), "Thông tin tìm kiếm", TitledBorder.LEFT, TitledBorder.TOP));
+//        GridBagConstraints gbc = new GridBagConstraints();
+//        gbc.insets = new Insets(5, 10, 15, 5);
+//        gbc.anchor = GridBagConstraints.WEST;
+//
+//        // Row 1: Ngày đến
+//        gbc.gridx = 0; gbc.gridy = 0;
+//        gbc.insets = new Insets(5, 10, 15, 20);
+//        formPanel.add(new JLabel("Ngày đến:"), gbc);
+//        gbc.gridx = 1; formPanel.add(dpCheckIn, gbc);
+//        gbc.gridx = 2; formPanel.add(new JLabel("Giờ:"), gbc);
+//        gbc.gridx = 3; formPanel.add(cbCheckInHour, gbc);
+//        gbc.gridx = 4; formPanel.add(new JLabel("Phút:"), gbc);
+//        gbc.gridx = 5; formPanel.add(cbCheckInMinute, gbc);
+//
+//        // Loại phòng (căn phải)
+//        gbc.gridx = 7;
+//        gbc.anchor = GridBagConstraints.EAST;
+//        formPanel.add(new JLabel("Loại phòng:"), gbc);
+//        gbc.gridx = 8;
+//        formPanel.add(cbLoaiPhong, gbc);
+//
+//        // Row 2: Ngày đi
+//        gbc.gridx = 0; gbc.gridy = 1;
+//        gbc.anchor = GridBagConstraints.WEST;
+//        formPanel.add(new JLabel("Ngày đi:"), gbc);
+//        gbc.gridx = 1; formPanel.add(dpCheckOut, gbc);
+//        gbc.gridx = 2; formPanel.add(new JLabel("Giờ:"), gbc);
+//        gbc.gridx = 3; formPanel.add(cbCheckOutHour, gbc);
+//        gbc.gridx = 4; formPanel.add(new JLabel("Phút:"), gbc);
+//        gbc.gridx = 5; formPanel.add(cbCheckOutMinute, gbc);
+//
+//        // === Buttons ===
+//        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+//        JButton btnTimKiem = new JButton("Tìm kiếm");
+//        JButton btnDatPhong = new JButton("Đặt phòng");
+//        btnPanel.add(btnTimKiem);
+//        btnPanel.add(btnDatPhong);
+//
+//        // === Table ===
+//        String[] columns = {"Mã phòng", "Mô tả", "Loại phòng", "Giá tiền (VNĐ)"};
+//        DefaultTableModel tableModel = new DefaultTableModel(columns, 0) {
+//            public boolean isCellEditable(int row, int col) { return false; }
+//        };
+//        JTable table = new JTable(tableModel);
+//        JScrollPane scrollPane = new JScrollPane(table);
+//        scrollPane.setBorder(BorderFactory.createTitledBorder("Kết quả tìm kiếm"));
+//
+//        table.getColumnModel().getColumn(0).setPreferredWidth(80);
+//        table.getColumnModel().getColumn(1).setPreferredWidth(300);
+//        table.getColumnModel().getColumn(2).setPreferredWidth(100);
+//        table.getColumnModel().getColumn(3).setPreferredWidth(120);
+//
+//        // === RoomFinder ===
+//        RoomFinderService finder = new RoomFinderService("rooms.xml", "bookings.xml");
+//        DecimalFormat currencyFormat = new DecimalFormat("#,###");
+//
+//        btnTimKiem.addActionListener(e -> {
+//            try {
+//                LocalDate ngayDen = dpCheckIn.getDate();
+//                LocalDate ngayDi = dpCheckOut.getDate();
+//
+//                if (ngayDen == null || ngayDi == null) {
+//                    JOptionPane.showMessageDialog(panel, "Vui lòng chọn ngày đến và ngày đi.");
+//                    return;
+//                }
+//
+//                int gioDen = cbCheckInHour.getSelectedIndex();
+//                int phutDen = cbCheckInMinute.getSelectedIndex();
+//                int gioDi = cbCheckOutHour.getSelectedIndex();
+//                int phutDi = cbCheckOutMinute.getSelectedIndex();
+//
+//                LocalDateTime checkIn = LocalDateTime.of(ngayDen, java.time.LocalTime.of(gioDen, phutDen));
+//                LocalDateTime checkOut = LocalDateTime.of(ngayDi, java.time.LocalTime.of(gioDi, phutDi));
+//                LocalDateTime now = LocalDateTime.now();
+//
+//                if (checkIn.isAfter(checkOut)) {
+//                    JOptionPane.showMessageDialog(panel, "Ngày đến phải trước ngày đi.");
+//                    return;
+//                }
+//
+//                if (checkIn.isBefore(now)) {
+//                    JOptionPane.showMessageDialog(panel, "Ngày đến phải sau thời gian hiện tại.");
+//                    return;
+//                }
+//
+//                String loaiPhong = cbLoaiPhong.getSelectedItem().toString();
+//                List<Room> rooms = finder.findAvailableRooms(checkIn, checkOut, loaiPhong);
+//
+//                tableModel.setRowCount(0);
+//                if (rooms.isEmpty()) {
+//                    JOptionPane.showMessageDialog(panel, "Không có phòng phù hợp.");
+//                } else {
+//                    for (Room room : rooms) {
+//                        tableModel.addRow(new Object[]{
+//                                room.getRoomId(),
+//                                room.getDescription(),
+//                                room.getType(),
+//                                currencyFormat.format(room.getPrice())
+//                        });
+//                    }
+//                }
+//
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                JOptionPane.showMessageDialog(panel, "Lỗi xử lý dữ liệu!");
+//            }
+//        });
+//
+//        btnDatPhong.addActionListener(e -> {
+//            if (tableModel.getRowCount() == 0) {
+//                JOptionPane.showMessageDialog(panel, "Bạn chưa chọn phòng nào để đặt.");
+//                return;
+//            }
+//
+//            // (Tuỳ chọn) kiểm tra người dùng có chọn dòng nào không
+//            if (table.getSelectedRow() == -1) {
+//                JOptionPane.showMessageDialog(panel, "Vui lòng chọn một phòng để đặt.");
+//                return;
+//            }
+//
+//            JPanel bookingPanel = CustomerBookingView.createBookingPanel(mainFrame, mainFrame.getLoggedInUsername());
+//            mainFrame.setCustomerDynamicContent(bookingPanel);
+//        });
+//
+//
+//        // Gắn các thành phần lên panel chính
+//        panel.add(formPanel, BorderLayout.NORTH);
+//        panel.add(scrollPane, BorderLayout.CENTER);
+//        panel.add(btnPanel, BorderLayout.SOUTH);
+//        return panel;
+//    }
+//}
+
+
 package org.example.view;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
+import org.example.entity.Room;
+import org.example.entity.SelectedRoomInfo;
+import org.example.service.RoomFinderService;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class CustomerSearchView {
-    public static JPanel createSearchPanel() {
-        JPanel panel = new JPanel(new BorderLayout(10,10));
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        panel.setBackground(Color.WHITE);
 
-        // Tạo DatePicker cho Ngày đến và Ngày đi
+    public static JPanel createSearchPanel(MainFrameView mainFrame) {
+        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        panel.setBackground(Color.WHITE);
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
         DatePickerSettings dateSettingsCheckIn = new DatePickerSettings();
         dateSettingsCheckIn.setFormatForDatesCommonEra("dd-MM-yyyy");
         DatePicker dpCheckIn = new DatePicker(dateSettingsCheckIn);
@@ -39,77 +237,154 @@ public class CustomerSearchView {
         cbCheckOutHour.setPreferredSize(comboSize);
         cbCheckOutMinute.setPreferredSize(comboSize);
 
-        JComboBox<String> cbLoaiPhong = new JComboBox<>(new String[]{"Tất cả", "Phòng đơn", "Phòng đôi", "Phòng đặc biệt", "Phòng gia đình"});
+        JComboBox<String> cbLoaiPhong = new JComboBox<>(new String[]{
+                "Tất cả", "Phòng đơn", "Phòng đôi", "Phòng đặc biệt", "Phòng gia đình"
+        });
 
         JPanel formPanel = new JPanel(new GridBagLayout());
-        formPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Thông tin tìm kiếm", TitledBorder.LEFT, TitledBorder.TOP));
+        formPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Thông tin tìm kiếm", TitledBorder.LEFT, TitledBorder.TOP));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 10, 15, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Hàng 1: Ngày đến + giờ + phút
         gbc.gridx = 0; gbc.gridy = 0;
         gbc.insets = new Insets(5, 10, 15, 20);
-
         formPanel.add(new JLabel("Ngày đến:"), gbc);
-        gbc.gridx = 1;
-        formPanel.add(dpCheckIn, gbc);
-        gbc.gridx = 2;
-        formPanel.add(new JLabel("Giờ:"), gbc);
-        gbc.gridx = 3;
-        formPanel.add(cbCheckInHour, gbc);
-        gbc.gridx = 4;
-        formPanel.add(new JLabel("Phút:"), gbc);
-        gbc.gridx = 5;
-        formPanel.add(cbCheckInMinute, gbc);
+        gbc.gridx = 1; formPanel.add(dpCheckIn, gbc);
+        gbc.gridx = 2; formPanel.add(new JLabel("Giờ:"), gbc);
+        gbc.gridx = 3; formPanel.add(cbCheckInHour, gbc);
+        gbc.gridx = 4; formPanel.add(new JLabel("Phút:"), gbc);
+        gbc.gridx = 5; formPanel.add(cbCheckInMinute, gbc);
 
-        // Hàng 1 tiếp: Loại phòng lùi phải
         gbc.gridx = 7;
-        gbc.weightx = 0;  // để đẩy sang phải
         gbc.anchor = GridBagConstraints.EAST;
         formPanel.add(new JLabel("Loại phòng:"), gbc);
-
         gbc.gridx = 8;
-        gbc.weightx = 0;
         formPanel.add(cbLoaiPhong, gbc);
 
-        // Hàng 2: Ngày đi + giờ + phút lùi trái
         gbc.gridx = 0; gbc.gridy = 1;
-        gbc.weightx = 0;
         gbc.anchor = GridBagConstraints.WEST;
         formPanel.add(new JLabel("Ngày đi:"), gbc);
-        gbc.gridx = 1;
-        formPanel.add(dpCheckOut, gbc);
-        gbc.gridx = 2;
-        formPanel.add(new JLabel("Giờ:"), gbc);
-        gbc.gridx = 3;
-        formPanel.add(cbCheckOutHour, gbc);
-        gbc.gridx = 4;
-        formPanel.add(new JLabel("Phút:"), gbc);
-        gbc.gridx = 5;
-        formPanel.add(cbCheckOutMinute, gbc);
+        gbc.gridx = 1; formPanel.add(dpCheckOut, gbc);
+        gbc.gridx = 2; formPanel.add(new JLabel("Giờ:"), gbc);
+        gbc.gridx = 3; formPanel.add(cbCheckOutHour, gbc);
+        gbc.gridx = 4; formPanel.add(new JLabel("Phút:"), gbc);
+        gbc.gridx = 5; formPanel.add(cbCheckOutMinute, gbc);
 
-        // Nút Tìm kiếm và Đặt phòng
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnTimKiem = new JButton("Tìm kiếm");
         JButton btnDatPhong = new JButton("Đặt phòng");
         btnPanel.add(btnTimKiem);
         btnPanel.add(btnDatPhong);
 
-        // Bảng kết quả
         String[] columns = {"Mã phòng", "Mô tả", "Loại phòng", "Giá tiền (VNĐ)"};
-        DefaultTableModel tableModel = new DefaultTableModel(columns, 0){
-            @Override
-            public boolean isCellEditable(int row, int column) { return false; }
+        DefaultTableModel tableModel = new DefaultTableModel(columns, 0) {
+            public boolean isCellEditable(int row, int col) { return false; }
         };
         JTable table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(BorderFactory.createTitledBorder("Kết quả tìm kiếm"));
 
+        table.getColumnModel().getColumn(0).setPreferredWidth(80);
+        table.getColumnModel().getColumn(1).setPreferredWidth(300);
+        table.getColumnModel().getColumn(2).setPreferredWidth(100);
+        table.getColumnModel().getColumn(3).setPreferredWidth(120);
+
+        RoomFinderService finder = new RoomFinderService("rooms.xml", "bookings.xml");
+        DecimalFormat currencyFormat = new DecimalFormat("#,###");
+
+        btnTimKiem.addActionListener(e -> {
+            try {
+                LocalDate ngayDen = dpCheckIn.getDate();
+                LocalDate ngayDi = dpCheckOut.getDate();
+
+                if (ngayDen == null || ngayDi == null) {
+                    JOptionPane.showMessageDialog(panel, "Vui lòng chọn ngày đến và ngày đi.");
+                    return;
+                }
+
+                int gioDen = cbCheckInHour.getSelectedIndex();
+                int phutDen = cbCheckInMinute.getSelectedIndex();
+                int gioDi = cbCheckOutHour.getSelectedIndex();
+                int phutDi = cbCheckOutMinute.getSelectedIndex();
+
+                LocalDateTime checkIn = LocalDateTime.of(ngayDen, java.time.LocalTime.of(gioDen, phutDen));
+                LocalDateTime checkOut = LocalDateTime.of(ngayDi, java.time.LocalTime.of(gioDi, phutDi));
+                LocalDateTime now = LocalDateTime.now();
+
+                if (checkIn.isAfter(checkOut)) {
+                    JOptionPane.showMessageDialog(panel, "Ngày đến phải trước ngày đi.");
+                    return;
+                }
+
+                if (checkIn.isBefore(now)) {
+                    JOptionPane.showMessageDialog(panel, "Ngày đến phải sau thời gian hiện tại.");
+                    return;
+                }
+
+                String loaiPhong = cbLoaiPhong.getSelectedItem().toString();
+                List<Room> rooms = finder.findAvailableRooms(checkIn, checkOut, loaiPhong);
+
+                tableModel.setRowCount(0);
+                if (rooms.isEmpty()) {
+                    JOptionPane.showMessageDialog(panel, "Không có phòng phù hợp.");
+                } else {
+                    for (Room room : rooms) {
+                        tableModel.addRow(new Object[]{
+                                room.getRoomId(),
+                                room.getDescription(),
+                                room.getType(),
+                                currencyFormat.format(room.getPrice())
+                        });
+                    }
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(panel, "Lỗi xử lý dữ liệu!");
+            }
+        });
+
+        btnDatPhong.addActionListener(e -> {
+            if (tableModel.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(panel, "Bạn chưa chọn phòng nào để đặt.");
+                return;
+            }
+
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(panel, "Vui lòng chọn một phòng để đặt.");
+                return;
+            }
+
+            try {
+                String roomId = tableModel.getValueAt(selectedRow, 0).toString();
+                String description = tableModel.getValueAt(selectedRow, 1).toString();
+                String type = tableModel.getValueAt(selectedRow, 2).toString();
+                String priceStr = tableModel.getValueAt(selectedRow, 3).toString().replace(",", "");
+                double price = Double.parseDouble(priceStr);
+
+                LocalDateTime checkIn = LocalDateTime.of(dpCheckIn.getDate(), java.time.LocalTime.of(
+                        cbCheckInHour.getSelectedIndex(), cbCheckInMinute.getSelectedIndex()));
+
+                LocalDateTime checkOut = LocalDateTime.of(dpCheckOut.getDate(), java.time.LocalTime.of(
+                        cbCheckOutHour.getSelectedIndex(), cbCheckOutMinute.getSelectedIndex()));
+
+                SelectedRoomInfo selectedRoom = new SelectedRoomInfo(roomId, description, type, price, checkIn, checkOut);
+
+                JPanel bookingPanel = CustomerBookingView.createBookingPanel(mainFrame, mainFrame.getLoggedInUsername(), selectedRoom);
+                mainFrame.setCustomerDynamicContent(bookingPanel);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(panel, "Lỗi khi xử lý dữ liệu phòng đã chọn.");
+            }
+        });
+
         panel.add(formPanel, BorderLayout.NORTH);
         panel.add(scrollPane, BorderLayout.CENTER);
         panel.add(btnPanel, BorderLayout.SOUTH);
-
         return panel;
     }
 }
