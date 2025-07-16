@@ -8,9 +8,9 @@
 //        String filePath = "bookings.xml";
 //
 //        // 1. Tạo các đối tượng người
-//        Person representative = new Person("John Doe", "123456789000");
-//        Person companion1 = new Person("Nguyễn Văn B", "012345678912");
-//        Person companion2 = new Person("Lê Thị C", "098765432198");
+//        Person representative = new Person("John Doe", "CCCD", "123456789000");
+//        Person companion1 = new Person("Nguyễn Văn B", "Không có", "012345678912");
+//        Person companion2 = new Person("Lê Thị C", "Hộ chiếu", "098765432198");
 //        List<Person> companions = List.of(companion1, companion2);
 //
 //        // 2. Thông tin booking

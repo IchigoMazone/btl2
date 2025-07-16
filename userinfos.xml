@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <UserInfos>
     <UserInfo>
+        <userName>asdadasdas12312</userName>
+        <password>123456789z</password>
+        <fullName>traiasdc</fullName>
+        <email>asd23@gmail.com</email>
+        <phoneNumber>0234567890</phoneNumber>
+    </UserInfo>
+    <UserInfo>
         <userName>nhat2112</userName>
         <password>77778888z</password>
         <fullName>triasdas</fullName>

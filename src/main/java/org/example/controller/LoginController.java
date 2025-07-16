@@ -12,7 +12,7 @@ public class LoginController {
         String error = CheckLogin.checkUser("userinfos.xml", user.getUserName(), user.getPassword());
 
         if (user.getUserName().equals("admin") && user.getPassword().equals("123456")) {
-            view.getMainFrame().showAdminContainerPanel(user.getUserName());
+            view.getMainFrame().showAdminContainerPanel();
         }
 
         else if (error != null) {

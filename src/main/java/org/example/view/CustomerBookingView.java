@@ -269,6 +269,7 @@ Trạng thái: Đã gửi yêu cầu
                 JOptionPane.showMessageDialog(mainFrame, "Gửi yêu cầu thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 JPanel homePanel = CustomerDashboardView.createUserHomePanel();
                 mainFrame.setCustomerDynamicContent(homePanel);
+                mainFrame.setCustomerSelectedMenu("Trang chủ");
             }
         });
 

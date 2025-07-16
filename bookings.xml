@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Bookings>
     <Booking>
+        <bookingId>BK202507164901</bookingId>
+        <requestId>REQ0000X</requestId>
+        <userName>user85450724</userName>
+        <fullName>5</fullName>
+        <email>4</email>
+        <phone>3</phone>
+        <roomId>R020</roomId>
+        <checkIn>2025-07-19T10:00:00</checkIn>
+        <checkOut>2025-07-20T10:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-16T21:17:05</submittedAt>
+        <status>Check-in</status>
+        <Person>
+            <name>5</name>
+            <loaiGiayTo>Mã định danh</loaiGiayTo>
+            <maGiayTo>6</maGiayTo>
+        </Person>
+        <History>
+            <timestamp>2025-07-16T21:17:05</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-16T21:17:05</timestamp>
+            <status>Check-in</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK20250707</bookingId>
+        <requestId>REQ12346</requestId>
+        <userName>user1</userName>
+        <fullName>Nguyen Van A</fullName>
+        <email>user1@example.com</email>
+        <phone>0123456789</phone>
+        <roomId>R001</roomId>
+        <checkIn>2025-07-07T14:00:00</checkIn>
+        <checkOut>2025-07-15T12:00:00</checkOut>
+        <amount>1500.0</amount>
+        <submittedAt>2025-07-16T21:08:20</submittedAt>
+        <status>Check-in</status>
+        <Person>
+            <name>Nguyen Van A</name>
+            <loaiGiayTo>CCCD</loaiGiayTo>
+            <maGiayTo>123456789</maGiayTo>
+        </Person>
+        <Person>
+            <name>Tran Thi B</name>
+            <loaiGiayTo>Không có</loaiGiayTo>
+            <maGiayTo>987654321</maGiayTo>
+        </Person>
+        <History>
+            <timestamp>2025-07-16T21:08:20</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-16T21:08:20</timestamp>
+            <status>Check-in</status>
+        </History>
+    </Booking>
+    <Booking>
         <bookingId>BK20250707</bookingId>
         <requestId>REQ12346</requestId>
         <userName>user1</userName>
@@ -15,11 +74,9 @@
         <status>Check-in</status>
         <Person>
             <name>Nguyen Van A</name>
-            <cccd>123456789</cccd>
         </Person>
         <Person>
             <name>Tran Thi B</name>
-            <cccd>987654321</cccd>
         </Person>
         <History>
             <timestamp>2025-07-08T18:30:19</timestamp>
