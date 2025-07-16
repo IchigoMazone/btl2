@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SelectedRoomInfo {
     private String roomId;
@@ -55,17 +56,27 @@ public class SelectedRoomInfo {
         this.price = price;
     }
 
-    public LocalDateTime getCheckIn() {
-        return checkIn;
-    }
+//    public String getCheckIn() {
+//        return checkIn != null
+//                ? checkIn.withSecond(0).withNano(0).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+//                : null;
+//    }
+//
+//
+//    public String getCheckOut() {
+//        return checkIn != null
+//                ? checkIn.withSecond(0).withNano(0).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+//                : null;
+//    }
 
-    public void setCheckIn(LocalDateTime checkIn) {
-        this.checkIn = checkIn;
+    public LocalDateTime getCheckIn() {
+        return checkIn != null ? checkIn.withSecond(0).withNano(0) : null;
     }
 
     public LocalDateTime getCheckOut() {
-        return checkOut;
+        return checkOut != null ? checkOut.withSecond(0).withNano(0) : null;
     }
+
 
     public void setCheckOut(LocalDateTime checkOut) {
         this.checkOut = checkOut;

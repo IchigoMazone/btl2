@@ -1,218 +1,15 @@
-//package org.example.view;
-//import org.example.entity.SelectedRoomInfo;
-//import javax.swing.*;
-//import javax.swing.border.TitledBorder;
-//import java.awt.*;
-//import java.time.LocalDateTime;
-//
-//public class CustomerBookingView extends JPanel {
-//    private MainFrameView mainFrame;
-//    private String username;
-//    private SelectedRoomInfo selectedRoom;
-//
-//    private JComboBox<Integer> cbSoNguoi;
-//    private JTextField tfTenKhach;
-//    private JTextArea taGhiChu;
-//    private JTextField[] hoTenFields = new JTextField[3];
-//    private JComboBox<String>[] loaiCombos = new JComboBox[3];
-//    private JTextField[] maFields = new JTextField[3];
-//
-//    public CustomerBookingView(MainFrameView mainFrame, String username, SelectedRoomInfo selectedRoom) {
-//        this.mainFrame = mainFrame;
-//        this.username = username;
-//        this.selectedRoom = selectedRoom;
-//
-//        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-//        setPreferredSize(new Dimension(950, 800));
-//        setBackground(Color.WHITE);
-//        setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-//
-//        add(createFormPanel());
-//        add(Box.createVerticalStrut(10));
-//        add(createButtonPanel());
-//    }
-//
-//    public static JPanel createBookingPanel(MainFrameView mainFrame, String username, SelectedRoomInfo selectedRoom) {
-//        return new CustomerBookingView(mainFrame, username, selectedRoom);
-//    }
-//
-//    private JPanel createFormPanel() {
-//        JPanel formPanel = new JPanel(new GridBagLayout());
-//        formPanel.setBackground(UIManager.getColor("Panel.background"));
-//        formPanel.setBorder(BorderFactory.createTitledBorder(
-//                BorderFactory.createLineBorder(new Color(180, 180, 180)),
-//                "Thông tin người dùng",
-//                TitledBorder.LEFT, TitledBorder.TOP));
-//
-//        GridBagConstraints gbc = new GridBagConstraints();
-//        gbc.insets = new Insets(6, 10, 6, 10);
-//        gbc.fill = GridBagConstraints.HORIZONTAL;
-//        gbc.weightx = 1.0;
-//
-//        // Tên khách
-//        gbc.gridy = 0;
-//        gbc.gridx = 0;
-//        formPanel.add(new JLabel("Tên khách hàng:"), gbc);
-//        gbc.gridx = 1;
-//        gbc.gridwidth = 3;
-//        tfTenKhach = new JTextField();
-//        formPanel.add(tfTenKhach, gbc);
-//        gbc.gridwidth = 1;
-//
-//        // Số người
-//        gbc.gridy++;
-//        gbc.gridx = 0;
-//        formPanel.add(new JLabel("Số người:"), gbc);
-//        gbc.gridx = 1;
-//        Integer[] soNguoiOptions = {0, 1, 2, 3};
-//        cbSoNguoi = new JComboBox<>(soNguoiOptions);
-//        formPanel.add(cbSoNguoi, gbc);
-//
-//        // Ghi chú
-//        gbc.gridy++;
-//        gbc.gridx = 0;
-//        formPanel.add(new JLabel("Ghi chú:"), gbc);
-//        gbc.gridx = 1;
-//        gbc.gridwidth = 3;
-//        taGhiChu = new JTextArea(3, 20);
-//        JScrollPane scroll = new JScrollPane(taGhiChu);
-//        formPanel.add(scroll, gbc);
-//        gbc.gridwidth = 1;
-//
-//        // Danh sách người đi cùng
-//        String[] loaiOptions = {"Không có", "Mã định danh"};
-//        for (int i = 0; i < 3; i++) {
-//            int row = 3 + i * 2;
-//
-//            gbc.gridy = row;
-//            gbc.gridx = 0;
-//            formPanel.add(new JLabel("Họ tên người " + (i + 1) + ":"), gbc);
-//            gbc.gridx = 1;
-//            gbc.gridwidth = 3;
-//            hoTenFields[i] = new JTextField();
-//            formPanel.add(hoTenFields[i], gbc);
-//            gbc.gridwidth = 1;
-//
-//            gbc.gridy = row + 1;
-//            gbc.gridx = 0;
-//            formPanel.add(new JLabel("Loại giấy tờ:"), gbc);
-//            gbc.gridx = 1;
-//            loaiCombos[i] = new JComboBox<>(loaiOptions);
-//            formPanel.add(loaiCombos[i], gbc);
-//            gbc.gridx = 2;
-//            formPanel.add(new JLabel("Mã:"), gbc);
-//            gbc.gridx = 3;
-//            maFields[i] = new JTextField();
-//            formPanel.add(maFields[i], gbc);
-//
-//            int index = i;
-//            loaiCombos[i].addActionListener(e -> {
-//                String selected = (String) loaiCombos[index].getSelectedItem();
-//                if ("Không có".equals(selected)) {
-//                    maFields[index].setText("Trẻ em");
-//                    maFields[index].setEditable(false);
-//                } else {
-//                    maFields[index].setText("");
-//                    maFields[index].setEditable(true);
-//                }
-//            });
-//        }
-//
-//        cbSoNguoi.addActionListener(e -> {
-//            int selected = (int) cbSoNguoi.getSelectedItem();
-//            for (int i = 0; i < 3; i++) {
-//                boolean enable = i < selected;
-//                hoTenFields[i].setEnabled(enable);
-//                loaiCombos[i].setEnabled(enable);
-//                maFields[i].setEnabled(enable);
-//                if (!enable) {
-//                    hoTenFields[i].setText("");
-//                    maFields[i].setText("");
-//                }
-//            }
-//        });
-//
-//        cbSoNguoi.setSelectedIndex(0);
-//        return formPanel;
-//    }
-//
-//    private JPanel createButtonPanel() {
-//        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-//        btnPanel.setBackground(UIManager.getColor("Panel.background"));
-//
-//        JButton btnXacNhan = new JButton("Xác nhận");
-//        JButton btnQuayLai = new JButton("Quay lại");
-//
-//        btnQuayLai.addActionListener(e -> {
-//            JPanel searchPanel = CustomerSearchView.createSearchPanel(mainFrame);
-//            mainFrame.setCustomerDynamicContent(searchPanel);
-//        });
-//
-//        btnXacNhan.addActionListener(e -> {
-//            String tenKhach = tfTenKhach.getText().trim();
-//            String ghiChu = taGhiChu.getText().trim();
-//            int soNguoi = (int) cbSoNguoi.getSelectedItem();
-//
-//            StringBuilder danhSachKhach = new StringBuilder();
-//            for (int i = 0; i < soNguoi; i++) {
-//                danhSachKhach.append("- ").append(hoTenFields[i].getText()).append(" [")
-//                        .append(loaiCombos[i].getSelectedItem()).append(", ")
-//                        .append(maFields[i].getText()).append("]\n");
-//            }
-//
-//            String roomId = selectedRoom.getRoomId();
-//            String moTa = selectedRoom.getDescription();
-//            String loai = selectedRoom.getType();
-//            double gia = selectedRoom.getPrice();
-//            LocalDateTime checkIn = selectedRoom.getCheckIn();
-//            LocalDateTime checkOut = selectedRoom.getCheckOut();
-//            String username = mainFrame.getLoggedInUsername();
-//
-//            String info = String.format("""
-//✅ THÔNG TIN ĐẶT PHÒNG
-//
-//👤 Người dùng: %s
-//📛 Tên khách: %s
-//👥 Số người: %d
-//📝 Ghi chú: %s
-//
-//🧾 Danh sách khách:
-//%s
-//🏨 Phòng: %s
-//📋 Mô tả: %s
-//🏷️ Loại: %s
-//💵 Giá: %,.0f VND
-//
-//⏰ Check-in: %s
-//⏰ Check-out: %s
-//""",
-//                    username, tenKhach, soNguoi, ghiChu, danhSachKhach.toString(),
-//                    roomId, moTa, loai, gia, checkIn, checkOut);
-//
-//            JTextArea ta = new JTextArea(info);
-//            ta.setEditable(false);
-//            ta.setLineWrap(true);
-//            ta.setWrapStyleWord(true);
-//            ta.setFont(new Font("Monospaced", Font.PLAIN, 13));
-//            JScrollPane scrollPane = new JScrollPane(ta);
-//            scrollPane.setPreferredSize(new Dimension(600, 400));
-//
-//            JOptionPane.showMessageDialog(this, scrollPane, "📦 XÁC NHẬN ĐẶT PHÒNG", JOptionPane.INFORMATION_MESSAGE);
-//        });
-//
-//        btnPanel.add(btnQuayLai);
-//        btnPanel.add(btnXacNhan);
-//        return btnPanel;
-//    }
-//}
-
 
 package org.example.view;
 
+import org.example.service.RequestService;
+import org.example.entity.Person;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.example.entity.SelectedRoomInfo;
 import org.example.service.UserInfoService;
+
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -272,7 +69,7 @@ public class CustomerBookingView {
         gbc.gridx = 0;
         formPanel.add(new JLabel("Loại giấy tờ:"), gbc);
         gbc.gridx = 1;
-        JComboBox<String> cbLoaiChung = new JComboBox<>(new String[]{"Không có", "Mã định danh"});
+        JComboBox<String> cbLoaiChung = new JComboBox<>(new String[]{"Không có", "Mã định danh", "Hộ chiếu"});
         formPanel.add(cbLoaiChung, gbc);
         gbc.gridx = 2;
         formPanel.add(new JLabel("Mã:"), gbc);
@@ -280,7 +77,7 @@ public class CustomerBookingView {
         tfMaChung = new JTextField();
         formPanel.add(tfMaChung, gbc);
 
-        String[] loaiOptions = {"Không có", "Mã định danh"};
+        String[] loaiOptions = {"Không có", "Mã định danh", "Hộ chiếu"};
 
         for (int i = 0; i < 3; i++) {
             int row = i * 2 + 2;
@@ -378,13 +175,12 @@ public class CustomerBookingView {
             }
 
 
-            // Thời gian tạo yêu cầu
+
             String thoiGianTao;
             try {
-                thoiGianTao = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-                // dùng biến thoiGianTao như bình thường
+                thoiGianTao = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             } catch (Exception ex) {
-                throw new RuntimeException(ex); // hoặc xử lý theo ý bạn
+                throw new RuntimeException(ex);
             }
 
 
@@ -427,9 +223,6 @@ Trạng thái: Đã gửi yêu cầu
                     thoiGianTao
             );
 
-//            JOptionPane.showMessageDialog(mainFrame, info, "XÁC NHẬN ĐẶT PHÒNG", JOptionPane.INFORMATION_MESSAGE);
-//            JOptionPane.showMessageDialog(mainFrame, "Gửi yêu cầu thành công!", "THÔNG BÁO", JOptionPane.INFORMATION_MESSAGE);
-
             String[] options = {"Quay lại", "Xác nhận"};
             int result = JOptionPane.showOptionDialog(
                     mainFrame,
@@ -443,9 +236,39 @@ Trạng thái: Đã gửi yêu cầu
             );
 
             if (result == 1) { // Xác nhận
+                // Tạo danh sách Person từ các trường nhập
+                List<Person> danhSach = new ArrayList<>();
+
+                // Người đại diện là người đầu tiên
+                danhSach.add(new Person(hoTen, "CCCD", cccdNguoiDaiDien));
+
+                for (int i = 0; i < soNguoi; i++) {
+                    String ten = hoTenFields[i].getText().trim();
+                    String loai = (String) loaiCombos[i].getSelectedItem();
+                    String ma = maFields[i].getText().trim();
+
+                    if (ten.isEmpty() || ma.isEmpty()) continue;
+
+                    danhSach.add(new Person(ten, loai, ma));
+                }
+
+                // Gửi request
+                RequestService.createRequest(
+                        username,
+                        hoTen,
+                        gmail,
+                        sdt,
+                        selectedRoom.getRoomId(),
+                        selectedRoom.getCheckIn(),
+                        selectedRoom.getCheckOut(),
+                        selectedRoom.getPrice(),
+                        danhSach
+                );
+
+                // Thông báo và quay về giao diện tìm kiếm
                 JOptionPane.showMessageDialog(mainFrame, "Gửi yêu cầu thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                JPanel searchPanel = CustomerSearchView.createSearchPanel(mainFrame);
-                mainFrame.setCustomerDynamicContent(searchPanel);
+                JPanel homePanel = CustomerDashboardView.createUserHomePanel();
+                mainFrame.setCustomerDynamicContent(homePanel);
             }
         });
 
