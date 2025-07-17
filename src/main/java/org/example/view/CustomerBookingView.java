@@ -2,17 +2,20 @@
 package org.example.view;
 
 import org.example.service.RequestService;
+import org.example.service.NotificationService;
 import org.example.entity.Person;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.example.entity.SelectedRoomInfo;
 import org.example.service.UserInfoService;
-
+import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.Objects;
+import java.util.UUID;
 
 public class CustomerBookingView {
 
@@ -134,6 +137,10 @@ public class CustomerBookingView {
         return formPanel;
     }
 
+    private static String generateRequestId() {
+        return "REQ" + UUID.randomUUID().toString().substring(0, 5).toUpperCase();
+    }
+
     private static JPanel createButtonPanel(MainFrameView mainFrame, String username, SelectedRoomInfo selectedRoom) {
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnPanel.setBackground(UIManager.getColor("Panel.background"));
@@ -183,6 +190,7 @@ public class CustomerBookingView {
                 throw new RuntimeException(ex);
             }
 
+            String requestId = generateRequestId();
 
             String info = String.format("""
 THÔNG TIN ĐẶT PHÒNG
@@ -254,6 +262,7 @@ Trạng thái: Đã gửi yêu cầu
 
                 // Gửi request
                 RequestService.createRequest(
+                        requestId,
                         username,
                         hoTen,
                         gmail,
@@ -263,6 +272,11 @@ Trạng thái: Đã gửi yêu cầu
                         selectedRoom.getCheckOut(),
                         selectedRoom.getPrice(),
                         danhSach
+                );
+
+                NotificationService.createNotification(
+                        "BK00000001", requestId, username,
+                        "Yêu cầu duyệt", "Đã gửi"
                 );
 
                 // Thông báo và quay về giao diện tìm kiếm
