@@ -901,7 +901,7 @@ public class R {
                 RequestService.updateStatus(r.getRequestId(), "Đã bị hủy");
                 NotificationService.createNotification(
                         bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                        "Đã bị hủy", "Đã gửi"
+                        "Không được hủy", "Đã gửi"
                 );
                 JOptionPane.showMessageDialog(null, "Bạn đã hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 SwingUtilities.getWindowAncestor(content).dispose();
