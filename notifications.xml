@@ -1,83 +1,211 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Notifications>
     <Notification>
-        <bookingId>BK00000001</bookingId>
-        <requestId>REQAB63B</requestId>
+        <bookingId>BOOKING_1752822484742</bookingId>
+        <requestId>REQB8034</requestId>
         <userName>husky123</userName>
         <content>Đã bị hủy</content>
-        <time>2025-07-18T01:04:58</time>
+        <time>2025-07-18T14:08:34</time>
         <status>Đã gửi</status>
     </Notification>
     <Notification>
-        <bookingId>BK00000002</bookingId>
-        <requestId>REQAB63B</requestId>
+        <bookingId>BOOKING_1752822484742</bookingId>
+        <requestId>REQB8034</requestId>
         <userName>husky123</userName>
         <content>Gửi yêu cầu hủy</content>
-        <time>2025-07-18T00:59:51</time>
+        <time>2025-07-18T14:08:21</time>
         <status>Đã gửi</status>
     </Notification>
     <Notification>
-        <bookingId>BK00000002</bookingId>
-        <requestId>REQAB63B</requestId>
-        <userName>husky123</userName>
-        <content>Gửi yêu cầu hủy</content>
-        <time>2025-07-18T00:33:17</time>
-        <status>Đã gửi</status>
-    </Notification>
-    <Notification>
-        <bookingId>BK00000001</bookingId>
-        <requestId>REQAB63B</requestId>
+        <bookingId>BOOKING_1752822484742</bookingId>
+        <requestId>REQB8034</requestId>
         <userName>husky123</userName>
         <content>Đã được duyệt</content>
-        <time>2025-07-18T00:25:27</time>
+        <time>2025-07-18T14:08:04</time>
         <status>Đã gửi</status>
     </Notification>
     <Notification>
         <bookingId>BK00000001</bookingId>
-        <requestId>REQAB63B</requestId>
-        <userName>husky123</userName>
-        <content>Đã được duyệt</content>
-        <time>2025-07-18T00:19:11</time>
-        <status>Đã gửi</status>
-    </Notification>
-    <Notification>
-        <bookingId>BK00000001</bookingId>
-        <requestId>REQAB63B</requestId>
-        <userName>husky123</userName>
-        <content>Đã được duyệt</content>
-        <time>2025-07-18T00:01:55</time>
-        <status>Đã gửi</status>
-    </Notification>
-    <Notification>
-        <bookingId>BK00000001</bookingId>
-        <requestId>REQAB63B</requestId>
-        <userName>husky123</userName>
-        <content>Đã bị hủy</content>
-        <time>2025-07-17T23:59:53</time>
-        <status>Đã gửi</status>
-    </Notification>
-    <Notification>
-        <bookingId>BK00000001</bookingId>
-        <requestId>REQAB63B</requestId>
+        <requestId>REQB8034</requestId>
         <userName>husky123</userName>
         <content>Yêu cầu duyệt</content>
-        <time>2025-07-17T22:47:45</time>
+        <time>2025-07-18T14:07:48</time>
         <status>Đã gửi</status>
     </Notification>
     <Notification>
-        <bookingId>BOOKING_1752766571334</bookingId>
-        <requestId>REQ4DE0A</requestId>
-        <userName>user123445667</userName>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQABF6F</requestId>
+        <userName>husky123</userName>
         <content>Đã bị hủy</content>
-        <time>2025-07-17T22:36:11</time>
+        <time>2025-07-18T14:06:38</time>
         <status>Đã gửi</status>
     </Notification>
     <Notification>
-        <bookingId>BOOKING_1752766512108</bookingId>
-        <requestId>REQ4DE0F</requestId>
-        <userName>user85450724</userName>
-        <content>Đã được duyệt</content>
-        <time>2025-07-17T22:35:12</time>
+        <bookingId>BOOKING_1752822319139</bookingId>
+        <requestId>REQABF6F</requestId>
+        <userName>husky123</userName>
+        <content>Gửi yêu cầu hủy</content>
+        <time>2025-07-18T14:06:21</time>
         <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BOOKING_1752822319139</bookingId>
+        <requestId>REQABF6F</requestId>
+        <userName>husky123</userName>
+        <content>Đã được duyệt</content>
+        <time>2025-07-18T14:05:19</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQABF6F</requestId>
+        <userName>husky123</userName>
+        <content>Yêu cầu duyệt</content>
+        <time>2025-07-18T14:04:38</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQA8D40</requestId>
+        <userName>husky123</userName>
+        <content>Đã bị hủy</content>
+        <time>2025-07-18T14:03:36</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQA8D40</requestId>
+        <userName>husky123</userName>
+        <content>Yêu cầu duyệt</content>
+        <time>2025-07-18T14:03:03</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQ7A011</requestId>
+        <userName>husky123</userName>
+        <content>Đã bị hủy</content>
+        <time>2025-07-18T14:02:04</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQ7A011</requestId>
+        <userName>husky123</userName>
+        <content>Yêu cầu duyệt</content>
+        <time>2025-07-18T14:00:35</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BOOKING_1752821474650</bookingId>
+        <requestId>REQC834B</requestId>
+        <userName>husky123</userName>
+        <content>Đã bị hủy</content>
+        <time>2025-07-18T13:51:49</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BOOKING_1752821474650</bookingId>
+        <requestId>REQC834B</requestId>
+        <userName>husky123</userName>
+        <content>Gửi yêu cầu hủy</content>
+        <time>2025-07-18T13:51:34</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BOOKING_1752821474650</bookingId>
+        <requestId>REQC834B</requestId>
+        <userName>husky123</userName>
+        <content>Đã được duyệt</content>
+        <time>2025-07-18T13:51:14</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQC834B</requestId>
+        <userName>husky123</userName>
+        <content>Yêu cầu duyệt</content>
+        <time>2025-07-18T13:50:46</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BOOKING_1752821300086</bookingId>
+        <requestId>REQ705AD</requestId>
+        <userName>husky123</userName>
+        <content>Đã bị hủy</content>
+        <time>2025-07-18T13:49:31</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BOOKING_1752821300086</bookingId>
+        <requestId>REQ705AD</requestId>
+        <userName>husky123</userName>
+        <content>Gửi yêu cầu hủy</content>
+        <time>2025-07-18T13:49:10</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BOOKING_1752821300086</bookingId>
+        <requestId>REQ705AD</requestId>
+        <userName>husky123</userName>
+        <content>Đã được duyệt</content>
+        <time>2025-07-18T13:48:20</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQ705AD</requestId>
+        <userName>husky123</userName>
+        <content>Yêu cầu duyệt</content>
+        <time>2025-07-18T13:47:49</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQ1B0BB</requestId>
+        <userName>husky123</userName>
+        <content>Đã bị hủy</content>
+        <time>2025-07-18T13:46:58</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQ1B0BB</requestId>
+        <userName>husky123</userName>
+        <content>Yêu cầu duyệt</content>
+        <time>2025-07-18T13:46:01</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQ40272</requestId>
+        <userName>husky123</userName>
+        <content>Đã bị hủy</content>
+        <time>2025-07-18T13:45:09</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQ40272</requestId>
+        <userName>husky123</userName>
+        <content>Yêu cầu duyệt</content>
+        <time>2025-07-18T13:43:31</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQ7EAA2</requestId>
+        <userName>husky123</userName>
+        <content>Đã bị hủy</content>
+        <time>2025-07-18T13:42:06</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQ7EAA2</requestId>
+        <userName>husky123</userName>
+        <content>Yêu cầu duyệt</content>
+        <time>2025-07-18T13:40:46</time>
+        <status>Đã xem</status>
     </Notification>
 </Notifications>

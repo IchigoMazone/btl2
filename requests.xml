@@ -1,7 +1,245 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Requests>
     <Request>
-        <requestId>REQAB63B</requestId>
+        <requestId>REQB8034</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R017</roomId>
+        <checkIn>2025-07-19T10:00:00</checkIn>
+        <checkOut>2025-07-26T10:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-18T14:08:34</submittedAt>
+        <status>Đã bị hủy</status>
+        <Person>
+            <name>Trinh Nhu Nhat</name>
+            <loaiGiayTo>CCCD</loaiGiayTo>
+            <maGiayTo>1</maGiayTo>
+        </Person>
+        <History>
+            <timestamp>2025-07-18T14:07:48</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T14:08:04</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T14:08:21</timestamp>
+            <status>Gửi yêu cầu hủy</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T14:08:34</timestamp>
+            <status>Đã bị hủy</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQABF6F</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R018</roomId>
+        <checkIn>2025-07-19T10:00:00</checkIn>
+        <checkOut>2025-07-26T12:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-18T14:06:38</submittedAt>
+        <status>Đã bị hủy</status>
+        <Person>
+            <name>Trinh Nhu Nhat</name>
+            <loaiGiayTo>CCCD</loaiGiayTo>
+            <maGiayTo>1</maGiayTo>
+        </Person>
+        <History>
+            <timestamp>2025-07-18T14:04:38</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T14:05:15</timestamp>
+            <status>Đã đọc</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T14:05:19</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T14:06:21</timestamp>
+            <status>Gửi yêu cầu hủy</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T14:06:35</timestamp>
+            <status>Đã đọc</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T14:06:38</timestamp>
+            <status>Đã bị hủy</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQA8D40</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R018</roomId>
+        <checkIn>2025-07-19T10:00:00</checkIn>
+        <checkOut>2025-07-26T10:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-18T14:03:36</submittedAt>
+        <status>Đã bị hủy</status>
+        <Person>
+            <name>Trinh Nhu Nhat</name>
+            <loaiGiayTo>CCCD</loaiGiayTo>
+            <maGiayTo>1</maGiayTo>
+        </Person>
+        <History>
+            <timestamp>2025-07-18T14:03:03</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T14:03:31</timestamp>
+            <status>Đã đọc</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T14:03:36</timestamp>
+            <status>Đã bị hủy</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQ7A011</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R018</roomId>
+        <checkIn>2025-07-19T10:00:00</checkIn>
+        <checkOut>2025-07-26T12:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-18T14:02:04</submittedAt>
+        <status>Đã từ chối</status>
+        <Person>
+            <name>Trinh Nhu Nhat</name>
+            <loaiGiayTo>CCCD</loaiGiayTo>
+            <maGiayTo>1</maGiayTo>
+        </Person>
+        <History>
+            <timestamp>2025-07-18T14:00:35</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T14:01:43</timestamp>
+            <status>Đã đọc</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T14:02:04</timestamp>
+            <status>Đã từ chối</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQC834B</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R018</roomId>
+        <checkIn>2025-07-19T11:00:00</checkIn>
+        <checkOut>2025-07-26T13:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-18T13:51:49</submittedAt>
+        <status>Đã bị hủy</status>
+        <Person>
+            <name>Trinh Nhu Nhat</name>
+            <loaiGiayTo>CCCD</loaiGiayTo>
+            <maGiayTo>1</maGiayTo>
+        </Person>
+        <History>
+            <timestamp>2025-07-18T13:50:46</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T13:51:14</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T13:51:34</timestamp>
+            <status>Gửi yêu cầu hủy</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T13:51:49</timestamp>
+            <status>Đã bị hủy</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQ705AD</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R019</roomId>
+        <checkIn>2025-07-19T10:00:00</checkIn>
+        <checkOut>2025-07-26T13:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-18T13:49:31</submittedAt>
+        <status>Đã bị hủy</status>
+        <Person>
+            <name>Trinh Nhu Nhat</name>
+            <loaiGiayTo>CCCD</loaiGiayTo>
+            <maGiayTo>1</maGiayTo>
+        </Person>
+        <History>
+            <timestamp>2025-07-18T13:47:49</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T13:48:16</timestamp>
+            <status>Đã đọc</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T13:48:20</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T13:49:09</timestamp>
+            <status>Gửi yêu cầu hủy</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T13:49:31</timestamp>
+            <status>Đã bị hủy</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQ1B0BB</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R019</roomId>
+        <checkIn>2025-07-19T09:00:00</checkIn>
+        <checkOut>2025-07-25T09:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-18T13:46:58</submittedAt>
+        <status>Đã bị hủy</status>
+        <Person>
+            <name>Trinh Nhu Nhat</name>
+            <loaiGiayTo>CCCD</loaiGiayTo>
+            <maGiayTo>1</maGiayTo>
+        </Person>
+        <History>
+            <timestamp>2025-07-18T13:46:01</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T13:46:33</timestamp>
+            <status>Đã đọc</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T13:46:58</timestamp>
+            <status>Đã bị hủy</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQ40272</requestId>
         <userName>husky123</userName>
         <fullName>Trinh Nhu Nhat</fullName>
         <email>asd23@gmail.com</email>
@@ -10,239 +248,49 @@
         <checkIn>2025-07-19T10:00:00</checkIn>
         <checkOut>2025-07-21T10:00:00</checkOut>
         <amount>800000.0</amount>
-        <submittedAt>2025-07-18T01:04:58</submittedAt>
-        <status>Đã bị hủy</status>
+        <submittedAt>2025-07-18T13:45:09</submittedAt>
+        <status>Đã từ chối</status>
         <Person>
             <name>Trinh Nhu Nhat</name>
             <loaiGiayTo>CCCD</loaiGiayTo>
-            <maGiayTo>1</maGiayTo>
+            <maGiayTo>12345678</maGiayTo>
         </Person>
         <History>
-            <timestamp>2025-07-17T22:47:45</timestamp>
+            <timestamp>2025-07-18T13:43:31</timestamp>
             <status>Gửi yêu cầu</status>
         </History>
         <History>
-            <timestamp>2025-07-17T22:49:47</timestamp>
+            <timestamp>2025-07-18T13:44:14</timestamp>
+            <status>Đã đọc</status>
+        </History>
+        <History>
+            <timestamp>2025-07-18T13:45:09</timestamp>
             <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T23:59:53</timestamp>
-            <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-18T00:01:55</timestamp>
-            <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-18T00:19:11</timestamp>
-            <status>Yêu cầu hủy</status>
-        </History>
-        <History>
-            <timestamp>2025-07-18T00:25:27</timestamp>
-            <status>Gửi yêu cầu</status>
-        </History>
-        <History>
-            <timestamp>2025-07-18T00:33:16</timestamp>
-            <status>Gửi yêu cầu hủy</status>
-        </History>
-        <History>
-            <timestamp>2025-07-18T00:59:51</timestamp>
-            <status>Đã bị hủy</status>
-        </History>
-        <History>
-            <timestamp>2025-07-18T01:04:58</timestamp>
-            <status>Đã bị hủy</status>
         </History>
     </Request>
     <Request>
-        <requestId>REQ4DE0F</requestId>
-        <userName>user85450724</userName>
-        <fullName>5</fullName>
-        <email>4</email>
-        <phone>3</phone>
-        <roomId>R020</roomId>
+        <requestId>REQ7EAA2</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R019</roomId>
         <checkIn>2025-07-19T10:00:00</checkIn>
-        <checkOut>2025-07-20T10:00:00</checkOut>
+        <checkOut>2025-07-26T10:00:00</checkOut>
         <amount>800000.0</amount>
-        <submittedAt>2025-07-17T22:35:08</submittedAt>
-        <status>Gửi yêu cầu</status>
+        <submittedAt>2025-07-18T13:42:06</submittedAt>
+        <status>Đã từ chối</status>
         <Person>
-            <name>5</name>
-            <loaiGiayTo>Mã định danh</loaiGiayTo>
-            <maGiayTo>6</maGiayTo>
+            <name>Trinh Nhu Nhat</name>
+            <loaiGiayTo>CCCD</loaiGiayTo>
+            <maGiayTo>12345678</maGiayTo>
         </Person>
         <History>
-            <timestamp>2025-07-16T21:17:06</timestamp>
+            <timestamp>2025-07-18T13:40:46</timestamp>
             <status>Gửi yêu cầu</status>
         </History>
         <History>
-            <timestamp>2025-07-16T22:43:36</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T16:27:58</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T16:35:39</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T16:37:16</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T16:41:24</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T16:53:06</timestamp>
-            <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:06:49</timestamp>
-            <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:16:32</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:29:52</timestamp>
-            <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:29:56</timestamp>
-            <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:42:25</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:43:20</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:50:21</timestamp>
-            <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:52:43</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:56:21</timestamp>
-            <status>Đã duyệt</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:57:08</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:58:21</timestamp>
-            <status>Đã duyệt</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T18:05:13</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T18:05:39</timestamp>
-            <status>Đã duyệt</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T18:10:47</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T18:10:54</timestamp>
-            <status>Đã duyệt</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T22:35:01</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T22:35:08</timestamp>
-            <status>Đã duyệt</status>
-        </History>
-    </Request>
-    <Request>
-        <requestId>REQ4DE0A</requestId>
-        <userName>user123445667</userName>
-        <fullName>5</fullName>
-        <email>4</email>
-        <phone>3</phone>
-        <roomId>R020</roomId>
-        <checkIn>2025-07-19T10:00:00</checkIn>
-        <checkOut>2025-07-20T10:00:00</checkOut>
-        <amount>800000.0</amount>
-        <submittedAt>2025-07-17T22:36:11</submittedAt>
-        <status>Gửi yêu cầu</status>
-        <Person>
-            <name>5</name>
-            <loaiGiayTo>Mã định danh</loaiGiayTo>
-            <maGiayTo>6</maGiayTo>
-        </Person>
-        <History>
-            <timestamp>2025-07-16T21:17:06</timestamp>
-            <status>Gửi yêu cầu</status>
-        </History>
-        <History>
-            <timestamp>2025-07-16T22:43:36</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T16:27:58</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T16:35:39</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T16:37:16</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T16:57:00</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:13:21</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:13:33</timestamp>
-            <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:16:38</timestamp>
-            <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:50:17</timestamp>
-            <status>Đã đọc</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:50:31</timestamp>
-            <status>Đã duyệt</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:52:55</timestamp>
-            <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T17:57:13</timestamp>
-            <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T18:05:17</timestamp>
-            <status>Đã từ chối</status>
-        </History>
-        <History>
-            <timestamp>2025-07-17T22:36:11</timestamp>
+            <timestamp>2025-07-18T13:42:06</timestamp>
             <status>Đã từ chối</status>
         </History>
     </Request>
