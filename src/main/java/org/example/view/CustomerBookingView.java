@@ -248,7 +248,7 @@ Trạng thái: Đã gửi yêu cầu
                 List<Person> danhSach = new ArrayList<>();
 
                 // Người đại diện là người đầu tiên
-                danhSach.add(new Person(hoTen, "CCCD", cccdNguoiDaiDien));
+                danhSach.add(new Person(hoTen, (String) loaiCombos[0].getSelectedItem(), cccdNguoiDaiDien));
 
                 for (int i = 0; i < soNguoi; i++) {
                     String ten = hoTenFields[i].getText().trim();

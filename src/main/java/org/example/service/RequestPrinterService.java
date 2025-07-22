@@ -30,8 +30,8 @@ public class RequestPrinterService {
             for (Person p : guests) {
                 danhSachKhach
                         .append("- ")
-                        .append(p.getName())
-                        .append(" [").append(p.getLoaiGiayTo()).append(": ").append(p.getMaGiayTo()).append("]\n");
+                        .append(p.getFullName())
+                        .append(" [").append(p.getDocumentType()).append(": ").append(p.getDocumentCode()).append("]\n");
             }
 
             String output = String.format("""
@@ -57,8 +57,8 @@ public class RequestPrinterService {
                     Trạng thái: Đã gửi yêu cầu
                     """,
                     r.getUserName(),
-                    daiDien.getName(),
-                    daiDien.getMaGiayTo(),
+                    daiDien.getFullName(),
+                    daiDien.getDocumentCode(),
                     r.getEmail(),
                     r.getPhone(),
                     soNguoi,

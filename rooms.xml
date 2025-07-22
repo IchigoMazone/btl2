@@ -1,149 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Rooms>
-    <!-- Nhóm 1: 5 Phòng đơn -->
     <Room>
         <roomId>R001</roomId>
         <roomNumber>101</roomNumber>
         <type>Phòng đơn</type>
-        <price>300000</price>
+        <price>300000.0</price>
         <description>Phòng đơn có cửa sổ nhỏ và bàn làm việc tiện lợi</description>
     </Room>
     <Room>
         <roomId>R002</roomId>
         <roomNumber>102</roomNumber>
         <type>Phòng đơn</type>
-        <price>300000</price>
+        <price>300000.0</price>
         <description>Phòng đơn với ánh sáng tự nhiên và bàn học</description>
     </Room>
     <Room>
         <roomId>R003</roomId>
         <roomNumber>103</roomNumber>
         <type>Phòng đơn</type>
-        <price>300000</price>
+        <price>300000.0</price>
         <description>Phòng đơn có cửa sổ hướng sân vườn, yên tĩnh</description>
     </Room>
     <Room>
         <roomId>R004</roomId>
         <roomNumber>104</roomNumber>
         <type>Phòng đơn</type>
-        <price>300000</price>
+        <price>300000.0</price>
         <description>Phòng đơn đơn giản, có cửa sổ và bàn gỗ</description>
     </Room>
     <Room>
         <roomId>R005</roomId>
         <roomNumber>105</roomNumber>
         <type>Phòng đơn</type>
-        <price>300000</price>
+        <price>300000.0</price>
         <description>Phòng đơn sáng sủa, phù hợp nghỉ ngắn ngày</description>
     </Room>
-
-    <!-- Nhóm 2: 5 Phòng đôi -->
     <Room>
         <roomId>R006</roomId>
         <roomNumber>201</roomNumber>
         <type>Phòng đôi</type>
-        <price>450000</price>
+        <price>450000.0</price>
         <description>Phòng đôi có giường lớn và ban công nhỏ</description>
     </Room>
     <Room>
         <roomId>R007</roomId>
         <roomNumber>202</roomNumber>
         <type>Phòng đôi</type>
-        <price>450000</price>
+        <price>450000.0</price>
         <description>Phòng đôi tiện nghi với ban công hướng nội khu</description>
     </Room>
     <Room>
         <roomId>R008</roomId>
         <roomNumber>203</roomNumber>
         <type>Phòng đôi</type>
-        <price>450000</price>
+        <price>450000.0</price>
         <description>Phòng đôi rộng rãi, có cửa sổ và bàn trà</description>
     </Room>
     <Room>
         <roomId>R009</roomId>
         <roomNumber>204</roomNumber>
         <type>Phòng đôi</type>
-        <price>450000</price>
+        <price>450000.0</price>
         <description>Phòng đôi yên tĩnh với cửa kính lớn</description>
     </Room>
     <Room>
         <roomId>R010</roomId>
         <roomNumber>205</roomNumber>
         <type>Phòng đôi</type>
-        <price>450000</price>
+        <price>450000.0</price>
         <description>Phòng đôi có tủ quần áo lớn và bàn trang điểm</description>
     </Room>
-
-    <!-- Nhóm 3: 5 Phòng gia đình -->
     <Room>
         <roomId>R011</roomId>
         <roomNumber>301</roomNumber>
         <type>Phòng gia đình</type>
-        <price>600000</price>
+        <price>600000.0</price>
         <description>Phòng gia đình có 2 giường đôi và khu vực tiếp khách</description>
     </Room>
     <Room>
         <roomId>R012</roomId>
         <roomNumber>302</roomNumber>
         <type>Phòng gia đình</type>
-        <price>600000</price>
+        <price>600000.0</price>
         <description>Phòng gia đình rộng rãi, có bàn ăn nhỏ</description>
     </Room>
     <Room>
         <roomId>R013</roomId>
         <roomNumber>303</roomNumber>
         <type>Phòng gia đình</type>
-        <price>600000</price>
+        <price>600000.0</price>
         <description>Phòng gia đình thiết kế mở, tiện nghi</description>
     </Room>
     <Room>
         <roomId>R014</roomId>
         <roomNumber>304</roomNumber>
         <type>Phòng gia đình</type>
-        <price>600000</price>
+        <price>600000.0</price>
         <description>Phòng gia đình có tivi lớn và tủ lạnh mini</description>
     </Room>
     <Room>
         <roomId>R015</roomId>
         <roomNumber>305</roomNumber>
         <type>Phòng gia đình</type>
-        <price>600000</price>
+        <price>600000.0</price>
         <description>Phòng gia đình gần khu vui chơi trẻ em</description>
     </Room>
-
-    <!-- Nhóm 4: 5 Phòng đặc biệt -->
     <Room>
         <roomId>R016</roomId>
         <roomNumber>401</roomNumber>
         <type>Phòng đặc biệt</type>
-        <price>800000</price>
+        <price>800000.0</price>
         <description>Phòng VIP với nội thất cao cấp và bồn tắm lớn</description>
     </Room>
     <Room>
         <roomId>R017</roomId>
         <roomNumber>402</roomNumber>
         <type>Phòng đặc biệt</type>
-        <price>800000</price>
+        <price>800000.0</price>
         <description>Phòng VIP có ban công nhìn ra biển</description>
     </Room>
     <Room>
         <roomId>R018</roomId>
         <roomNumber>403</roomNumber>
         <type>Phòng đặc biệt</type>
-        <price>800000</price>
+        <price>800000.0</price>
         <description>Phòng đặc biệt có khu làm việc riêng</description>
     </Room>
     <Room>
         <roomId>R019</roomId>
         <roomNumber>404</roomNumber>
         <type>Phòng đặc biệt</type>
-        <price>800000</price>
+        <price>8000000.0</price>
         <description>Phòng đặc biệt với cửa kính toàn cảnh</description>
     </Room>
     <Room>
         <roomId>R020</roomId>
         <roomNumber>405</roomNumber>
         <type>Phòng đặc biệt</type>
-        <price>800000</price>
+        <price>800000.0</price>
         <description>Phòng đặc biệt có minibar và máy pha cà phê</description>
     </Room>
 </Rooms>

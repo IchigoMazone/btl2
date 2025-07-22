@@ -262,6 +262,39 @@ public class BookingService {
     }
 
     // Liệt kê danh sách khách đang lưu trú với số điện thoại và email đại diện
+//    public static void listCurrentGuests(LocalDateTime currentTime, String filePath) {
+//        BookingXML bookingXML = FileUtils.readFromFile(filePath, BookingXML.class);
+//        if (bookingXML == null || bookingXML.getBookings() == null) {
+//            System.out.println("Không có dữ liệu booking.");
+//            return;
+//        }
+//
+//        List<Booking> currentBookings = bookingXML.getBookings().stream()
+//                .filter(b -> !b.getCheckIn().isAfter(currentTime) && !b.getCheckOut().isBefore(currentTime))
+//                .toList();
+//
+//        if (currentBookings.isEmpty()) {
+//            System.out.println("Không có khách nào đang lưu trú vào thời điểm " + currentTime);
+//            return;
+//        }
+//
+//        System.out.println("Danh sách khách đang lưu trú tại " + currentTime + ":");
+//        for (Booking booking : currentBookings) {
+//            String phone = booking.getPhone();
+//            String email = booking.getEmail();
+//
+//            List<Person> persons = booking.getPersons();
+//            for (Person person : persons) {
+//                System.out.println("- " + person.getFullName()
+//                        + " | SĐT đại diện: " + phone
+//                        + " | Email đại diện: " + email
+//                        + " | Phòng: " + booking.getRoomId()
+//                        + " | Check-in: " + booking.getCheckIn()
+//                        + " | Check-out: " + booking.getCheckOut());
+//            }
+//        }
+//    }
+
     public static void listCurrentGuests(LocalDateTime currentTime, String filePath) {
         BookingXML bookingXML = FileUtils.readFromFile(filePath, BookingXML.class);
         if (bookingXML == null || bookingXML.getBookings() == null) {
@@ -282,18 +315,26 @@ public class BookingService {
         for (Booking booking : currentBookings) {
             String phone = booking.getPhone();
             String email = booking.getEmail();
+            String account = booking.getUserName(); // ⚠️ Cần đảm bảo Booking có field này
 
             List<Person> persons = booking.getPersons();
             for (Person person : persons) {
-                System.out.println("- " + person.getName()
+                String documentType = person.getDocumentType();
+                String documentCode = person.getDocumentCode();
+
+                System.out.println("- " + person.getFullName()
+                        + " | Tài khoản: " + (account != null ? account : "Không có")
                         + " | SĐT đại diện: " + phone
                         + " | Email đại diện: " + email
+                        + " | Giấy tờ: " + documentType
+                        + " | Mã giấy tờ: " + (documentCode != null ? documentCode : "Không có")
                         + " | Phòng: " + booking.getRoomId()
                         + " | Check-in: " + booking.getCheckIn()
                         + " | Check-out: " + booking.getCheckOut());
             }
         }
     }
+
 
     // Kiểm tra trạng thái hoạt động của các phòng
     public static void checkBookingStatus(String bookingFilePath, String roomFilePath) {

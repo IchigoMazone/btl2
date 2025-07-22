@@ -818,8 +818,8 @@ public class R {
 
             StringBuilder danhSach = new StringBuilder();
             for (Person p : people) {
-                danhSach.append("- ").append(p.getName())
-                        .append(" [").append(p.getLoaiGiayTo()).append(": ").append(p.getMaGiayTo()).append("]\n");
+                danhSach.append("- ").append(p.getFullName())
+                        .append(" [").append(p.getDocumentType()).append(": ").append(p.getDocumentCode()).append("]\n");
             }
 
             String chiTiet = String.format("""
@@ -844,7 +844,7 @@ public class R {
                     Trạng thái: %s
                     """,
                     Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                    daiDien.getName(), daiDien.getMaGiayTo(),
+                    daiDien.getFullName(), daiDien.getDocumentCode(),
                     Objects.requireNonNullElse(r.getEmail(), "Không rõ"),
                     Objects.requireNonNullElse(r.getPhone(), "Không rõ"),
                     soNguoi, danhSach,
@@ -937,7 +937,7 @@ public class R {
                                 newBookingId,
                                 r.getRequestId(),
                                 Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                                daiDien.getName(),
+                                daiDien.getFullName(),
                                 Objects.requireNonNullElse(r.getEmail(), "Không rõ"),
                                 Objects.requireNonNullElse(r.getPhone(), "Không rõ"),
                                 Objects.requireNonNullElse(r.getRoomId(), "Không rõ"),
