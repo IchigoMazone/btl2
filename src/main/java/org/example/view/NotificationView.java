@@ -669,7 +669,7 @@ public class NotificationView {
 
             // Thêm nút "Yêu cầu hủy" cho thông báo "Đã được duyệt" nếu thời gian thông báo cách check-in 5 giờ
             if ("Đã được duyệt".equalsIgnoreCase(notification.getContent())) {
-                Booking booking = BookingService.getBookingById(notification.getBookingId());
+                Booking booking = BookingService.findBookingById(notification.getBookingId());
                 if (booking != null && booking.getCheckIn() != null) {
                     long hoursUntilCheckIn = ChronoUnit.HOURS.between(notification.getTime(), booking.getCheckIn());
                     if (hoursUntilCheckIn >= 5) {

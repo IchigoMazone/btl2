@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Notifications>
     <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQAC125</requestId>
+        <userName>husky123</userName>
+        <content>Yêu cầu duyệt</content>
+        <time>2025-07-22T21:20:17</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
         <bookingId>BOOKING_1753175044579</bookingId>
         <requestId>REQ0FDD9</requestId>
         <userName>husky123</userName>

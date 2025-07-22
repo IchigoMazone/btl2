@@ -69,13 +69,13 @@ public class BookingView {
         String[] columns = {
                 "Mã đơn", "Tài khoản", "Họ tên", "SĐT", "Gmail",
                 "Phòng", "Loại phòng", "Ngày đến", "Ngày đi",
-                "Trạng thái", "Ghi chú", "Dịch vụ kèm", "Tổng tiền"
+                "Trạng thái", "Tổng tiền"
         };
 
         Object[][] data = {
-                {"001", "user123", "Nguyễn A", "0901234567", "a@gmail.com", "P101", "Đơn", "12/07", "14/07", "Đã đặt", "Không", "Không", "2.000.000"},
-                {"002", "user456", "Trần B", "0902345678", "b@gmail.com", "P102", "Đôi", "13/07", "15/07", "Đã check-in", "Không", "Không", "3.500.000"},
-                {"003", "user789", "Lê C", "0903456789", "c@gmail.com", "P103", "Gia đình", "10/07", "12/07", "Đã check-out", "Không", "Không", "5.000.000"}
+                {"001", "user123", "Nguyễn A", "0901234567", "a@gmail.com", "P101", "Đơn", "12/07", "14/07", "Đã đặt", "2.000.000"},
+                {"002", "user456", "Trần B", "0902345678", "b@gmail.com", "P102", "Đôi", "13/07", "15/07", "Đã check-in", "3.500.000"},
+                {"003", "user789", "Lê C", "0903456789", "c@gmail.com", "P103", "Gia đình", "10/07", "12/07", "Đã check-in", "5.000.000"}
         };
 
         DefaultTableModel model = new DefaultTableModel(data, columns) {
@@ -98,7 +98,7 @@ public class BookingView {
         ((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer())
                 .setHorizontalAlignment(SwingConstants.CENTER);
 
-        int[] widths = {150, 150, 250, 150, 250, 100, 150, 100, 100, 150, 300, 300, 100};
+        int[] widths = {150, 150, 250, 150, 250, 100, 150, 100, 100, 150, 100};
         for (int i = 0; i < widths.length && i < table.getColumnCount(); i++) {
             TableColumn column = table.getColumnModel().getColumn(i);
             column.setPreferredWidth(widths[i]);
@@ -128,3 +128,4 @@ public class BookingView {
         return panel;
     }
 }
+

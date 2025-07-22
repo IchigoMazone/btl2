@@ -180,6 +180,70 @@ import java.util.List;
 public class BookingService {
     private static final String BOOKINGS_XML_PATH = "bookings.xml";
 
+    private static final String FILE_PATH = "bookings.xml";
+
+    public void addPerson(String bookingId, Person person) {
+        BookingXML bookingXML = FileUtils.readFromFile(FILE_PATH, BookingXML.class);
+        if (bookingXML == null || bookingXML.getBookings() == null) {
+            throw new RuntimeException("Không thể đọc dữ liệu booking.");
+        }
+
+        Booking booking = bookingXML.getBookings().stream()
+                .filter(b -> b.getBookingId().equals(bookingId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy bookingId: " + bookingId));
+
+        booking.getPersons().add(person);
+
+        FileUtils.writeToFile(FILE_PATH, bookingXML); // ⬅ Ghi file sau khi thêm
+    }
+
+    public void updatePerson(String bookingId, String oldDocumentCode, String oldFullName, Person updatedPerson) {
+        BookingXML bookingXML = FileUtils.readFromFile(FILE_PATH, BookingXML.class);
+        if (bookingXML == null || bookingXML.getBookings() == null) {
+            throw new RuntimeException("Không thể đọc dữ liệu booking.");
+        }
+
+        Booking booking = bookingXML.getBookings().stream()
+                .filter(b -> b.getBookingId().equals(bookingId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy bookingId: " + bookingId));
+
+        List<Person> persons = booking.getPersons();
+        for (int i = 0; i < persons.size(); i++) {
+            Person p = persons.get(i);
+            if (p.getDocumentCode().equals(oldDocumentCode) && p.getFullName().equals(oldFullName)) {
+                persons.set(i, updatedPerson);
+                FileUtils.writeToFile(FILE_PATH, bookingXML); // ⬅ Ghi file sau khi cập nhật
+                return;
+            }
+        }
+
+        throw new RuntimeException("Không tìm thấy người cần sửa.");
+    }
+
+    public void deletePerson(String bookingId, String documentCode, String fullName) {
+        BookingXML bookingXML = FileUtils.readFromFile(FILE_PATH, BookingXML.class);
+        if (bookingXML == null || bookingXML.getBookings() == null) {
+            throw new RuntimeException("Không thể đọc dữ liệu booking.");
+        }
+
+        Booking booking = bookingXML.getBookings().stream()
+                .filter(b -> b.getBookingId().equals(bookingId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy bookingId: " + bookingId));
+
+        boolean removed = booking.getPersons().removeIf(
+                p -> p.getDocumentCode().equals(documentCode) && p.getFullName().equals(fullName)
+        );
+
+        if (!removed) {
+            throw new RuntimeException("Không tìm thấy người cần xóa.");
+        }
+
+        FileUtils.writeToFile(FILE_PATH, bookingXML); // ⬅ Ghi file sau khi xóa
+    }
+
     // Tạo booking mới
     public static void createBooking(String filePath,
                                      String bookingId,
@@ -335,6 +399,39 @@ public class BookingService {
         }
     }
 
+    public void updateBooking(Booking updatedBooking) {
+        BookingXML bookingXML = FileUtils.readFromFile("bookings.xml", BookingXML.class);
+        if (bookingXML == null || bookingXML.getBookings() == null) {
+            System.out.println("Không có dữ liệu booking.");
+            return;
+        }
+
+        boolean updated = false;
+        for (int i = 0; i < bookingXML.getBookings().size(); i++) {
+            Booking booking = bookingXML.getBookings().get(i);
+            if (booking.getBookingId().equals(updatedBooking.getBookingId())) {
+                bookingXML.getBookings().set(i, updatedBooking);
+                updated = true;
+                break;
+            }
+        }
+
+        if (updated) {
+            FileUtils.writeToFile("bookings.xml", bookingXML);
+            System.out.println("Cập nhật booking thành công: " + updatedBooking.getBookingId());
+        } else {
+            System.out.println("Không tìm thấy booking với ID: " + updatedBooking.getBookingId());
+        }
+    }
+
+    public List<Booking> getAllBookings() {
+        BookingXML bookingXML = FileUtils.readFromFile("bookings.xml", BookingXML.class);
+        if (bookingXML == null || bookingXML.getBookings() == null) {
+            return new ArrayList<>();
+        }
+        return bookingXML.getBookings();
+    }
+
 
     // Kiểm tra trạng thái hoạt động của các phòng
     public static void checkBookingStatus(String bookingFilePath, String roomFilePath) {
@@ -368,7 +465,7 @@ public class BookingService {
     }
 
     // Lấy thông tin booking theo bookingId
-    public static Booking getBookingById(String bookingId) {
+    public static Booking findBookingById(String bookingId) {
         BookingXML bookingXML = FileUtils.readFromFile(BOOKINGS_XML_PATH, BookingXML.class);
         if (bookingXML == null || bookingXML.getBookings() == null) {
             return null;
