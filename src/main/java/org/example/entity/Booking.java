@@ -180,4 +180,10 @@ public class Booking {
         }
         history.add(new HistoryEntry(timestamp, status));
     }
+
+    // Trả về số lượng khách trong booking (dựa vào danh sách Person)
+    public int getNumberOfGuests() {
+        return persons != null ? persons.size() : 0;
+    }
+
 }

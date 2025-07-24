@@ -1,7 +1,10 @@
 package org.example.view;
 
+import org.example.service.RoomFinderService;
 import org.kordamp.ikonli.materialdesign.MaterialDesign;
 import org.kordamp.ikonli.swing.FontIcon;
+import org.example.entity.BookingXML;
+import org.example.utils.FileUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,10 +23,18 @@ public class StatisticalView {
         grid.setBackground(new Color(245, 245, 245));
         grid.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        grid.add(createStatCard(MaterialDesign.MDI_CALENDAR_RANGE, "Doanh thu tháng này", "72.300.000 VNĐ", new Color(0, 123, 255)));
-        grid.add(createStatCard(MaterialDesign.MDI_ACCOUNT_MULTIPLE, "Lượt khách tháng", "120", new Color(40, 167, 69)));
-        grid.add(createStatCard(MaterialDesign.MDI_CHART_LINE, "Tỉ lệ đặt phòng", "87%", new Color(255, 193, 7)));
-        grid.add(createStatCard(MaterialDesign.MDI_CHART_ARC, "Tỉ lệ công suất phòng", "91%", new Color(220, 53, 69)));
+        BookingXML bookingXML = FileUtils.readFromFile("bookings.xml", BookingXML.class);
+        int luotKhach = RoomFinderService.getTotalMonthlyCustomers(bookingXML);
+
+        String doanhThu = RoomFinderService.getFormattedMonthlyRevenue(bookingXML);
+        String luotKhachx = String.valueOf(luotKhach);
+        String totalGuests = RoomFinderService.getMonthlyCustomerCountFormatted(bookingXML);
+        String maxGuests = RoomFinderService.getMaxGuestCountInOneDay(bookingXML);
+
+        grid.add(createStatCard(MaterialDesign.MDI_CALENDAR_RANGE, "Doanh thu tháng này", doanhThu, new Color(0, 123, 255)));
+        grid.add(createStatCard(MaterialDesign.MDI_ACCOUNT_MULTIPLE, "Lượt khách tháng", luotKhachx, new Color(40, 167, 69)));
+        grid.add(createStatCard(MaterialDesign.MDI_CHART_LINE, "Tỉ lệ đặt phòng", totalGuests, new Color(255, 193, 7)));
+        grid.add(createStatCard(MaterialDesign.MDI_CHART_ARC, "Lượt khách cao nhất", maxGuests, new Color(220, 53, 69)));
 
         mainContent.add(grid, BorderLayout.CENTER);
 

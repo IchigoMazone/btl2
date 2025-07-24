@@ -1,35 +1,556 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Bookings>
     <Booking>
-        <bookingId>BK202507225968</bookingId>
-        <requestId>REQ0000X</requestId>
-        <userName>user38163753</userName>
-        <fullName>33</fullName>
-        <email>22</email>
-        <phone>Nga Nga</phone>
-        <roomId>R019</roomId>
-        <checkIn>2025-07-22T21:15:00</checkIn>
-        <checkOut>2025-07-23T10:00:00</checkOut>
-        <amount>8000000.0</amount>
-        <submittedAt>2025-07-22T21:15:05</submittedAt>
-        <status>Check-in</status>
+        <bookingId>BK1753368570153</bookingId>
+        <requestId>REQ21066</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R020</roomId>
+        <checkIn>2025-07-26T00:00:00</checkIn>
+        <checkOut>2025-07-27T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T21:49:30</submittedAt>
+        <status>Check-out</status>
         <Person>
-            <fullName>33</fullName>
-            <documentType>CCCD</documentType>
-            <documentCode>9999</documentCode>
-        </Person>
-        <Person>
-            <fullName>My My</fullName>
-            <documentType>CCCD</documentType>
-            <documentCode>3</documentCode>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode></documentCode>
         </Person>
         <History>
-            <timestamp>2025-07-22T21:15:05</timestamp>
+            <timestamp>2025-07-24T21:49:30</timestamp>
             <status>Đã tạo booking</status>
         </History>
         <History>
-            <timestamp>2025-07-22T21:15:05</timestamp>
+            <timestamp>2025-07-24T21:52:06</timestamp>
             <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:52:13</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK1753368467897</bookingId>
+        <requestId>REQ4D91D</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R017</roomId>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T21:47:47</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode></documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T21:47:47</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:55:47</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:55:50</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK1753368047893</bookingId>
+        <requestId>REQ47987</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R017</roomId>
+        <checkIn>2025-07-25T05:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T21:40:47</submittedAt>
+        <status>Đã bị hủy</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode></documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T21:40:47</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:41:49</timestamp>
+            <status>Đã bị hủy</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK1753367973091</bookingId>
+        <requestId>REQ05675</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R018</roomId>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T21:39:33</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T21:39:33</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:53:03</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:53:06</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK1753367823050</bookingId>
+        <requestId>REQ5D0A7</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R015</roomId>
+        <checkIn>2025-07-24T21:37:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>600000.0</amount>
+        <submittedAt>2025-07-24T21:37:03</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T21:37:03</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:37:21</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:56:41</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK1753361959109</bookingId>
+        <requestId>REQ59297</requestId>
+        <userName>nhat2112</userName>
+        <fullName>triasdas</fullName>
+        <email>qw23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R016</roomId>
+        <checkIn>2025-07-24T19:59:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T19:59:19</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>triasdas</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <Person>
+            <fullName>Z</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>2</documentCode>
+        </Person>
+        <Person>
+            <fullName>y</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>3</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T19:59:19</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T20:35:21</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:56:38</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK202507249101</bookingId>
+        <requestId>REQ0000X</requestId>
+        <userName>1</userName>
+        <fullName>4</fullName>
+        <email>3</email>
+        <phone>2</phone>
+        <roomId>R017</roomId>
+        <checkIn>2025-07-24T19:55:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T19:55:03</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>4</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>5</documentCode>
+        </Person>
+        <Person>
+            <fullName>6</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>7</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T19:55:03</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T19:55:04</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:56:34</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK202507248755</bookingId>
+        <requestId>REQ0000X</requestId>
+        <userName>5</userName>
+        <fullName>55</fullName>
+        <email>55</email>
+        <phone>55</phone>
+        <roomId>R017</roomId>
+        <checkIn>2025-07-24T19:35:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T19:35:00</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>55</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>6</documentCode>
+        </Person>
+        <Person>
+            <fullName>77</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>7</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T19:35:00</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T19:35:00</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T19:35:36</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK202507248065</bookingId>
+        <requestId>REQ0000X</requestId>
+        <userName>user02901699</userName>
+        <fullName>99</fullName>
+        <email>99</email>
+        <phone>99</phone>
+        <roomId>R018</roomId>
+        <checkIn>2025-07-24T19:34:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T19:34:03</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>99</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>99</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T19:34:03</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T19:34:03</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:55:55</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK1753360320295</bookingId>
+        <requestId>REQ06000</requestId>
+        <userName>nhat2112</userName>
+        <fullName>triasdas</fullName>
+        <email>qw23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R019</roomId>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>8000000.0</amount>
+        <submittedAt>2025-07-24T19:32:00</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>triasdas</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T19:32:00</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:52:59</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:55:28</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK1753359050611</bookingId>
+        <requestId>REQ9DD3B</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R020</roomId>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T19:10:50</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T19:10:50</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:49:21</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:52:10</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK202507244449</bookingId>
+        <requestId>REQ0000X</requestId>
+        <userName>user16462826</userName>
+        <fullName>3</fullName>
+        <email>2</email>
+        <phone>1</phone>
+        <roomId>R020</roomId>
+        <checkIn>2025-07-24T18:16:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T18:16:13</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>0123456789</documentCode>
+        </Person>
+        <Person>
+            <fullName>Nguyen Dieu Lynh</fullName>
+            <documentType>CCCD</documentType>
+            <documentCode>9876543210</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T18:16:13</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T18:16:13</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T18:18:34</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK202507242907</bookingId>
+        <requestId>REQ0000X</requestId>
+        <userName>user92728182</userName>
+        <fullName>4</fullName>
+        <email>3</email>
+        <phone>2</phone>
+        <roomId>R020</roomId>
+        <checkIn>2025-07-24T17:36:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T17:35:39</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>4</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>5</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T17:35:39</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T17:35:39</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T17:36:34</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK202507243364</bookingId>
+        <requestId>REQ0000X</requestId>
+        <userName>user47308931</userName>
+        <fullName>7</fullName>
+        <email>6</email>
+        <phone>5</phone>
+        <roomId>R020</roomId>
+        <checkIn>2025-07-24T17:27:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T17:26:59</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>7</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>8</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T17:26:59</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T17:26:59</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T17:28:43</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK202507247430</bookingId>
+        <requestId>REQ0000X</requestId>
+        <userName>user29930722</userName>
+        <fullName>3</fullName>
+        <email>2</email>
+        <phone>1</phone>
+        <roomId>R018</roomId>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T16:58:17</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>3</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>4</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T16:58:17</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T16:58:17</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T17:27:21</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK202507236432</bookingId>
+        <requestId>REQ0000X</requestId>
+        <userName>user60194421</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>A</email>
+        <phone>212312313123</phone>
+        <roomId>R018</roomId>
+        <checkIn>2025-07-23T19:28:00</checkIn>
+        <checkOut>2025-07-28T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-23T19:27:57</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <Person>
+            <fullName>Nguyen Dieu Lynh</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>61222007</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-23T19:27:57</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-23T19:27:57</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T16:00:08</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK175327356726</bookingId>
+        <requestId>REQAEB70</requestId>
+        <userName>nhat2112</userName>
+        <fullName>triasdas</fullName>
+        <email>qw23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R019</roomId>
+        <checkIn>2025-07-24T00:00:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>8000000.0</amount>
+        <submittedAt>2025-07-23T19:26:07</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>triasdas</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-23T19:26:07</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T15:14:13</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T15:27:13</timestamp>
+            <status>Check-out</status>
         </History>
     </Booking>
     <Booking>
@@ -44,7 +565,7 @@
         <checkOut>2025-07-24T00:00:00</checkOut>
         <amount>800000.0</amount>
         <submittedAt>2025-07-22T21:08:28</submittedAt>
-        <status>Check-in</status>
+        <status>Check-out</status>
         <Person>
             <fullName>9</fullName>
             <documentType>Mã định danh</documentType>
@@ -63,47 +584,9 @@
             <timestamp>2025-07-22T21:08:28</timestamp>
             <status>Check-in</status>
         </History>
-    </Booking>
-    <Booking>
-        <bookingId>BK202507223039</bookingId>
-        <requestId>REQ0000X</requestId>
-        <userName>user85541972</userName>
-        <fullName>3</fullName>
-        <email>2</email>
-        <phone>1</phone>
-        <roomId>R018</roomId>
-        <checkIn>2025-07-22T12:55:00</checkIn>
-        <checkOut>2025-07-23T10:00:00</checkOut>
-        <amount>800000.0</amount>
-        <submittedAt>2025-07-22T12:54:46</submittedAt>
-        <status>Check-in</status>
-        <Person>
-            <fullName>Trinh Nhu Nhat</fullName>
-            <documentType>Mã định danh</documentType>
-            <documentCode>1</documentCode>
-        </Person>
-        <Person>
-            <fullName>2</fullName>
-            <documentType>Mã định danh</documentType>
-            <documentCode>1</documentCode>
-        </Person>
-        <Person>
-            <fullName>1</fullName>
-            <documentType>Hộ chiếu</documentType>
-            <documentCode>1</documentCode>
-        </Person>
-        <Person>
-            <fullName>Nguyen Dieu Lynh</fullName>
-            <documentType>Hộ chiếu</documentType>
-            <documentCode>1</documentCode>
-        </Person>
         <History>
-            <timestamp>2025-07-22T12:54:46</timestamp>
-            <status>Đã tạo booking</status>
-        </History>
-        <History>
-            <timestamp>2025-07-22T12:54:47</timestamp>
-            <status>Check-in</status>
+            <timestamp>2025-07-24T16:54:21</timestamp>
+            <status>Check-out</status>
         </History>
     </Booking>
     <Booking>
@@ -118,7 +601,7 @@
         <checkOut>2025-07-24T00:00:00</checkOut>
         <amount>800000.0</amount>
         <submittedAt>2025-07-22T12:45:04</submittedAt>
-        <status>Check-in</status>
+        <status>Check-out</status>
         <Person>
             <fullName>Trinh Nhu Nhat</fullName>
             <documentType>Mã định danh</documentType>
@@ -132,32 +615,13 @@
             <timestamp>2025-07-22T12:45:04</timestamp>
             <status>Check-in</status>
         </History>
-    </Booking>
-    <Booking>
-        <bookingId>BOOKING_1753162403763</bookingId>
-        <requestId>REQ60DF5</requestId>
-        <userName>husky123</userName>
-        <fullName>Trinh Nhu Nhat</fullName>
-        <email>asd23@gmail.com</email>
-        <phone>0999999999</phone>
-        <roomId>R020</roomId>
-        <checkIn>2025-07-23T00:00:00</checkIn>
-        <checkOut>2025-07-30T00:00:00</checkOut>
-        <amount>800000.0</amount>
-        <submittedAt>2025-07-22T12:33:23</submittedAt>
-        <status>Đã bị hủy</status>
-        <Person>
-            <fullName>Trinh Nhu Nhat</fullName>
-            <documentType>CCCD</documentType>
-            <documentCode>1</documentCode>
-        </Person>
         <History>
-            <timestamp>2025-07-22T12:33:23</timestamp>
-            <status>Đã tạo booking</status>
+            <timestamp>2025-07-24T15:58:43</timestamp>
+            <status>Check-out</status>
         </History>
         <History>
-            <timestamp>2025-07-22T12:34:35</timestamp>
-            <status>Đã bị hủy</status>
+            <timestamp>2025-07-24T15:58:47</timestamp>
+            <status>Check-out</status>
         </History>
     </Booking>
 </Bookings>

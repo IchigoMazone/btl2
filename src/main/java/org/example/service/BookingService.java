@@ -475,4 +475,69 @@ public class BookingService {
                 .findFirst()
                 .orElse(null);
     }
+
+    public static int countActiveRooms(String bookingFilePath, String roomFilePath) {
+        BookingXML bookingXML = FileUtils.readFromFile(bookingFilePath, BookingXML.class);
+        RoomXML roomXML = FileUtils.readFromFile(roomFilePath, RoomXML.class);
+
+        if (roomXML == null || roomXML.getRooms() == null || roomXML.getRooms().isEmpty()) {
+            return 0;
+        }
+
+        List<Room> rooms = roomXML.getRooms();
+        List<Booking> bookings = bookingXML != null && bookingXML.getBookings() != null ? bookingXML.getBookings() : new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
+
+        int count = 0;
+        for (Room room : rooms) {
+            for (Booking booking : bookings) {
+                if (booking.getRoomId().equals(room.getRoomId())
+                        && "Check-in".equalsIgnoreCase(booking.getStatus())
+                        && !now.isBefore(booking.getCheckIn())
+                        && !now.isAfter(booking.getCheckOut())) {
+                    count++;
+                    break;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    public static int countEmptyRooms(String bookingFilePath, String roomFilePath) {
+        BookingXML bookingXML = FileUtils.readFromFile(bookingFilePath, BookingXML.class);
+        RoomXML roomXML = FileUtils.readFromFile(roomFilePath, RoomXML.class);
+
+        if (roomXML == null || roomXML.getRooms() == null) return 0;
+        List<Room> rooms = roomXML.getRooms();
+        List<Booking> bookings = bookingXML != null && bookingXML.getBookings() != null
+                ? bookingXML.getBookings()
+                : new ArrayList<>();
+
+        LocalDateTime now = LocalDateTime.now();
+        int count = 0;
+
+        for (Room room : rooms) {
+            String roomId = room.getRoomId().trim();
+            boolean isOccupied = false;
+
+            for (Booking booking : bookings) {
+                String bookedRoomId = booking.getRoomId().trim();
+
+                if (roomId.equalsIgnoreCase(bookedRoomId)
+                        && !"Check-in".equalsIgnoreCase(booking.getStatus())
+                        && !now.isBefore(booking.getCheckIn())
+                        && !now.isAfter(booking.getCheckOut())) {
+                    isOccupied = true;
+                    break;
+                }
+            }
+
+            if (!isOccupied) {
+                count++;
+            }
+        }
+
+        return count;
+    }
 }

@@ -1,39 +1,255 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Payments>
     <Payment>
+        <paymentId>PMT80E97</paymentId>
+        <bookingId>BK1753367823050</bookingId>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <userName>husky123</userName>
+        <room>R015</room>
+        <amount>600000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-24T21:37:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <paidAt>2025-07-24T21:56:41</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMTFF7B2</paymentId>
+        <bookingId>BK1753361959109</bookingId>
+        <fullName>triasdas</fullName>
+        <userName>nhat2112</userName>
+        <room>R016</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-24T19:59:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <paidAt>2025-07-24T21:56:38</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMTA78B7</paymentId>
+        <bookingId>BK202507249101</bookingId>
+        <fullName>4</fullName>
+        <userName>1</userName>
+        <room>R017</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-24T19:55:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <paidAt>2025-07-24T21:56:34</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMT3D30E</paymentId>
+        <bookingId>BK202507248065</bookingId>
+        <fullName>99</fullName>
+        <userName>user02901699</userName>
+        <room>R018</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-24T19:34:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <paidAt>2025-07-24T21:55:55</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMTDE17E</paymentId>
+        <bookingId>BK1753368467897</bookingId>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <userName>husky123</userName>
+        <room>R017</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <paidAt>2025-07-24T21:55:50</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMT635A6</paymentId>
+        <bookingId>BK1753360320295</bookingId>
+        <fullName>triasdas</fullName>
+        <userName>nhat2112</userName>
+        <room>R019</room>
+        <amount>8000000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <paidAt>2025-07-24T21:55:28</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMTED699</paymentId>
+        <bookingId>BK1753367973091</bookingId>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <userName>husky123</userName>
+        <room>R018</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <paidAt>2025-07-24T21:53:06</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMT08ED5</paymentId>
+        <bookingId>BK1753368570153</bookingId>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <userName>husky123</userName>
+        <room>R020</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-26T00:00:00</checkIn>
+        <checkOut>2025-07-27T00:00:00</checkOut>
+        <paidAt>2025-07-24T21:52:13</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMT4EF17</paymentId>
+        <bookingId>BK1753359050611</bookingId>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <userName>husky123</userName>
+        <room>R020</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <paidAt>2025-07-24T21:52:10</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMTACF28</paymentId>
+        <bookingId>BK202507248755</bookingId>
+        <fullName>55</fullName>
+        <userName>5</userName>
+        <room>R017</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-24T19:35:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <paidAt>2025-07-24T19:35:36</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMTE4C4B</paymentId>
+        <bookingId>BK202507244449</bookingId>
+        <fullName>3</fullName>
+        <userName>user16462826</userName>
+        <room>R020</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-24T18:16:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <paidAt>2025-07-24T18:18:35</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMTB2E31</paymentId>
+        <bookingId>BK202507242907</bookingId>
+        <fullName>4</fullName>
+        <userName>user92728182</userName>
+        <room>R020</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-24T17:36:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <paidAt>2025-07-24T17:36:34</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMTE549B</paymentId>
+        <bookingId>BK202507243364</bookingId>
+        <fullName>7</fullName>
+        <userName>user47308931</userName>
+        <room>R020</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-24T17:27:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <paidAt>2025-07-24T17:28:43</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMT73D68</paymentId>
+        <bookingId>BK202507247430</bookingId>
+        <fullName>3</fullName>
+        <userName>user29930722</userName>
+        <room>R018</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <paidAt>2025-07-24T17:27:21</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMTE5E4A</paymentId>
+        <bookingId>BK202507226444</bookingId>
+        <fullName>9</fullName>
+        <userName>user45472661</userName>
+        <room>R017</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-22T00:00:00</checkIn>
+        <checkOut>2025-07-24T00:00:00</checkOut>
+        <paidAt>2025-07-24T16:54:21</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMT84738</paymentId>
+        <bookingId>BK202507236432</bookingId>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <userName>user60194421</userName>
+        <room>R018</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-23T19:28:00</checkIn>
+        <checkOut>2025-07-28T00:00:00</checkOut>
+        <paidAt>2025-07-24T16:00:08</paidAt>
+    </Payment>
+    <Payment>
+        <paymentId>PMT76D9C</paymentId>
+        <bookingId>BK00001</bookingId>
+        <fullName>Nguyễn Văn A</fullName>
+        <userName>nguyenvana</userName>
+        <room>Phòng 101</room>
+        <amount>1500000.0</amount>
+        <method>Chuyển khoản</method>
+        <code>MB12345678</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-25T14:00:00</checkIn>
+        <checkOut>2025-07-28T12:00:00</checkOut>
+        <paidAt>2025-07-24T15:44:32</paidAt>
+    </Payment>
+    <Payment>
         <paymentId>PMTF7D81</paymentId>
         <bookingId>BK20250708</bookingId>
         <fullName>Nguyen Van A</fullName>
+        <userName>nhat2112</userName>
+        <room>R019</room>
         <amount>2500.0</amount>
-        <method>Credit Card</method>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
         <status>Đã thanh toán</status>
+        <checkIn>2025-07-24T00:00:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
         <paidAt>2025-07-13T18:06:44</paidAt>
-    </Payment>
-    <Payment>
-        <paymentId>PMTEC9AE</paymentId>
-        <bookingId>BK20250708</bookingId>
-        <fullName>Nguyen Van A</fullName>
-        <amount>2500.0</amount>
-        <method>Credit Card</method>
-        <status>Đã thanh toán</status>
-        <paidAt>2025-07-09T15:51:09</paidAt>
-    </Payment>
-    <Payment>
-        <paymentId>PMT1015E</paymentId>
-        <bookingId>BK20250708</bookingId>
-        <fullName>Nguyen Van A</fullName>
-        <amount>2500.0</amount>
-        <method>Credit Card</method>
-        <status>Đã thanh toán</status>
-        <paidAt>2025-07-09T15:50:50</paidAt>
-    </Payment>
-    <Payment>
-        <paymentId>PMT8BBC4</paymentId>
-        <bookingId>BK20250708</bookingId>
-        <fullName>Nguyen Van A</fullName>
-        <amount>2500.0</amount>
-        <method>Credit Card</method>
-        <status>Đã thanh toán</status>
-        <paidAt>2025-07-08T19:17:31</paidAt>
     </Payment>
 </Payments>

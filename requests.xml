@@ -1,6 +1,292 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Requests>
     <Request>
+        <requestId>REQ21066</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R020</roomId>
+        <checkIn>2025-07-26T00:00:00</checkIn>
+        <checkOut>2025-07-27T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T21:49:57</submittedAt>
+        <status>Gửi yêu cầu hủy</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode></documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T21:48:22</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:49:30</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:49:57</timestamp>
+            <status>Gửi yêu cầu hủy</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQ4D91D</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R017</roomId>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T21:47:47</submittedAt>
+        <status>Đã được duyệt</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode></documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T21:47:14</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:47:47</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQ47987</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R017</roomId>
+        <checkIn>2025-07-25T05:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T21:41:49</submittedAt>
+        <status>Đã bị hủy</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode></documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T21:40:33</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:40:47</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:41:09</timestamp>
+            <status>Gửi yêu cầu hủy</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:41:49</timestamp>
+            <status>Đã bị hủy</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQ05675</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R018</roomId>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T21:39:33</submittedAt>
+        <status>Đã được duyệt</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T21:39:05</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:39:33</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQ5D0A7</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R015</roomId>
+        <checkIn>2025-07-24T21:37:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>600000.0</amount>
+        <submittedAt>2025-07-24T21:37:03</submittedAt>
+        <status>Đã được duyệt</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T21:36:45</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:37:03</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQ74232</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R015</roomId>
+        <checkIn>2025-07-24T21:35:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>600000.0</amount>
+        <submittedAt>2025-07-24T21:35:19</submittedAt>
+        <status>Đã bị hủy</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T21:34:44</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T21:35:19</timestamp>
+            <status>Đã bị hủy</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQ59297</requestId>
+        <userName>nhat2112</userName>
+        <fullName>triasdas</fullName>
+        <email>qw23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R016</roomId>
+        <checkIn>2025-07-24T19:59:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T19:59:19</submittedAt>
+        <status>Đã được duyệt</status>
+        <Person>
+            <fullName>triasdas</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <Person>
+            <fullName>Z</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>2</documentCode>
+        </Person>
+        <Person>
+            <fullName>y</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>3</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T19:58:38</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T19:59:19</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQ06000</requestId>
+        <userName>nhat2112</userName>
+        <fullName>triasdas</fullName>
+        <email>qw23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R019</roomId>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>8000000.0</amount>
+        <submittedAt>2025-07-24T19:32:00</submittedAt>
+        <status>Đã được duyệt</status>
+        <Person>
+            <fullName>triasdas</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T19:31:32</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T19:31:52</timestamp>
+            <status>Đã đọc</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T19:32:00</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQ9DD3B</requestId>
+        <userName>husky123</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>asd23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R020</roomId>
+        <checkIn>2025-07-25T00:00:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-24T19:10:50</submittedAt>
+        <status>Đã được duyệt</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-24T19:10:28</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-24T19:10:50</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>REQAEB70</requestId>
+        <userName>nhat2112</userName>
+        <fullName>triasdas</fullName>
+        <email>qw23@gmail.com</email>
+        <phone>0999999999</phone>
+        <roomId>R019</roomId>
+        <checkIn>2025-07-24T00:00:00</checkIn>
+        <checkOut>2025-07-25T00:00:00</checkOut>
+        <amount>8000000.0</amount>
+        <submittedAt>2025-07-23T19:26:07</submittedAt>
+        <status>Đã được duyệt</status>
+        <Person>
+            <fullName>triasdas</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-23T19:25:46</timestamp>
+            <status>Gửi yêu cầu</status>
+        </History>
+        <History>
+            <timestamp>2025-07-23T19:26:07</timestamp>
+            <status>Đã được duyệt</status>
+        </History>
+    </Request>
+    <Request>
         <requestId>REQAC125</requestId>
         <userName>husky123</userName>
         <fullName>Trinh Nhu Nhat</fullName>
@@ -882,6 +1168,15 @@
         <History>
             <timestamp>2025-07-18T13:42:06</timestamp>
             <status>Đã từ chối</status>
+        </History>
+    </Request>
+    <Request>
+        <requestId>BOOKING_1753162403763</requestId>
+        <amount>0.0</amount>
+        <status>Check-in</status>
+        <History>
+            <timestamp>2025-07-23T20:04:56</timestamp>
+            <status>Check-in</status>
         </History>
     </Request>
 </Requests>

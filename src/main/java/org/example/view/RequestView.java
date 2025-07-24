@@ -553,7 +553,7 @@ public class RequestView {
         }
 
         private String generateBookingId() {
-            return "BOOKING_" + System.currentTimeMillis();
+            return "BK" + System.currentTimeMillis();
         }
     }
 
