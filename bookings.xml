@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Bookings>
     <Booking>
+        <bookingId>BK2025072554</bookingId>
+        <requestId>REQ0000X</requestId>
+        <userName>user08138880</userName>
+        <fullName>3</fullName>
+        <email>2</email>
+        <phone>1</phone>
+        <roomId>R019</roomId>
+        <checkIn>2025-07-25T21:52:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>8000.0</amount>
+        <submittedAt>2025-07-25T21:51:57</submittedAt>
+        <status>Check-in</status>
+        <Person>
+            <fullName>3</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>4</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-25T21:51:57</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-25T21:51:57</timestamp>
+            <status>Check-in</status>
+        </History>
+    </Booking>
+    <Booking>
+        <bookingId>BK1753455041295</bookingId>
+        <requestId>REQ5D5B2</requestId>
+        <userName>nhattrinh2702</userName>
+        <fullName>Trinh Nhu Nhat</fullName>
+        <email>nhattrinh2702@gmail.com</email>
+        <phone>0389927069</phone>
+        <roomId>R020</roomId>
+        <checkIn>2025-07-26T00:00:00</checkIn>
+        <checkOut>2025-07-27T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-25T21:50:41</submittedAt>
+        <status>Check-in</status>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>1</documentCode>
+        </Person>
+        <Person>
+            <fullName>Trinh Nhu Nhat</fullName>
+            <documentType>Mã định danh</documentType>
+            <documentCode>2</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-25T21:50:41</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-25T21:51:01</timestamp>
+            <status>Check-in</status>
+        </History>
+    </Booking>
+    <Booking>
         <bookingId>BK202507259954</bookingId>
         <requestId>REQ0000X</requestId>
         <userName>user56251550</userName>

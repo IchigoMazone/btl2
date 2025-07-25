@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Notifications>
     <Notification>
+        <bookingId>BK1753455041295</bookingId>
+        <requestId>REQ5D5B2</requestId>
+        <userName>nhattrinh2702</userName>
+        <content>Đã được duyệt</content>
+        <time>2025-07-25T21:50:41</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQ5D5B2</requestId>
+        <userName>nhattrinh2702</userName>
+        <content>Yêu cầu duyệt</content>
+        <time>2025-07-25T21:49:49</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
         <bookingId>BK00000001</bookingId>
         <requestId>REQAC125</requestId>
         <userName>husky123</userName>
