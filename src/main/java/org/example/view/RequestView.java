@@ -1,29 +1,57 @@
+//
 //package org.example.view;
+//
+//import com.formdev.flatlaf.FlatLightLaf;
+//import org.example.entity.Notification;
+//import org.example.entity.NotificationXML;
+//import org.example.entity.Person;
+//import org.example.entity.Request;
+//import org.example.entity.RequestXML;
+//import org.example.service.RequestService;
+//import org.example.service.BookingService;
+//import org.example.service.NotificationService;
+//import org.example.utils.FileUtils;
 //
 //import javax.swing.*;
 //import javax.swing.table.DefaultTableModel;
 //import javax.swing.table.TableCellRenderer;
 //import java.awt.*;
+//import java.time.format.DateTimeFormatter;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.Objects;
 //
 //public class RequestView {
+//    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
+//    private static final DateTimeFormatter DETAILED_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//    private static final String XML_PATH = "requests.xml";
+//    private static final String BOOKINGS_XML_PATH = "bookings.xml";
+//    private static final String NOTIFICATIONS_XML_PATH = "notifications.xml";
+//    private static final String[] TABLE_COLUMNS = {"Thông báo"};
+//    private static final String NOTIFICATION_TITLE = "Thông báo đặt phòng mới";
+//    private static final String ERROR_MESSAGE = "Không thể đọc dữ liệu yêu cầu!";
 //
 //    public static JPanel createNotificationPanel() {
-//        Color backgroundColor = UIManager.getColor("Panel.background");
-//
-//        JPanel container = new JPanel();
-//        container.setLayout(new BorderLayout(10, 10));
+//        JPanel container = new JPanel(new BorderLayout(10, 10));
 //        container.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 //        container.setBackground(Color.WHITE);
 //
-//        String[] columns = {"Thông báo"};
-//        Object[][] data = {
-//                {" Nguyễn Văn A đã đặt phòng lúc 14:20"},
-//                {" Trần Thị B đã huỷ đặt phòng lúc 15:05"},
-//                {" Lê Văn C đã đặt phòng lúc 16:30"},
-//        };
+//        RequestXML requestXML = FileUtils.readFromFile(XML_PATH, RequestXML.class);
+//        if (requestXML == null) {
+//            container.add(new JLabel(ERROR_MESSAGE), BorderLayout.CENTER);
+//            return container;
+//        }
 //
-//        DefaultTableModel model = new DefaultTableModel(data, columns) {
-//            public boolean isCellEditable(int row, int col) {
+//        List<Request> allRequests = requestXML.getRequests();
+//        List<Request> filtered = new ArrayList<>(allRequests.stream()
+//                .filter(r -> "Gửi yêu cầu".equalsIgnoreCase(r.getStatus()) ||
+//                        "Đã đọc".equalsIgnoreCase(r.getStatus()) ||
+//                        "Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus()))
+//                .toList());
+//
+//        DefaultTableModel model = new DefaultTableModel(TABLE_COLUMNS, 0) {
+//            @Override
+//            public boolean isCellEditable(int row, int column) {
 //                return true;
 //            }
 //        };
@@ -31,15 +59,39 @@
 //        JTable table = new JTable(model);
 //        table.setRowHeight(38);
 //        table.getTableHeader().setReorderingAllowed(false);
+//        table.setDefaultRenderer(Object.class, new ButtonLikeRenderer());
 //
-//        table.getColumnModel().getColumn(0).setCellRenderer(new ButtonLikeRenderer());
-//        table.getColumnModel().getColumn(0).setCellEditor(new ButtonLikeEditor(new JCheckBox(), model));
+//        loadTableData(filtered, model);
+//
+//        table.getColumnModel().getColumn(0).setCellEditor(
+//                new ButtonLikeEditor(new JCheckBox(), model, filtered, table)
+//        );
 //
 //        JScrollPane scrollPane = new JScrollPane(table);
-//        scrollPane.setBorder(BorderFactory.createTitledBorder("Thông báo hệ thống"));
+//        scrollPane.setBorder(BorderFactory.createTitledBorder(NOTIFICATION_TITLE));
 //
 //        container.add(scrollPane, BorderLayout.CENTER);
 //        return container;
+//    }
+//
+//    private static void loadTableData(List<Request> requests, DefaultTableModel model) {
+//        model.setRowCount(0);
+//        for (Request r : requests) {
+//            String msg;
+//            if ("Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus())) {
+//                msg = String.format(" %s gửi yêu cầu hủy phòng lúc %s",
+//                        Objects.requireNonNullElse(r.getRequestId(), "Không rõ"),
+//                        r.getSubmittedAt().format(DATE_TIME_FORMATTER));
+//            } else {
+//                msg = String.format(" %s đã gửi yêu cầu đặt phòng lúc %s",
+//                        Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+//                        r.getSubmittedAt().format(DATE_TIME_FORMATTER));
+//                if ("Đã đọc".equalsIgnoreCase(r.getStatus())) {
+//                    msg += " [Đã đọc]";
+//                }
+//            }
+//            model.addRow(new Object[]{msg});
+//        }
 //    }
 //
 //    static class ButtonLikeRenderer extends JButton implements TableCellRenderer {
@@ -47,113 +99,263 @@
 //            styleButton(this);
 //        }
 //
-//        public Component getTableCellRendererComponent(JTable table, Object value,
-//                                                       boolean isSelected, boolean hasFocus,
-//                                                       int row, int column) {
+//        @Override
+//        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+//                                                       boolean hasFocus, int row, int column) {
 //            setText(value == null ? "" : value.toString());
-//
-//            // Nếu là đã đọc thì đổi màu text xám
-//            if (value != null && value.toString().contains("[Đã đọc]")) {
-//                setForeground(Color.GRAY);
-//            } else {
-//                setForeground(new Color(33, 99, 255));
-//            }
-//
+//            setForeground(value != null && value.toString().contains("[Đã đọc]")
+//                    ? Color.GRAY : new Color(33, 99, 255));
 //            return this;
 //        }
 //    }
 //
 //    static class ButtonLikeEditor extends DefaultCellEditor {
 //        private final JButton button;
-//        private int selectedRow;
 //        private final DefaultTableModel model;
+//        private final List<Request> requests;
+//        private final JTable table;
+//        private int selectedRow;
+//        private String currentValue;
 //
-//        public ButtonLikeEditor(JCheckBox checkBox, DefaultTableModel model) {
+//        public ButtonLikeEditor(JCheckBox checkBox, DefaultTableModel model, List<Request> requests, JTable table) {
 //            super(checkBox);
 //            this.model = model;
+//            this.requests = requests;
+//            this.table = table;
+//
 //            button = new JButton();
 //            styleButton(button);
 //
 //            button.addActionListener(e -> {
-//                fireEditingStopped();
-//                showNotificationDialog(selectedRow);
+//                if (selectedRow >= 0 && selectedRow < requests.size()) {
+//                    if (table.isEditing()) {
+//                        table.getCellEditor().stopCellEditing();
+//                    }
+//                    Request r = requests.get(selectedRow);
+//                    showDetailDialog(r);
+//                }
 //            });
 //        }
 //
-//        public Component getTableCellEditorComponent(JTable table, Object value,
-//                                                     boolean isSelected, int row, int column) {
+//        @Override
+//        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 //            selectedRow = row;
-//            button.setText(value == null ? "" : value.toString());
+//            currentValue = value == null ? "" : value.toString();
+//            button.setText(currentValue);
+//            button.setForeground(currentValue.contains("[Đã đọc]") ? Color.GRAY : new Color(33, 99, 255));
 //            return button;
 //        }
 //
+//        @Override
 //        public Object getCellEditorValue() {
-//            return button.getText();
+//            return currentValue;
 //        }
 //
-//        private void showNotificationDialog(int row) {
-//            String message = (String) model.getValueAt(row, 0);
+//        private void reloadTable() {
+//            RequestXML updatedXML = FileUtils.readFromFile(XML_PATH, RequestXML.class);
+//            if (updatedXML == null) {
+//                JOptionPane.showMessageDialog(null, ERROR_MESSAGE, "Lỗi", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
+//            List<Request> updated = new ArrayList<>(updatedXML.getRequests().stream()
+//                    .filter(r -> "Gửi yêu cầu".equalsIgnoreCase(r.getStatus()) ||
+//                            "Đã đọc".equalsIgnoreCase(r.getStatus()) ||
+//                            "Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus()))
+//                    .toList());
+//            requests.clear();
+//            requests.addAll(updated);
+//            loadTableData(requests, model);
+//        }
 //
-//            JDialog dialog = new JDialog((Frame) null, "Chi tiết thông báo", true);
-//            dialog.setSize(400, 240);
-//            dialog.setLocationRelativeTo(null);
-//            dialog.setLayout(new BorderLayout(10, 10));
+//        private String getBookingIdForCancelRequest(String requestId) {
+//            NotificationXML notificationXML = FileUtils.readFromFile(NOTIFICATIONS_XML_PATH, NotificationXML.class);
+//            if (notificationXML == null || notificationXML.getNotifications() == null) {
+//                return null;
+//            }
+//            return notificationXML.getNotifications().stream()
+//                    .filter(n -> "Đã được duyệt".equalsIgnoreCase(n.getContent()) &&
+//                            n.getRequestId().equals(requestId))
+//                    .map(Notification::getBookingId)
+//                    .findFirst()
+//                    .orElse(null);
+//        }
+//
+//        private void showDetailDialog(Request r) {
+//            List<Person> people = r.getPersons() != null ? r.getPersons() : new ArrayList<>();
+//            Person daiDien = people.isEmpty() ? new Person("Không rõ", "", "") : people.get(0);
+//            int soNguoi = people.size();
+//
+//            StringBuilder danhSach = new StringBuilder();
+//            for (Person p : people) {
+//                danhSach.append("- ").append(p.getFullName())
+//                        .append(" [").append(p.getDocumentType()).append(": ").append(p.getDocumentCode()).append("]\n");
+//            }
+//
+//            String chiTiet = String.format("""
+//                    THÔNG TIN ĐẶT PHÒNG
+//
+//                    Người dùng: %s
+//                    Người đại diện: %s
+//                    CCCD: %s
+//                    Gmail: %s
+//                    SĐT: %s
+//
+//                    Số người: %d
+//
+//                    Danh sách khách:
+//                    %s
+//                    Phòng: %s
+//                    Giá: %,.0f VND
+//
+//                    Check-in: %s
+//                    Check-out: %s
+//                    Tạo yêu cầu: %s
+//                    Trạng thái: %s
+//                    """,
+//                    Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+//                    daiDien.getFullName(), daiDien.getDocumentCode(),
+//                    Objects.requireNonNullElse(r.getEmail(), "Không rõ"),
+//                    Objects.requireNonNullElse(r.getPhone(), "Không rõ"),
+//                    soNguoi, danhSach,
+//                    Objects.requireNonNullElse(r.getRoomId(), "Không rõ"), r.getAmount(),
+//                    r.getCheckIn().format(DETAILED_DATE_FORMATTER),
+//                    r.getCheckOut().format(DETAILED_DATE_FORMATTER),
+//                    r.getSubmittedAt().format(DETAILED_DATE_FORMATTER),
+//                    r.getStatus()
+//            );
+//
+//            JTextArea textArea = new JTextArea(chiTiet);
+//            textArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+//            textArea.setEditable(false);
+//            textArea.setMargin(new Insets(10, 10, 10, 10));
 //
 //            JPanel content = new JPanel(new BorderLayout());
-//            content.setBorder(BorderFactory.createEmptyBorder(15, 20, 10, 20));
-//            JTextArea area = new JTextArea(message);
-//            area.setLineWrap(true);
-//            area.setWrapStyleWord(true);
-//            area.setEditable(false);
-//            area.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-//            area.setBackground(dialog.getBackground());
-//
-//            content.add(area, BorderLayout.CENTER);
+//            content.add(new JScrollPane(textArea), BorderLayout.CENTER);
 //
 //            JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 //            JButton btnQuayLai = new JButton("Quay lại");
 //            JButton btnCancel = new JButton("Hủy");
 //            JButton btnConfirm = new JButton("Xác nhận");
 //
-//            styleDialogButton(btnQuayLai, new Color(120, 120, 120));  // xám
-//            styleDialogButton(btnCancel, new Color(200, 55, 60));     // đỏ
-//            styleDialogButton(btnConfirm, new Color(0, 153, 76));     // xanh lá
+//            styleDialogButton(btnQuayLai, new Color(120, 120, 120)); // Xám
+//            styleDialogButton(btnCancel, new Color(200, 55, 60));    // Đỏ
+//            styleDialogButton(btnConfirm, new Color(0, 153, 76));    // Xanh lá
 //
 //            btnQuayLai.addActionListener(e -> {
-//                String current = (String) model.getValueAt(row, 0);
-//                if (!current.contains("[Đã đọc]")) {
-//                    model.setValueAt(current + " [Đã đọc]", row, 0);
+//                if (!"Đã đọc".equalsIgnoreCase(r.getStatus())) {
+//                    RequestService.updateStatus(r.getRequestId(), "Đã đọc");
+//                    r.setStatus("Đã đọc");
+//                    if (selectedRow < model.getRowCount()) {
+//                        String msg = String.format("%s đã gửi yêu cầu đặt phòng lúc %s [Đã đọc]",
+//                                Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+//                                r.getSubmittedAt().format(DATE_TIME_FORMATTER));
+//                        model.setValueAt(msg, selectedRow, 0);
+//                    }
 //                }
-//                dialog.dispose();
+//                SwingUtilities.getWindowAncestor(content).dispose();
+//                SwingUtilities.invokeLater(this::reloadTable);
 //            });
 //
 //            btnCancel.addActionListener(e -> {
-//                int choice = JOptionPane.showConfirmDialog(dialog,
-//                        "Bạn có chắc chắn muốn hủy thao tác không?",
+//                if (!"Gửi yêu cầu".equalsIgnoreCase(r.getStatus()) &&
+//                        !"Đã đọc".equalsIgnoreCase(r.getStatus()) &&
+//                        !"Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus())) {
+//                    JOptionPane.showMessageDialog(null, "Yêu cầu đã xử lý. Không thể hủy.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+//                    return;
+//                }
+//                int choice = JOptionPane.showConfirmDialog(content,
+//                        "Bạn có chắc chắn muốn hủy yêu cầu này?",
 //                        "Xác nhận hủy", JOptionPane.YES_NO_OPTION);
 //                if (choice == JOptionPane.YES_OPTION) {
-//                    JOptionPane.showMessageDialog(dialog, "Bạn đã hủy thao tác.");
-//                    dialog.dispose();
+//                    String bookingId = "BK00000001";
+//                    if ("Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus())) {
+//                        bookingId = getBookingIdForCancelRequest(r.getRequestId());
+//                        if (bookingId == null) {
+//                            JOptionPane.showMessageDialog(null, "Không tìm thấy booking liên quan để hủy.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//                            return;
+//                        }
+//                    }
+//                    RequestService.updateStatus(r.getRequestId(), "Đã bị hủy");
+//                    NotificationService.createNotification(
+//                            bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+//                            "Không được hủy", "Đã gửi"
+//                    );
+//                    JOptionPane.showMessageDialog(null, "Bạn đã hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//                    SwingUtilities.getWindowAncestor(content).dispose();
+//                    SwingUtilities.invokeLater(this::reloadTable);
 //                }
 //            });
 //
 //            btnConfirm.addActionListener(e -> {
-//                int choice = JOptionPane.showConfirmDialog(dialog,
-//                        "Bạn có chắc chắn muốn xác nhận thông báo này?",
+//                if (!"Gửi yêu cầu".equalsIgnoreCase(r.getStatus()) &&
+//                        !"Đã đọc".equalsIgnoreCase(r.getStatus()) &&
+//                        !"Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus())) {
+//                    JOptionPane.showMessageDialog(null, "Yêu cầu đã xử lý. Không thể xác nhận.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+//                    return;
+//                }
+//                int choice = JOptionPane.showConfirmDialog(content,
+//                        "Bạn có chắc chắn muốn xác nhận yêu cầu này?",
 //                        "Xác nhận thông báo", JOptionPane.YES_NO_OPTION);
 //                if (choice == JOptionPane.YES_OPTION) {
-//                    JOptionPane.showMessageDialog(dialog, "Bạn đã xác nhận thông báo.");
-//                    dialog.dispose();
+//                    if ("Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus())) {
+//                        String bookingId = getBookingIdForCancelRequest(r.getRequestId());
+//                        if (bookingId == null) {
+//                            JOptionPane.showMessageDialog(null, "Không tìm thấy booking liên quan để xác nhận hủy.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//                            return;
+//                        }
+//                        RequestService.updateStatus(r.getRequestId(), "Đã bị hủy");
+//                        BookingService.updateBookingStatus(BOOKINGS_XML_PATH, bookingId, "Đã bị hủy");
+//                        NotificationService.createNotification(
+//                                bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+//                                "Đã bị hủy", "Đã gửi"
+//                        );
+//                        JOptionPane.showMessageDialog(null, "Bạn đã xác nhận hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//                    } else {
+//                        String newBookingId = generateBookingId();
+//                        RequestService.updateStatus(r.getRequestId(), "Đã được duyệt");
+//                        try {
+//                            BookingService.createBooking(
+//                                    BOOKINGS_XML_PATH,
+//                                    newBookingId,
+//                                    r.getRequestId(),
+//                                    Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+//                                    daiDien.getFullName(),
+//                                    Objects.requireNonNullElse(r.getEmail(), "Không rõ"),
+//                                    Objects.requireNonNullElse(r.getPhone(), "Không rõ"),
+//                                    Objects.requireNonNullElse(r.getRoomId(), "Không rõ"),
+//                                    r.getCheckIn(),
+//                                    r.getCheckOut(),
+//                                    r.getAmount(),
+//                                    r.getPersons() != null ? r.getPersons() : new ArrayList<>()
+//                            );
+//                            NotificationService.createNotification(
+//                                    newBookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+//                                    "Đã được duyệt", "Đã gửi"
+//                            );
+//                            JOptionPane.showMessageDialog(null, "Bạn đã xác nhận yêu cầu và tạo booking thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//                        } catch (Exception ex) {
+//                            JOptionPane.showMessageDialog(null, "Lỗi khi tạo booking: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+//                        }
+//                    }
+//                    SwingUtilities.getWindowAncestor(content).dispose();
+//                    SwingUtilities.invokeLater(this::reloadTable);
 //                }
 //            });
 //
 //            buttons.add(btnQuayLai);
 //            buttons.add(btnCancel);
 //            buttons.add(btnConfirm);
+//            content.add(buttons, BorderLayout.SOUTH);
 //
-//            dialog.add(content, BorderLayout.CENTER);
-//            dialog.add(buttons, BorderLayout.SOUTH);
+//            JDialog dialog = new JDialog((Frame) null, "Chi tiết yêu cầu", true);
+//            dialog.setContentPane(content);
+//            dialog.setSize(550, 460);
+//            dialog.setLocationRelativeTo(null);
 //            dialog.setVisible(true);
+//        }
+//
+//        private String generateBookingId() {
+//            return "BK" + System.currentTimeMillis();
 //        }
 //    }
 //
@@ -164,23 +366,27 @@
 //        button.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 //        button.setForeground(new Color(33, 99, 255));
 //        button.setHorizontalAlignment(SwingConstants.LEFT);
-//        button.setMargin(new Insets(5, 10, 5, 10));
+//        button.setMargin(new Insets(5, 20, 5, 10)); // Tăng padding lề trái lên 20px
 //
 //        button.addMouseListener(new java.awt.event.MouseAdapter() {
+//            @Override
 //            public void mouseEntered(java.awt.event.MouseEvent evt) {
 //                button.setOpaque(true);
 //                button.setBackground(new Color(230, 240, 255));
 //            }
 //
+//            @Override
 //            public void mouseExited(java.awt.event.MouseEvent evt) {
 //                button.setOpaque(false);
 //                button.setBackground(null);
 //            }
 //
+//            @Override
 //            public void mousePressed(java.awt.event.MouseEvent evt) {
 //                button.setBackground(new Color(200, 220, 250));
 //            }
 //
+//            @Override
 //            public void mouseReleased(java.awt.event.MouseEvent evt) {
 //                button.setBackground(new Color(230, 240, 255));
 //            }
@@ -197,99 +403,96 @@
 //}
 
 
+
 package org.example.view;
 
-import com.formdev.flatlaf.FlatLightLaf;
-import org.example.entity.Notification;
-import org.example.entity.NotificationXML;
-import org.example.entity.Person;
+import org.example.controller.RequestController;
 import org.example.entity.Request;
-import org.example.entity.RequestXML;
-import org.example.service.RequestService;
-import org.example.service.BookingService;
-import org.example.service.NotificationService;
-import org.example.utils.FileUtils;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class RequestView {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
     private static final DateTimeFormatter DETAILED_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    private static final String XML_PATH = "requests.xml";
-    private static final String BOOKINGS_XML_PATH = "bookings.xml";
-    private static final String NOTIFICATIONS_XML_PATH = "notifications.xml";
     private static final String[] TABLE_COLUMNS = {"Thông báo"};
     private static final String NOTIFICATION_TITLE = "Thông báo đặt phòng mới";
     private static final String ERROR_MESSAGE = "Không thể đọc dữ liệu yêu cầu!";
+    private static DefaultTableModel tableModel;
+    private static JTable table;
 
-    public static JPanel createNotificationPanel() {
-        JPanel container = new JPanel(new BorderLayout(10, 10));
-        container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        container.setBackground(Color.WHITE);
-
-        RequestXML requestXML = FileUtils.readFromFile(XML_PATH, RequestXML.class);
-        if (requestXML == null) {
-            container.add(new JLabel(ERROR_MESSAGE), BorderLayout.CENTER);
-            return container;
-        }
-
-        List<Request> allRequests = requestXML.getRequests();
-        List<Request> filtered = new ArrayList<>(allRequests.stream()
-                .filter(r -> "Gửi yêu cầu".equalsIgnoreCase(r.getStatus()) ||
-                        "Đã đọc".equalsIgnoreCase(r.getStatus()) ||
-                        "Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus()))
-                .toList());
-
-        DefaultTableModel model = new DefaultTableModel(TABLE_COLUMNS, 0) {
+    // Initialize static fields
+    static {
+        tableModel = new DefaultTableModel(TABLE_COLUMNS, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return true;
             }
         };
+        table = new JTable(tableModel);
+    }
 
-        JTable table = new JTable(model);
+    public static JPanel createNotificationPanel() {
+        JPanel container = new JPanel(new BorderLayout(10, 10));
+        container.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        container.setBackground(Color.WHITE);
+
+        RequestController controller = new RequestController();
+
+        // Table setup
         table.setRowHeight(38);
         table.getTableHeader().setReorderingAllowed(false);
         table.setDefaultRenderer(Object.class, new ButtonLikeRenderer());
-
-        loadTableData(filtered, model);
-
         table.getColumnModel().getColumn(0).setCellEditor(
-                new ButtonLikeEditor(new JCheckBox(), model, filtered, table)
+                new ButtonLikeEditor(new JCheckBox(), tableModel, table, controller)
         );
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(BorderFactory.createTitledBorder(NOTIFICATION_TITLE));
 
+        // Load initial data
+        controller.loadTableData();
+
         container.add(scrollPane, BorderLayout.CENTER);
         return container;
     }
 
-    private static void loadTableData(List<Request> requests, DefaultTableModel model) {
-        model.setRowCount(0);
-        for (Request r : requests) {
-            String msg;
-            if ("Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus())) {
-                msg = String.format(" %s gửi yêu cầu hủy phòng lúc %s",
-                        Objects.requireNonNullElse(r.getRequestId(), "Không rõ"),
-                        r.getSubmittedAt().format(DATE_TIME_FORMATTER));
-            } else {
-                msg = String.format(" %s đã gửi yêu cầu đặt phòng lúc %s",
-                        Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                        r.getSubmittedAt().format(DATE_TIME_FORMATTER));
-                if ("Đã đọc".equalsIgnoreCase(r.getStatus())) {
-                    msg += " [Đã đọc]";
-                }
-            }
-            model.addRow(new Object[]{msg});
-        }
+    public static void showDetailDialog(Request request, RequestController controller, int selectedRow) {
+        String chiTiet = controller.formatRequestDetails(request);
+        JTextArea textArea = new JTextArea(chiTiet);
+        textArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        textArea.setEditable(false);
+        textArea.setMargin(new Insets(10, 10, 10, 10));
+
+        JPanel content = new JPanel(new BorderLayout());
+        content.add(new JScrollPane(textArea), BorderLayout.CENTER);
+
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton btnQuayLai = new JButton("Quay lại");
+        JButton btnCancel = new JButton("Hủy");
+        JButton btnConfirm = new JButton("Xác nhận");
+
+        styleDialogButton(btnQuayLai, new Color(120, 120, 120)); // Gray
+        styleDialogButton(btnCancel, new Color(200, 55, 60));    // Red
+        styleDialogButton(btnConfirm, new Color(0, 153, 76));    // Green
+
+        btnQuayLai.addActionListener(e -> controller.handleQuayLai(request, selectedRow, content));
+        btnCancel.addActionListener(e -> controller.handleCancel(request, selectedRow, content));
+        btnConfirm.addActionListener(e -> controller.handleConfirm(request, selectedRow, content));
+
+        buttons.add(btnQuayLai);
+        buttons.add(btnCancel);
+        buttons.add(btnConfirm);
+        content.add(buttons, BorderLayout.SOUTH);
+
+        JDialog dialog = new JDialog((Frame) null, "Chi tiết yêu cầu", true);
+        dialog.setContentPane(content);
+        dialog.setSize(550, 460);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }
 
     static class ButtonLikeRenderer extends JButton implements TableCellRenderer {
@@ -310,27 +513,26 @@ public class RequestView {
     static class ButtonLikeEditor extends DefaultCellEditor {
         private final JButton button;
         private final DefaultTableModel model;
-        private final List<Request> requests;
         private final JTable table;
+        private final RequestController controller;
         private int selectedRow;
         private String currentValue;
 
-        public ButtonLikeEditor(JCheckBox checkBox, DefaultTableModel model, List<Request> requests, JTable table) {
+        public ButtonLikeEditor(JCheckBox checkBox, DefaultTableModel model, JTable table, RequestController controller) {
             super(checkBox);
             this.model = model;
-            this.requests = requests;
             this.table = table;
+            this.controller = controller;
 
             button = new JButton();
             styleButton(button);
 
             button.addActionListener(e -> {
-                if (selectedRow >= 0 && selectedRow < requests.size()) {
+                if (selectedRow >= 0) {
                     if (table.isEditing()) {
                         table.getCellEditor().stopCellEditing();
                     }
-                    Request r = requests.get(selectedRow);
-                    showDetailDialog(r);
+                    controller.handleTableButtonClick(selectedRow);
                 }
             });
         }
@@ -348,213 +550,6 @@ public class RequestView {
         public Object getCellEditorValue() {
             return currentValue;
         }
-
-        private void reloadTable() {
-            RequestXML updatedXML = FileUtils.readFromFile(XML_PATH, RequestXML.class);
-            if (updatedXML == null) {
-                JOptionPane.showMessageDialog(null, ERROR_MESSAGE, "Lỗi", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            List<Request> updated = new ArrayList<>(updatedXML.getRequests().stream()
-                    .filter(r -> "Gửi yêu cầu".equalsIgnoreCase(r.getStatus()) ||
-                            "Đã đọc".equalsIgnoreCase(r.getStatus()) ||
-                            "Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus()))
-                    .toList());
-            requests.clear();
-            requests.addAll(updated);
-            loadTableData(requests, model);
-        }
-
-        private String getBookingIdForCancelRequest(String requestId) {
-            NotificationXML notificationXML = FileUtils.readFromFile(NOTIFICATIONS_XML_PATH, NotificationXML.class);
-            if (notificationXML == null || notificationXML.getNotifications() == null) {
-                return null;
-            }
-            return notificationXML.getNotifications().stream()
-                    .filter(n -> "Đã được duyệt".equalsIgnoreCase(n.getContent()) &&
-                            n.getRequestId().equals(requestId))
-                    .map(Notification::getBookingId)
-                    .findFirst()
-                    .orElse(null);
-        }
-
-        private void showDetailDialog(Request r) {
-            List<Person> people = r.getPersons() != null ? r.getPersons() : new ArrayList<>();
-            Person daiDien = people.isEmpty() ? new Person("Không rõ", "", "") : people.get(0);
-            int soNguoi = people.size();
-
-            StringBuilder danhSach = new StringBuilder();
-            for (Person p : people) {
-                danhSach.append("- ").append(p.getFullName())
-                        .append(" [").append(p.getDocumentType()).append(": ").append(p.getDocumentCode()).append("]\n");
-            }
-
-            String chiTiet = String.format("""
-                    THÔNG TIN ĐẶT PHÒNG
-
-                    Người dùng: %s
-                    Người đại diện: %s
-                    CCCD: %s
-                    Gmail: %s
-                    SĐT: %s
-
-                    Số người: %d
-
-                    Danh sách khách:
-                    %s
-                    Phòng: %s
-                    Giá: %,.0f VND
-
-                    Check-in: %s
-                    Check-out: %s
-                    Tạo yêu cầu: %s
-                    Trạng thái: %s
-                    """,
-                    Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                    daiDien.getFullName(), daiDien.getDocumentCode(),
-                    Objects.requireNonNullElse(r.getEmail(), "Không rõ"),
-                    Objects.requireNonNullElse(r.getPhone(), "Không rõ"),
-                    soNguoi, danhSach,
-                    Objects.requireNonNullElse(r.getRoomId(), "Không rõ"), r.getAmount(),
-                    r.getCheckIn().format(DETAILED_DATE_FORMATTER),
-                    r.getCheckOut().format(DETAILED_DATE_FORMATTER),
-                    r.getSubmittedAt().format(DETAILED_DATE_FORMATTER),
-                    r.getStatus()
-            );
-
-            JTextArea textArea = new JTextArea(chiTiet);
-            textArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-            textArea.setEditable(false);
-            textArea.setMargin(new Insets(10, 10, 10, 10));
-
-            JPanel content = new JPanel(new BorderLayout());
-            content.add(new JScrollPane(textArea), BorderLayout.CENTER);
-
-            JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-            JButton btnQuayLai = new JButton("Quay lại");
-            JButton btnCancel = new JButton("Hủy");
-            JButton btnConfirm = new JButton("Xác nhận");
-
-            styleDialogButton(btnQuayLai, new Color(120, 120, 120)); // Xám
-            styleDialogButton(btnCancel, new Color(200, 55, 60));    // Đỏ
-            styleDialogButton(btnConfirm, new Color(0, 153, 76));    // Xanh lá
-
-            btnQuayLai.addActionListener(e -> {
-                if (!"Đã đọc".equalsIgnoreCase(r.getStatus())) {
-                    RequestService.updateStatus(r.getRequestId(), "Đã đọc");
-                    r.setStatus("Đã đọc");
-                    if (selectedRow < model.getRowCount()) {
-                        String msg = String.format("%s đã gửi yêu cầu đặt phòng lúc %s [Đã đọc]",
-                                Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                                r.getSubmittedAt().format(DATE_TIME_FORMATTER));
-                        model.setValueAt(msg, selectedRow, 0);
-                    }
-                }
-                SwingUtilities.getWindowAncestor(content).dispose();
-                SwingUtilities.invokeLater(this::reloadTable);
-            });
-
-            btnCancel.addActionListener(e -> {
-                if (!"Gửi yêu cầu".equalsIgnoreCase(r.getStatus()) &&
-                        !"Đã đọc".equalsIgnoreCase(r.getStatus()) &&
-                        !"Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus())) {
-                    JOptionPane.showMessageDialog(null, "Yêu cầu đã xử lý. Không thể hủy.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-                int choice = JOptionPane.showConfirmDialog(content,
-                        "Bạn có chắc chắn muốn hủy yêu cầu này?",
-                        "Xác nhận hủy", JOptionPane.YES_NO_OPTION);
-                if (choice == JOptionPane.YES_OPTION) {
-                    String bookingId = "BK00000001";
-                    if ("Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus())) {
-                        bookingId = getBookingIdForCancelRequest(r.getRequestId());
-                        if (bookingId == null) {
-                            JOptionPane.showMessageDialog(null, "Không tìm thấy booking liên quan để hủy.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                    }
-                    RequestService.updateStatus(r.getRequestId(), "Đã bị hủy");
-                    NotificationService.createNotification(
-                            bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                            "Không được hủy", "Đã gửi"
-                    );
-                    JOptionPane.showMessageDialog(null, "Bạn đã hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    SwingUtilities.getWindowAncestor(content).dispose();
-                    SwingUtilities.invokeLater(this::reloadTable);
-                }
-            });
-
-            btnConfirm.addActionListener(e -> {
-                if (!"Gửi yêu cầu".equalsIgnoreCase(r.getStatus()) &&
-                        !"Đã đọc".equalsIgnoreCase(r.getStatus()) &&
-                        !"Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus())) {
-                    JOptionPane.showMessageDialog(null, "Yêu cầu đã xử lý. Không thể xác nhận.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-                int choice = JOptionPane.showConfirmDialog(content,
-                        "Bạn có chắc chắn muốn xác nhận yêu cầu này?",
-                        "Xác nhận thông báo", JOptionPane.YES_NO_OPTION);
-                if (choice == JOptionPane.YES_OPTION) {
-                    if ("Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus())) {
-                        String bookingId = getBookingIdForCancelRequest(r.getRequestId());
-                        if (bookingId == null) {
-                            JOptionPane.showMessageDialog(null, "Không tìm thấy booking liên quan để xác nhận hủy.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                        RequestService.updateStatus(r.getRequestId(), "Đã bị hủy");
-                        BookingService.updateBookingStatus(BOOKINGS_XML_PATH, bookingId, "Đã bị hủy");
-                        NotificationService.createNotification(
-                                bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                                "Đã bị hủy", "Đã gửi"
-                        );
-                        JOptionPane.showMessageDialog(null, "Bạn đã xác nhận hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        String newBookingId = generateBookingId();
-                        RequestService.updateStatus(r.getRequestId(), "Đã được duyệt");
-                        try {
-                            BookingService.createBooking(
-                                    BOOKINGS_XML_PATH,
-                                    newBookingId,
-                                    r.getRequestId(),
-                                    Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                                    daiDien.getFullName(),
-                                    Objects.requireNonNullElse(r.getEmail(), "Không rõ"),
-                                    Objects.requireNonNullElse(r.getPhone(), "Không rõ"),
-                                    Objects.requireNonNullElse(r.getRoomId(), "Không rõ"),
-                                    r.getCheckIn(),
-                                    r.getCheckOut(),
-                                    r.getAmount(),
-                                    r.getPersons() != null ? r.getPersons() : new ArrayList<>()
-                            );
-                            NotificationService.createNotification(
-                                    newBookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                                    "Đã được duyệt", "Đã gửi"
-                            );
-                            JOptionPane.showMessageDialog(null, "Bạn đã xác nhận yêu cầu và tạo booking thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null, "Lỗi khi tạo booking: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                    SwingUtilities.getWindowAncestor(content).dispose();
-                    SwingUtilities.invokeLater(this::reloadTable);
-                }
-            });
-
-            buttons.add(btnQuayLai);
-            buttons.add(btnCancel);
-            buttons.add(btnConfirm);
-            content.add(buttons, BorderLayout.SOUTH);
-
-            JDialog dialog = new JDialog((Frame) null, "Chi tiết yêu cầu", true);
-            dialog.setContentPane(content);
-            dialog.setSize(550, 460);
-            dialog.setLocationRelativeTo(null);
-            dialog.setVisible(true);
-        }
-
-        private String generateBookingId() {
-            return "BK" + System.currentTimeMillis();
-        }
     }
 
     private static void styleButton(JButton button) {
@@ -564,7 +559,7 @@ public class RequestView {
         button.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         button.setForeground(new Color(33, 99, 255));
         button.setHorizontalAlignment(SwingConstants.LEFT);
-        button.setMargin(new Insets(5, 20, 5, 10)); // Tăng padding lề trái lên 20px
+        button.setMargin(new Insets(5, 20, 5, 10));
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -597,5 +592,26 @@ public class RequestView {
         btn.setBackground(bgColor);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btn.setPreferredSize(new Dimension(110, 36));
+    }
+
+    // Getters for controller access
+    public static DefaultTableModel getTableModel() {
+        return tableModel;
+    }
+
+    public static JTable getTable() {
+        return table;
+    }
+
+    public static DateTimeFormatter getDateTimeFormatter() {
+        return DATE_TIME_FORMATTER;
+    }
+
+    public static DateTimeFormatter getDetailedDateFormatter() {
+        return DETAILED_DATE_FORMATTER;
+    }
+
+    public static String getErrorMessage() {
+        return ERROR_MESSAGE;
     }
 }

@@ -130,7 +130,7 @@
         <roomId>R019</roomId>
         <roomNumber>404</roomNumber>
         <type>Phòng đặc biệt</type>
-        <price>8000000.0</price>
+        <price>8000.0</price>
         <description>Phòng đặc biệt với cửa kính toàn cảnh</description>
     </Room>
     <Room>

@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Notifications>
     <Notification>
+        <bookingId>BK00000001</bookingId>
+        <requestId>REQAC125</requestId>
+        <userName>husky123</userName>
+        <content>Không được hủy</content>
+        <time>2025-07-25T20:30:13</time>
+        <status>Đã đọc</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK1753368570153</bookingId>
+        <requestId>REQ21066</requestId>
+        <userName>husky123</userName>
+        <content>Không được hủy</content>
+        <time>2025-07-25T00:09:06</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
         <bookingId>BK1753368570153</bookingId>
         <requestId>REQ21066</requestId>
         <userName>husky123</userName>

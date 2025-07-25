@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Bookings>
     <Booking>
+        <bookingId>BK202507259954</bookingId>
+        <requestId>REQ0000X</requestId>
+        <userName>user56251550</userName>
+        <fullName>3</fullName>
+        <email>2</email>
+        <phone>1</phone>
+        <roomId>R020</roomId>
+        <checkIn>2025-07-25T00:10:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <amount>800000.0</amount>
+        <submittedAt>2025-07-25T00:10:12</submittedAt>
+        <status>Check-out</status>
+        <Person>
+            <fullName>3</fullName>
+            <documentType>Không có</documentType>
+            <documentCode>4</documentCode>
+        </Person>
+        <History>
+            <timestamp>2025-07-25T00:10:12</timestamp>
+            <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-25T00:10:12</timestamp>
+            <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-25T19:03:58</timestamp>
+            <status>Check-out</status>
+        </History>
+    </Booking>
+    <Booking>
         <bookingId>BK1753368570153</bookingId>
         <requestId>REQ21066</requestId>
         <userName>husky123</userName>

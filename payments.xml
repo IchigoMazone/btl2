@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Payments>
     <Payment>
+        <paymentId>PMTD8CA4</paymentId>
+        <bookingId>BK202507259954</bookingId>
+        <fullName>3</fullName>
+        <userName>user56251550</userName>
+        <room>R020</room>
+        <amount>800000.0</amount>
+        <method>Tiền mặt</method>
+        <code>0000000X</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-25T00:10:00</checkIn>
+        <checkOut>2025-07-26T00:00:00</checkOut>
+        <paidAt>2025-07-25T19:03:58</paidAt>
+    </Payment>
+    <Payment>
         <paymentId>PMT80E97</paymentId>
         <bookingId>BK1753367823050</bookingId>
         <fullName>Trinh Nhu Nhat</fullName>

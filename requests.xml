@@ -10,8 +10,8 @@
         <checkIn>2025-07-26T00:00:00</checkIn>
         <checkOut>2025-07-27T00:00:00</checkOut>
         <amount>800000.0</amount>
-        <submittedAt>2025-07-24T21:49:57</submittedAt>
-        <status>Gửi yêu cầu hủy</status>
+        <submittedAt>2025-07-25T00:09:06</submittedAt>
+        <status>Đã bị hủy</status>
         <Person>
             <fullName>Trinh Nhu Nhat</fullName>
             <documentType>Không có</documentType>
@@ -28,6 +28,10 @@
         <History>
             <timestamp>2025-07-24T21:49:57</timestamp>
             <status>Gửi yêu cầu hủy</status>
+        </History>
+        <History>
+            <timestamp>2025-07-25T00:09:06</timestamp>
+            <status>Đã bị hủy</status>
         </History>
     </Request>
     <Request>
@@ -296,8 +300,8 @@
         <checkIn>2025-07-23T00:00:00</checkIn>
         <checkOut>2025-07-24T00:00:00</checkOut>
         <amount>800000.0</amount>
-        <submittedAt>2025-07-22T21:20:35</submittedAt>
-        <status>Đã đọc</status>
+        <submittedAt>2025-07-25T20:30:13</submittedAt>
+        <status>Đã bị hủy</status>
         <Person>
             <fullName>Trinh Nhu Nhat</fullName>
             <documentType>Không có</documentType>
@@ -310,6 +314,10 @@
         <History>
             <timestamp>2025-07-22T21:20:35</timestamp>
             <status>Đã đọc</status>
+        </History>
+        <History>
+            <timestamp>2025-07-25T20:30:13</timestamp>
+            <status>Đã bị hủy</status>
         </History>
     </Request>
     <Request>
