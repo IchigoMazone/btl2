@@ -1,6 +1,10 @@
 
 package org.example.view;
-
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import org.example.controller.RequestResetController;
+import org.example.controller.BookingResetController;
 import javax.swing.*;
 import java.awt.*;
 
@@ -32,6 +36,20 @@ public class MainFrameView extends JFrame {
         setSize(1200, 800);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        RequestResetController controller = new RequestResetController();
+        controller.updateExpiredRequests();
+        BookingResetController bookingResetController = new BookingResetController();
+        bookingResetController.updateAbsentBookings();
+
+        Timer timer = new Timer(60_000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.updateExpiredRequests();
+                bookingResetController.updateAbsentBookings();
+            }
+        });
+        timer.start();
 
         mainCardLayout = new CardLayout();
         mainPanel = new JPanel(mainCardLayout);

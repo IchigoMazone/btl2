@@ -89,10 +89,19 @@ public class NotificationView {
                 msg = String.format(" %s đã được đặt lúc %s",
                         n.getBookingId(), n.getTime().format(TIME_FORMATTER));
             } else if ("Đã bị hủy".equalsIgnoreCase(n.getContent()) && !n.getBookingId().equals("BK00000001")) {
-                msg = String.format(" %s đã được hủy lúc %s",
-                        n.getBookingId(), n.getTime().format(TIME_FORMATTER));
+                msg = String.format(" %s đã bị hủy lúc %s",
+                        n.getRequestId(), n.getTime().format(TIME_FORMATTER));
             } else if ("Không được hủy".equalsIgnoreCase(n.getContent())) {
                 msg = String.format(" %s không được hủy lúc %s",
+                        n.getBookingId(), n.getTime().format(TIME_FORMATTER));
+            } else if ("Check-out".equalsIgnoreCase(n.getContent())) {
+                msg = String.format(" %s đã check-out lúc %s",
+                        n.getBookingId(), n.getTime().format(TIME_FORMATTER));
+            } else if ("Vắng mặt".equalsIgnoreCase(n.getContent())) {
+                msg = String.format(" %s đã bị hủy do vắng mặt lúc %s",
+                        n.getBookingId(), n.getTime().format(TIME_FORMATTER));
+            } else if ("Đã thanh toán".equalsIgnoreCase(n.getContent())) {
+                msg = String.format(" %s đã được thanh toán lúc %s",
                         n.getBookingId(), n.getTime().format(TIME_FORMATTER));
             } else {
                 String id = n.getBookingId().equals("BK00000001") ? n.getRequestId() : n.getBookingId();
@@ -140,7 +149,7 @@ public class NotificationView {
             this.notifications = notifications;
             this.xmlPath = xmlPath;
             button = new JButton();
-            styleButton(button);
+            //styleButton(button);
 
             button.addActionListener(e -> {
                 fireEditingStopped();
@@ -188,7 +197,7 @@ public class NotificationView {
 
             JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
             JButton btnClose = new JButton("Đóng");
-            styleDialogButton(btnClose, new Color(100, 100, 100));
+            //styleDialogButton(btnClose, new Color(100, 100, 100));
 
             btnClose.addActionListener(e -> {
                 String current = (String) model.getValueAt(row, 0);
@@ -224,7 +233,7 @@ public class NotificationView {
                             .orElse(null);
                     if (request != null && ("Gửi yêu cầu".equalsIgnoreCase(request.getStatus()) || "Đã đọc".equalsIgnoreCase(request.getStatus()))) {
                         JButton btnCancel = new JButton("Hủy");
-                        styleDialogButton(btnCancel, new Color(255, 100, 100));
+                        //styleDialogButton(btnCancel, new Color(255, 100, 100));
                         btnCancel.addActionListener(e -> {
                             RequestService.updateStatus(notification.getRequestId(), "Đã từ chối");
                             NotificationService.createNotification(
@@ -251,12 +260,12 @@ public class NotificationView {
                 }
             }
 
-            // Thêm nút "Yêu cầu hủy" cho thông báo "Đã được duyệt" nếu thời gian thông báo cách check-in 5 giờ
+            // Thêm nút "Yêu cầu hủy" cho thông báo "Đã được duyệt" nếu thời gian thông báo cách check-in 2 giờ
             if ("Đã được duyệt".equalsIgnoreCase(notification.getContent())) {
                 Booking booking = BookingService.findBookingById(notification.getBookingId());
                 if (booking != null && booking.getCheckIn() != null) {
                     long hoursUntilCheckIn = ChronoUnit.HOURS.between(notification.getTime(), booking.getCheckIn());
-                    if (hoursUntilCheckIn >= 5) {
+                    if (hoursUntilCheckIn >= 2) {
                         RequestXML requestXML = FileUtils.readFromFile(REQUESTS_XML_PATH, RequestXML.class);
                         if (requestXML != null) {
                             Request request = requestXML.getRequests().stream()
@@ -268,7 +277,7 @@ public class NotificationView {
                                             "Gửi yêu cầu hủy".equalsIgnoreCase(n.getContent()));
                             if (!hasCancellationRequest) {
                                 JButton btnRequestCancel = new JButton("Yêu cầu hủy");
-                                styleDialogButton(btnRequestCancel, new Color(255, 165, 0));
+                                //styleDialogButton(btnRequestCancel, new Color(255, 165, 0));
                                 btnRequestCancel.addActionListener(e -> {
                                     RequestService.updateStatus(notification.getRequestId(), "Gửi yêu cầu hủy");
                                     NotificationService.createNotification(

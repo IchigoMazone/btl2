@@ -154,7 +154,7 @@ public class CustomerBookingView {
         });
 
         btnXacNhan.addActionListener(e -> {
-            int soNguoi = (int) cbSoNguoi.getSelectedItem() + 1;
+            int soNguoi = (int) cbSoNguoi.getSelectedItem();
 
             // Người đại diện là người đầu tiên, lấy CCCD từ tfMaChung
             String cccdNguoiDaiDien = tfMaChung.getText();
@@ -192,32 +192,33 @@ public class CustomerBookingView {
 
             String requestId = generateRequestId();
 
+
+
             String info = String.format("""
-THÔNG TIN ĐẶT PHÒNG
+    THÔNG TIN ĐẶT PHÒNG
 
-Người dùng: %s
-Người đại diện: %s
-CCCD: %s
-Gmail: %s
-SĐT: %s
+    Người dùng: %s
+    Người đại diện: %s
+    Gmail: %s
+    SĐT: %s
 
-Số người: %d
+    Số người: %d
 
-Danh sách khách:
-%s
-Phòng: %s
-Mô tả: %s
-Loại: %s
-Giá: %,.0f VND
+    Danh sách khách:
+    %s
 
-Check-in: %s
-Check-out: %s
-Tạo yêu cầu: %s
-Trạng thái: Đã gửi yêu cầu
-""",
+    Phòng: %s
+    Mô tả: %s
+    Loại: %s
+    Giá: %,.0f VND
+
+    Check-in: %s
+    Check-out: %s
+    Tạo yêu cầu: %s
+    Trạng thái: Đã gửi yêu cầu
+    """,
                     username,
                     hoTen,
-                    cccdNguoiDaiDien,
                     gmail,
                     sdt,
                     soNguoi,
@@ -231,17 +232,37 @@ Trạng thái: Đã gửi yêu cầu
                     thoiGianTao
             );
 
-            String[] options = {"Quay lại", "Xác nhận"};
+            JTextArea textArea = new JTextArea(info);
+            textArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            textArea.setEditable(false);
+            textArea.setMargin(new Insets(10, 10, 10, 10));
+            textArea.setLineWrap(true);
+            textArea.setWrapStyleWord(true);
+
+// Đặt JTextArea vào JScrollPane
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new Dimension(500, 400));
+
+// Tạo nội dung panel chứa nội dung cuộn
+            JPanel content = new JPanel(new BorderLayout());
+            content.add(scrollPane, BorderLayout.CENTER);
+
+// Tùy chọn nút
+            //Object[] options = {"Quay lại", "Xác nhận"};
+
+            Object[] options = {"Quay lại", "Xác nhận"};
+
             int result = JOptionPane.showOptionDialog(
                     mainFrame,
-                    info,
-                    "📋 Xác nhận đặt phòng",
+                    content,
+                    "Xác nhận đặt phòng",
                     JOptionPane.YES_NO_OPTION,
-                    JOptionPane.INFORMATION_MESSAGE,
+                    JOptionPane.PLAIN_MESSAGE,
                     null,
                     options,
-                    options[1]
+                    options[1] // mặc định là "Xác nhận"
             );
+
 
             if (result == 1) { // Xác nhận
                 // Tạo danh sách Person từ các trường nhập
@@ -286,7 +307,6 @@ Trạng thái: Đã gửi yêu cầu
                 mainFrame.setCustomerSelectedMenu("Trang chủ");
             }
         });
-
 
 
         btnPanel.add(btnQuayLai);

@@ -239,7 +239,7 @@ public class HistoryView {
 
         JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnClose = new JButton("Đóng");
-        styleDialogButton(btnClose, new Color(0, 120, 215));
+        //styleDialogButton(btnClose, new Color(0, 120, 215));
 
         btnClose.addActionListener(e -> {
             if (!readBookings.contains(bookingId)) {

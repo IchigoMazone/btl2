@@ -2,20 +2,21 @@
 package org.example.view;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import org.example.entity.Notification;
-import org.example.entity.NotificationXML;
-import org.example.entity.Person;
-import org.example.entity.Request;
-import org.example.entity.RequestXML;
+import org.example.entity.*;
 import org.example.service.RequestService;
 import org.example.service.BookingService;
 import org.example.service.NotificationService;
 import org.example.utils.FileUtils;
-
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class RequestView {
         }
 
         List<Request> allRequests = requestXML.getRequests();
+
         List<Request> filtered = new ArrayList<>(allRequests.stream()
                 .filter(r -> "Gửi yêu cầu".equalsIgnoreCase(r.getStatus()) ||
                         "Đã đọc".equalsIgnoreCase(r.getStatus()) ||
@@ -228,6 +230,7 @@ public class RequestView {
             textArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
             textArea.setEditable(false);
             textArea.setMargin(new Insets(10, 10, 10, 10));
+            textArea.setPreferredSize(new Dimension(500, 450));
 
             JPanel content = new JPanel(new BorderLayout());
             content.add(new JScrollPane(textArea), BorderLayout.CENTER);
@@ -237,9 +240,9 @@ public class RequestView {
             JButton btnCancel = new JButton("Hủy");
             JButton btnConfirm = new JButton("Xác nhận");
 
-            styleDialogButton(btnQuayLai, new Color(120, 120, 120)); // Xám
-            styleDialogButton(btnCancel, new Color(200, 55, 60));    // Đỏ
-            styleDialogButton(btnConfirm, new Color(0, 153, 76));    // Xanh lá
+//            styleDialogButton(btnQuayLai, new Color(120, 120, 120)); // Xám
+//            styleDialogButton(btnCancel, new Color(200, 55, 60));    // Đỏ
+//            styleDialogButton(btnConfirm, new Color(0, 153, 76));    // Xanh lá
 
             btnQuayLai.addActionListener(e -> {
                 if (!"Đã đọc".equalsIgnoreCase(r.getStatus())) {
@@ -275,12 +278,53 @@ public class RequestView {
                             return;
                         }
                     }
-                    RequestService.updateStatus(r.getRequestId(), "Đã bị hủy");
-                    NotificationService.createNotification(
-                            bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                            "Không được hủy", "Đã gửi"
-                    );
-                    JOptionPane.showMessageDialog(null, "Bạn đã hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+                    if ("Gửi yêu cầu".equalsIgnoreCase(r.getStatus())) {
+                        RequestService.updateStatus(r.getRequestId(), "Đã bị hủy");
+                        NotificationService.createNotification(
+                                bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+                                "Đã bị hủy", "Đã gửi"
+                        );
+                        JOptionPane.showMessageDialog(null, "Bạn đã hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else if ("Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus())) {
+                        RequestService.updateStatus(r.getRequestId(), "Đã bị hủy");
+                        NotificationService.createNotification(
+                                bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+                                "Không được hủy", "Đã gửi"
+                        );
+                        JOptionPane.showMessageDialog(null, "Bạn đã hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else if ("Đã đọc".equalsIgnoreCase(r.getStatus())) {
+                        List<HistoryEntry> histories = r.getHistory();
+                        if (histories != null && !histories.isEmpty()) {
+                            // Lấy lịch sử gần nhất (entry cuối cùng)
+                            HistoryEntry latestHistory = histories.get(histories.size() - 1);
+                            if (latestHistory.getStatus() != null) {
+                                // Kiểm tra trạng thái trước đó (nếu có)
+                                if (histories.size() > 1) {
+                                    HistoryEntry previous = histories.get(histories.size() - 2);
+                                    String previousStatus = previous.getStatus() != null ? previous.getStatus().trim() : "";
+                                    if ("Gửi yêu cầu".equalsIgnoreCase(previousStatus)) {
+                                        RequestService.updateStatus(r.getRequestId(), "Đã bị hủy");
+                                        NotificationService.createNotification(
+                                                bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+                                                "Đã bị hủy", "Đã gửi"
+                                        );
+                                        JOptionPane.showMessageDialog(null, "Bạn đã hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+                                    } else if ("Gửi yêu cầu hủy".equalsIgnoreCase(previousStatus)) {
+                                        RequestService.updateStatus(r.getRequestId(), "Đã bị hủy");
+                                        NotificationService.createNotification(
+                                                bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+                                                "Không được hủy", "Đã gửi"
+                                        );
+                                        JOptionPane.showMessageDialog(null, "Bạn đã hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                                    }
+                                }
+                            }
+                        }
+                    }
                     SwingUtilities.getWindowAncestor(content).dispose();
                     SwingUtilities.invokeLater(this::reloadTable);
                 }
@@ -310,7 +354,7 @@ public class RequestView {
                                 "Đã bị hủy", "Đã gửi"
                         );
                         JOptionPane.showMessageDialog(null, "Bạn đã xác nhận hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
+                    } else if ("Gửi yêu cầu".equalsIgnoreCase(r.getStatus())){
                         String newBookingId = generateBookingId();
                         RequestService.updateStatus(r.getRequestId(), "Đã được duyệt");
                         try {
@@ -337,6 +381,61 @@ public class RequestView {
                             JOptionPane.showMessageDialog(null, "Lỗi khi tạo booking: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
                         }
                     }
+                    else if ("Đã đọc".equalsIgnoreCase(r.getStatus())) {
+                        List<HistoryEntry> histories = r.getHistory();
+                        if (histories != null && !histories.isEmpty()) {
+                            // Lấy lịch sử gần nhất (entry cuối cùng)
+                            HistoryEntry latestHistory = histories.get(histories.size() - 1);
+                            if (latestHistory.getStatus() != null) {
+                                // Kiểm tra trạng thái trước đó (nếu có)
+                                if (histories.size() > 1) {
+                                    HistoryEntry previous = histories.get(histories.size() - 2);
+                                    String previousStatus = previous.getStatus() != null ? previous.getStatus().trim() : "";
+                                    if ("Gửi yêu cầu".equalsIgnoreCase(previousStatus)) {
+                                        String bookingId = getBookingIdForCancelRequest(r.getRequestId());
+                                        if (bookingId == null) {
+                                            JOptionPane.showMessageDialog(null, "Không tìm thấy booking liên quan để xác nhận hủy.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                            return;
+                                        }
+                                        RequestService.updateStatus(r.getRequestId(), "Đã bị hủy");
+                                        BookingService.updateBookingStatus(BOOKINGS_XML_PATH, bookingId, "Đã bị hủy");
+                                        NotificationService.createNotification(
+                                                bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+                                                "Đã bị hủy", "Đã gửi"
+                                        );
+                                        JOptionPane.showMessageDialog(null, "Bạn đã xác nhận hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+                                    } else if ("Gửi yêu cầu hủy".equalsIgnoreCase(previousStatus)) {
+                                        String newBookingId = generateBookingId();
+                                        RequestService.updateStatus(r.getRequestId(), "Đã được duyệt");
+                                        try {
+                                            BookingService.createBooking(
+                                                    BOOKINGS_XML_PATH,
+                                                    newBookingId,
+                                                    r.getRequestId(),
+                                                    Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+                                                    daiDien.getFullName(),
+                                                    Objects.requireNonNullElse(r.getEmail(), "Không rõ"),
+                                                    Objects.requireNonNullElse(r.getPhone(), "Không rõ"),
+                                                    Objects.requireNonNullElse(r.getRoomId(), "Không rõ"),
+                                                    r.getCheckIn(),
+                                                    r.getCheckOut(),
+                                                    r.getAmount(),
+                                                    r.getPersons() != null ? r.getPersons() : new ArrayList<>()
+                                            );
+                                            NotificationService.createNotification(
+                                                    newBookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
+                                                    "Đã được duyệt", "Đã gửi"
+                                            );
+                                            JOptionPane.showMessageDialog(null, "Bạn đã xác nhận yêu cầu và tạo booking thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                                        } catch (Exception ex) {
+                                            JOptionPane.showMessageDialog(null, "Lỗi khi tạo booking: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     SwingUtilities.getWindowAncestor(content).dispose();
                     SwingUtilities.invokeLater(this::reloadTable);
                 }
@@ -355,7 +454,7 @@ public class RequestView {
         }
 
         private String generateBookingId() {
-            return "BK" + System.currentTimeMillis();
+            return "BK" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ((int)(Math.random() * 99999) + 10000);
         }
     }
 

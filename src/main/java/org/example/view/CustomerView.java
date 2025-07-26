@@ -507,10 +507,10 @@ public class CustomerView {
         JButton btnSua = new JButton("Sửa");
         JButton btnTimKiem = new JButton("Tìm kiếm");
 
-        styleButton(btnThem, new Color(0, 153, 76));
-        styleButton(btnXoa, new Color(200, 55, 60));
-        styleButton(btnSua, new Color(120, 120, 120));
-        styleButton(btnTimKiem, new Color(0, 153, 76));
+//        styleButton(btnThem, new Color(0, 153, 76));
+//        styleButton(btnXoa, new Color(200, 55, 60));
+//        styleButton(btnSua, new Color(120, 120, 120));
+//        styleButton(btnTimKiem, new Color(0, 153, 76));
 
         btnPanel.add(btnThem);
         btnPanel.add(btnXoa);
@@ -530,9 +530,7 @@ public class CustomerView {
             }
 
             List<Booking> activeBookings = bookingXML.getBookings().stream()
-                    .filter(b -> !b.getCheckIn().isAfter(currentTime) &&
-                            b.getCheckOut().isAfter(currentTime) &&
-                            "Check-in".equalsIgnoreCase(b.getStatus()))
+                    .filter(b -> "Check-in".equalsIgnoreCase(b.getStatus()))
                     .collect(Collectors.toList());
 
 
@@ -624,9 +622,9 @@ public class CustomerView {
             }
 
             Booking booking = bookingXML.getBookings().stream()
-                    .filter(b -> b.getBookingId().equals(bookingId) &&
-                            !b.getCheckIn().isAfter(LocalDateTime.now()) &&
-                            b.getCheckOut().isAfter(LocalDateTime.now()))
+                    .filter(b -> b.getBookingId().equals(bookingId))
+//                            !b.getCheckIn().isAfter(LocalDateTime.now()) &&
+//                            b.getCheckOut().isAfter(LocalDateTime.now()))
                     .findFirst()
                     .orElse(null);
 
@@ -661,7 +659,8 @@ public class CustomerView {
         }
 
         List<Booking> activeBookings = bookingXML.getBookings().stream()
-                .filter(b -> !b.getCheckIn().isAfter(currentTime) && b.getCheckOut().isAfter(currentTime))
+                //.filter(b -> !b.getCheckIn().isAfter(currentTime) && b.getCheckOut().isAfter(currentTime))
+                .filter(b -> "Check-in".equalsIgnoreCase(b.getStatus()))
                 .collect(Collectors.toList());
 
         tableModel.setRowCount(0);
@@ -722,9 +721,9 @@ public class CustomerView {
                 bookingXML.setBookings(new ArrayList<>());
             }
             List<String> bookingIds = bookingXML.getBookings().stream()
-                    .filter(b -> !b.getCheckIn().isAfter(LocalDateTime.now()) &&
-                            b.getCheckOut().isAfter(LocalDateTime.now()) &&
-                            "Check-in".equalsIgnoreCase(b.getStatus()))
+//                    .filter(b -> !b.getCheckIn().isAfter(LocalDateTime.now()) &&
+//                            b.getCheckOut().isAfter(LocalDateTime.now()) &&
+                    .filter(b -> "Check-in".equalsIgnoreCase(b.getStatus()))
                     .map(Booking::getBookingId)
                     .collect(Collectors.toList());
 

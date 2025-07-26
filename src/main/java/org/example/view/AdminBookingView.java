@@ -6,6 +6,7 @@ import org.example.entity.SelectedRoomInfo;
 import org.example.service.BookingService;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import java.time.temporal.ChronoUnit;
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -96,7 +97,7 @@ public class AdminBookingView {
         formPanel.add(tfGmail, gbc);
 
         // Danh sách người đi cùng
-        String[] loaiOptions = {"Không có", "Mã định danh"};
+        String[] loaiOptions = {"Không có", "Mã định danh", "Hộ chiếu"};
 
         for (int i = 0; i < 4; i++) {
             int row = gbc.gridy + 1 + i * 2;
@@ -207,6 +208,40 @@ public class AdminBookingView {
             }
 
             String thoiGianTao = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//            String info = String.format("""
+//THÔNG TIN ĐẶT PHÒNG
+//
+//Tài khoản: %s
+//SĐT: %s
+//Gmail: %s
+//Người đại diện: %s
+//
+//Số người: %d
+//Danh sách khách:
+//%s
+//Phòng: %s
+//Mô tả: %s
+//Loại: %s
+//Giá: %,.0f VND
+//
+//Check-in: %s
+//Check-out: %s
+//Thời gian tạo: %s
+//Trạng thái: Đã gửi yêu cầu
+//""",
+//                    username, sdt, gmail, hoTenDaiDien, soNguoi, danhSachKhach.toString(),
+//                    selectedRoom.getRoomId(), selectedRoom.getDescription(), selectedRoom.getType(),
+//                    selectedRoom.getPrice(),
+//                    selectedRoom.getCheckIn(), selectedRoom.getCheckOut(),
+//                    thoiGianTao
+//            );
+//
+//            int confirm = JOptionPane.showOptionDialog(
+//                    mainFrame, info, "Xác nhận đặt phòng",
+//                    JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
+//                    null, new String[]{"Quay lại", "Xác nhận"}, "Xác nhận"
+//            );
+
             String info = String.format("""
 THÔNG TIN ĐẶT PHÒNG
 
@@ -235,15 +270,38 @@ Trạng thái: Đã gửi yêu cầu
                     thoiGianTao
             );
 
+// Tạo JTextArea để hiển thị thông tin
+            JTextArea textArea = new JTextArea(info);
+            textArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            textArea.setEditable(false);
+            textArea.setLineWrap(true);
+            textArea.setWrapStyleWord(true);
+            textArea.setMargin(new Insets(10, 10, 10, 10));
+
+// Đặt trong JScrollPane để hiện đẹp hơn
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new Dimension(500, 400));
+
+// Tạo JPanel chứa scroll pane
+            JPanel content = new JPanel(new BorderLayout());
+            content.add(scrollPane, BorderLayout.CENTER);
+
+// Hiển thị JOptionPane không có icon, với hai nút
             int confirm = JOptionPane.showOptionDialog(
-                    mainFrame, info, "📋 Xác nhận đặt phòng",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                    null, new String[]{"Quay lại", "Xác nhận"}, "Xác nhận"
+                    mainFrame,
+                    content,
+                    "Xác nhận đặt phòng",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.PLAIN_MESSAGE, // Không icon xanh
+                    null,
+                    new String[]{"Quay lại", "Xác nhận"},
+                    "Xác nhận"
             );
+
 
             if (confirm == 1) {
                 // Sinh mã booking ngẫu nhiên
-                String bookingId = "BK" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + (int)(Math.random() * 10000);
+                String bookingId = "BK" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ((int)(Math.random() * 99999) + 10000);
                 String requestId = "REQ0000X";
 
                 BookingService.createBooking(
@@ -260,10 +318,13 @@ Trạng thái: Đã gửi yêu cầu
                         selectedRoom.getPrice(),
                         danhSach
                 );
+                long minutesUntilCheckIn = ChronoUnit.MINUTES.between(LocalDateTime.now(), selectedRoom.getCheckIn());
 
-                BookingService.updateBookingStatus("bookings.xml", bookingId, "Check-in");
+                if (minutesUntilCheckIn <= 15 && minutesUntilCheckIn >= 0) {
+                    BookingService.updateBookingStatus("bookings.xml", bookingId, "Check-in");
+                }
 
-                JOptionPane.showMessageDialog(mainFrame, "Gửi yêu cầu thành công!", "✅ Thành công", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(mainFrame, "Gửi yêu cầu thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
                 mainFrame.setAdminDynamicContent(AdminDashboardView.createDashboardPanel());
                 mainFrame.setAdminSelectedMenu("Trang chủ");
             }

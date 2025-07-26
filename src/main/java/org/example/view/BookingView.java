@@ -2,6 +2,7 @@
 package org.example.view;
 
 import org.example.service.BookingService;
+import org.example.service.NotificationService;
 import org.example.service.PaymentService;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -60,7 +61,7 @@ public class BookingView {
         keywordField = new JTextField(18);
 
         statusCombo = new JComboBox<>(new String[]{
-                "Tất cả", "Đã đặt", "Check-in"
+                "Tất cả", "Đã đặt", "Check-in", "Chờ thanh toán"
         });
 
         gbc.gridx = 0; gbc.gridy = 0;
@@ -155,13 +156,15 @@ public class BookingView {
             showConfirmDialog(selectedRow);
         } else if (status.equals("Check-in")) {
             showPaymentDialog(selectedRow, table);
+        } else if (status.equals("Chờ thanh toán")) {
+            showChoThanhToan(selectedRow, table);
         }
     }
 
     private static void showConfirmDialog(int row) {
         JDialog dialog = new JDialog((Frame) null, "Xác nhận nhận phòng", true);
         dialog.setLayout(new BorderLayout(10, 10));
-        dialog.setSize(600, 400);
+        dialog.setSize(400, 320);
         dialog.setLocationRelativeTo(null);
 
         String bookingId = table.getValueAt(row, 0).toString();
@@ -180,7 +183,7 @@ public class BookingView {
         JButton confirmBtn = new JButton("Xác nhận");
         JButton cancelBtn = new JButton("Quay lại");
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        JPanel buttonPanel = new JPanel();//new FlowLayout(FlowLayout.CENTER, 20, 10));
         buttonPanel.add(confirmBtn);
         buttonPanel.add(cancelBtn);
 
@@ -225,6 +228,7 @@ public class BookingView {
         confirmBtn.addActionListener(e -> {
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             String bookingId = model.getValueAt(row, getColumnIndex(table, "Mã đơn")).toString();
+            String userName = model.getValueAt(row, getColumnIndex(table, "Tài khoản")).toString();
 
             // Cập nhật trạng thái trên bảng
             int statusCol = getColumnIndex(table, "Trạng thái");
@@ -234,10 +238,17 @@ public class BookingView {
 
             // Ghi trạng thái vào file XML
             BookingService.updateBookingStatus("bookings.xml", bookingId, "Check-out");
+            NotificationService.createNotification(
+                    bookingId,
+                    "",
+                    userName,
+                    "Check-out",
+                    "Đã gửi"
+            );
 
             // Lấy thông tin
             String fullName = model.getValueAt(row, getColumnIndex(table, "Họ tên")).toString();
-            String userName = model.getValueAt(row, getColumnIndex(table, "Tài khoản")).toString();
+            //String userName = model.getValueAt(row, getColumnIndex(table, "Tài khoản")).toString();
             String room = model.getValueAt(row, getColumnIndex(table, "Phòng")).toString();
             double amount = Double.parseDouble(model.getValueAt(row, getColumnIndex(table, "Tổng tiền")).toString());
             String method = paymentCombo.getSelectedItem().toString();
@@ -258,6 +269,119 @@ public class BookingView {
                     code,
                     checkIn,
                     checkOut
+            );
+
+            NotificationService.createNotification(
+                    bookingId,
+                    "",
+                    userName,
+                    "Đã thanh toán",
+                    "Đã gửi"
+            );
+
+            dialog.dispose();
+        });
+
+        cancelBtn.addActionListener(e -> dialog.dispose());
+
+        // Add components
+        gbc.gridx = 0; gbc.gridy = 0;
+        dialog.add(paymentLabel, gbc);
+        gbc.gridx = 1;
+        dialog.add(paymentCombo, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 1;
+        dialog.add(new JLabel("Mã thanh toán:"), gbc);
+        gbc.gridx = 1;
+        dialog.add(codeField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 2;
+        dialog.add(confirmBtn, gbc);
+        gbc.gridx = 1;
+        dialog.add(cancelBtn, gbc);
+
+        // Hiển thị thông tin đơn
+        JTextArea infoArea = new JTextArea(getBookingDetails(row));
+        infoArea.setEditable(false);
+        infoArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        infoArea.setBorder(BorderFactory.createTitledBorder("Thông tin đơn"));
+
+        gbc.gridwidth = 2;
+        gbc.gridx = 0; gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        dialog.add(infoArea, gbc);
+
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }
+
+    private static void showChoThanhToan(int row, JTable table) {
+        JDialog dialog = new JDialog((Frame) null, "Thanh toán", true);
+        dialog.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        JLabel paymentLabel = new JLabel("Phương thức thanh toán:");
+        JComboBox<String> paymentCombo = new JComboBox<>(new String[]{"Tiền mặt", "Thẻ tín dụng"});
+        JTextField codeField = new JTextField(10);
+        codeField.setText("0000000X");
+
+        paymentCombo.addActionListener(e -> {
+            if (paymentCombo.getSelectedItem().equals("Tiền mặt")) {
+                codeField.setText("0000000X");
+                codeField.setEditable(false);
+            } else {
+                codeField.setText("");
+                codeField.setEditable(true);
+            }
+        });
+
+        JButton confirmBtn = new JButton("Xác nhận");
+        JButton cancelBtn = new JButton("Quay lại");
+
+        confirmBtn.addActionListener(e -> {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            String bookingId = model.getValueAt(row, getColumnIndex(table, "Mã đơn")).toString();
+            String userName = model.getValueAt(row, getColumnIndex(table, "Tài khoản")).toString();
+
+            // Cập nhật trạng thái trên bảng
+            int statusCol = getColumnIndex(table, "Trạng thái");
+            if (statusCol != -1) {
+                model.setValueAt("Check-out", row, statusCol);
+            }
+
+            // Lấy thông tin
+            String fullName = model.getValueAt(row, getColumnIndex(table, "Họ tên")).toString();
+            //String userName = model.getValueAt(row, getColumnIndex(table, "Tài khoản")).toString();
+            String room = model.getValueAt(row, getColumnIndex(table, "Phòng")).toString();
+            double amount = Double.parseDouble(model.getValueAt(row, getColumnIndex(table, "Tổng tiền")).toString());
+            String method = paymentCombo.getSelectedItem().toString();
+            String code = codeField.getText();
+
+            // Parse thời gian
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            LocalDateTime checkIn = LocalDateTime.parse(model.getValueAt(row, getColumnIndex(table, "Ngày đến")).toString(), formatter);
+            LocalDateTime checkOut = LocalDateTime.parse(model.getValueAt(row, getColumnIndex(table, "Ngày đi")).toString(), formatter);
+
+            PaymentService.createPayment(
+                    bookingId,
+                    fullName,
+                    userName,
+                    room,
+                    amount,
+                    method,
+                    code,
+                    checkIn,
+                    checkOut
+            );
+
+            NotificationService.createNotification(
+                    bookingId,
+                    "",
+                    userName,
+                    "Đã thanh toán",
+                    "Đã gửi"
             );
 
             dialog.dispose();
@@ -307,9 +431,6 @@ public class BookingView {
         }
         return -1;
     }
-
-
-
 
 
     private static String getBookingDetails(int row) {
@@ -396,7 +517,8 @@ public class BookingView {
 
                 // Bỏ qua nếu trạng thái là "Check-out"
                 if (rowData[9].equalsIgnoreCase("Check-out")
-                ||  rowData[9].equalsIgnoreCase("Đã bị hủy")) {
+                ||  rowData[9].equalsIgnoreCase("Đã bị hủy")
+                ||  rowData[9].equalsIgnoreCase("Vắng mặt")) {
                     continue;
                 }
 
