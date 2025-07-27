@@ -6,7 +6,9 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import org.example.entity.Room;
 import org.example.entity.SelectedRoomInfo;
 import org.example.service.RoomFinderService;
-
+import java.time.LocalDateTime;
+import java.time.Duration;
+import org.example.service.BookingService;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -14,6 +16,7 @@ import java.awt.*;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class AdminSearchView {
@@ -142,7 +145,7 @@ public class AdminSearchView {
                             room.getRoomId(),
                             room.getDescription(),
                             room.getType(),
-                            currencyFormat.format(room.getPrice())
+                            currencyFormat.format(BookingService.getAmount(checkIn, checkOut, room.getPrice()))
                     });
                 }
             }

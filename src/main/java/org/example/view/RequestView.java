@@ -351,7 +351,7 @@ public class RequestView {
                         BookingService.updateBookingStatus(BOOKINGS_XML_PATH, bookingId, "Đã bị hủy");
                         NotificationService.createNotification(
                                 bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                                "Đã bị hủy", "Đã gửi"
+                                "Đã được hủy", "Đã gửi"
                         );
                         JOptionPane.showMessageDialog(null, "Bạn đã xác nhận hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     } else if ("Gửi yêu cầu".equalsIgnoreCase(r.getStatus())){

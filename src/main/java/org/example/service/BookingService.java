@@ -169,13 +169,56 @@
 
 
 package org.example.service;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import org.example.entity.*;
-import org.example.utils.FileUtils;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
-import java.time.LocalDateTime;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.OutputKeys;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import org.example.entity.*;
+import org.example.utils.FileUtils;
+import org.example.entity.Booking;
+import org.example.entity.Person;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.io.File;
 
 public class BookingService {
     private static final String BOOKINGS_XML_PATH = "bookings.xml";
@@ -539,5 +582,149 @@ public class BookingService {
         }
 
         return count;
+    }
+
+    public static double getAmount(LocalDateTime checkIn, LocalDateTime checkOut, double giaNiemYet) {
+        if (checkOut.isBefore(checkIn)) {
+            return 0;
+        }
+
+        long totalNights = ChronoUnit.DAYS.between(checkIn.toLocalDate(), checkOut.toLocalDate());
+
+        if (checkOut.getHour() >= 12) {
+            totalNights += 1;
+        }
+
+        if (totalNights == 0) {
+            totalNights = 1;
+        }
+
+        return totalNights * giaNiemYet;
+    }
+
+    public int countPersonsByBookingId(String bookingId) throws Exception {
+        File xmlFile = new File("bookings.xml");
+        JAXBContext jaxbContext = JAXBContext.newInstance(BookingXML.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        BookingXML bookingsWrapper = (BookingXML) unmarshaller.unmarshal(xmlFile);
+        List<Booking> bookings = bookingsWrapper.getBookings();
+
+        for (Booking booking : bookings) {
+            if (booking.getBookingId().equals(bookingId)) {
+                return booking.getNumberOfGuests(); // Sử dụng getNumberOfGuests() từ Booking
+            }
+        }
+        return 0; // Trả về 0 nếu không tìm thấy bookingId
+    }
+
+    // Xóa Person dựa trên chỉ số dòng và bookingId
+//    public void deletePersonByRow(int rowIndex, String bookingId) throws Exception {
+//        // Kiểm tra số lượng người trong bookingId
+//        int personCount = countPersonsByBookingId(bookingId);
+//        if (personCount <= 1) {
+//            throw new Exception("Không thể xóa: Phòng phải có ít nhất một người.");
+//        }
+//
+//        File xmlFile = new File("bookings.xml");
+//        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+//        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//        Document doc = dBuilder.parse(xmlFile);
+//        doc.getDocumentElement().normalize();
+//
+//        // Tìm Booking với bookingId
+//        NodeList bookingList = doc.getElementsByTagName("Booking");
+//        Element targetBooking = null;
+//        for (int i = 0; i < bookingList.getLength(); i++) {
+//            Element bookingElement = (Element) bookingList.item(i);
+//            String currentBookingId = bookingElement.getElementsByTagName("bookingId").item(0).getTextContent();
+//            if (currentBookingId.equals(bookingId)) {
+//                targetBooking = bookingElement;
+//                break;
+//            }
+//        }
+//
+//        if (targetBooking == null) {
+//            throw new Exception("Không tìm thấy Booking với bookingId: " + bookingId);
+//        }
+//
+//        // Lấy danh sách Person trong Booking
+//        NodeList personList = targetBooking.getElementsByTagName("Person");
+//        if (rowIndex < 0 || rowIndex >= personList.getLength()) {
+//            throw new Exception("Chỉ số dòng không hợp lệ: " + rowIndex);
+//        }
+//
+//        // Xóa phần tử Person tại rowIndex
+//        personList.item(rowIndex).getParentNode().removeChild(personList.item(rowIndex));
+//
+//        // Lưu lại tệp XML
+//        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//        Transformer transformer = transformerFactory.newTransformer();
+//        DOMSource source = new DOMSource(doc);
+//        StreamResult result = new StreamResult(xmlFile);
+//        transformer.transform(source, result);
+//    }
+    public void deletePersonByRow(int rowIndex, String bookingId) throws Exception {
+        int personCount = countPersonsByBookingId(bookingId);
+        if (personCount <= 1) {
+            throw new Exception("Không thể xóa: Phòng phải có ít nhất một người.");
+        }
+
+        File xmlFile = new File("bookings.xml");
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        dbFactory.setIgnoringElementContentWhitespace(true); // quan trọng
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(xmlFile);
+        doc.getDocumentElement().normalize();
+
+        // XÓA WHITESPACE NODE gây lỗi format
+        removeWhitespaceNodes(doc.getDocumentElement());
+
+        // Tìm booking cần xóa
+        NodeList bookingList = doc.getElementsByTagName("Booking");
+        Element targetBooking = null;
+        for (int i = 0; i < bookingList.getLength(); i++) {
+            Element bookingElement = (Element) bookingList.item(i);
+            String currentBookingId = bookingElement.getElementsByTagName("bookingId").item(0).getTextContent();
+            if (currentBookingId.equals(bookingId)) {
+                targetBooking = bookingElement;
+                break;
+            }
+        }
+
+        if (targetBooking == null) {
+            throw new Exception("Không tìm thấy Booking với bookingId: " + bookingId);
+        }
+
+        NodeList personList = targetBooking.getElementsByTagName("Person");
+        if (rowIndex < 0 || rowIndex >= personList.getLength()) {
+            throw new Exception("Chỉ số dòng không hợp lệ: " + rowIndex);
+        }
+
+        Node personNode = personList.item(rowIndex);
+        personNode.getParentNode().removeChild(personNode);
+
+        // Ghi lại file XML sạch sẽ, không thụt dòng
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes"); // Không xuống dòng
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no"); // giữ dòng khai báo
+
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(xmlFile);
+        transformer.transform(source, result);
+    }
+
+    // Xóa các TEXT_NODE trắng rác (xuống dòng, khoảng trắng)
+    private void removeWhitespaceNodes(Node node) {
+        NodeList children = node.getChildNodes();
+        for (int i = children.getLength() - 1; i >= 0; i--) {
+            Node child = children.item(i);
+            if (child.getNodeType() == Node.TEXT_NODE && child.getTextContent().trim().isEmpty()) {
+                node.removeChild(child);
+            } else if (child.hasChildNodes()) {
+                removeWhitespaceNodes(child);
+            }
+        }
     }
 }

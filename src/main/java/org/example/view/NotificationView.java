@@ -34,7 +34,7 @@ public class NotificationView {
     public static JPanel createUserNotificationPanel(String username) {
         JPanel container = new JPanel(new BorderLayout(10, 10));
         container.setBackground(Color.WHITE);
-        container.setBorder(new EmptyBorder(10, 10, 10, 10));
+        container.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         // Tải dữ liệu từ XML
         NotificationXML notificationXML = FileUtils.readFromFile(XML_PATH, NotificationXML.class);
@@ -93,6 +93,9 @@ public class NotificationView {
                         n.getRequestId(), n.getTime().format(TIME_FORMATTER));
             } else if ("Không được hủy".equalsIgnoreCase(n.getContent())) {
                 msg = String.format(" %s không được hủy lúc %s",
+                        n.getBookingId(), n.getTime().format(TIME_FORMATTER));
+            } else if ("Đã được hủy".equalsIgnoreCase(n.getContent())) {
+                msg = String.format(" %s đã được hủy lúc %s",
                         n.getBookingId(), n.getTime().format(TIME_FORMATTER));
             } else if ("Check-out".equalsIgnoreCase(n.getContent())) {
                 msg = String.format(" %s đã check-out lúc %s",

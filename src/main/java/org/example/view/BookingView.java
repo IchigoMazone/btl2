@@ -5,6 +5,7 @@ import org.example.service.BookingService;
 import org.example.service.NotificationService;
 import org.example.service.PaymentService;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import org.w3c.dom.*;
 import javax.swing.*;
@@ -188,6 +189,19 @@ public class BookingView {
         buttonPanel.add(cancelBtn);
 
         confirmBtn.addActionListener(e -> {
+            String checkInStr = table.getValueAt(row, getColumnIndex(table, "Ngày đến")).toString();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            LocalDateTime checkInTime = LocalDateTime.parse(checkInStr, formatter);
+            LocalDateTime now = LocalDateTime.now();
+            long hoursUntilCheckIn = ChronoUnit.HOURS.between(now, checkInTime);
+
+            if (hoursUntilCheckIn > 1) {
+                JOptionPane.showMessageDialog(dialog,
+                        "Không thể check-in! Thời gian check-in phải trong vòng 1 giờ từ hiện tại.",
+                        "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             table.setValueAt("Check-in", row, getColumnIndex("Trạng thái"));
             System.out.println("Đã xác nhận Check-in cho đơn: " + bookingId);
             BookingService.updateBookingStatus("bookings.xml", bookingId, "Check-in");
@@ -250,7 +264,7 @@ public class BookingView {
             String fullName = model.getValueAt(row, getColumnIndex(table, "Họ tên")).toString();
             //String userName = model.getValueAt(row, getColumnIndex(table, "Tài khoản")).toString();
             String room = model.getValueAt(row, getColumnIndex(table, "Phòng")).toString();
-            double amount = Double.parseDouble(model.getValueAt(row, getColumnIndex(table, "Tổng tiền")).toString());
+            double amount = Double.parseDouble(model.getValueAt(row, getColumnIndex(table, "Tổng tiền")).toString().replace(",", ""));
             String method = paymentCombo.getSelectedItem().toString();
             String code = codeField.getText();
 
@@ -355,7 +369,7 @@ public class BookingView {
             String fullName = model.getValueAt(row, getColumnIndex(table, "Họ tên")).toString();
             //String userName = model.getValueAt(row, getColumnIndex(table, "Tài khoản")).toString();
             String room = model.getValueAt(row, getColumnIndex(table, "Phòng")).toString();
-            double amount = Double.parseDouble(model.getValueAt(row, getColumnIndex(table, "Tổng tiền")).toString());
+            double amount = Double.parseDouble(model.getValueAt(row, getColumnIndex(table, "Tổng tiền")).toString().replace(",", ""));
             String method = paymentCombo.getSelectedItem().toString();
             String code = codeField.getText();
 
@@ -364,6 +378,7 @@ public class BookingView {
             LocalDateTime checkIn = LocalDateTime.parse(model.getValueAt(row, getColumnIndex(table, "Ngày đến")).toString(), formatter);
             LocalDateTime checkOut = LocalDateTime.parse(model.getValueAt(row, getColumnIndex(table, "Ngày đi")).toString(), formatter);
 
+            BookingService.updateBookingStatus("bookings.xml", bookingId, "Check-out");
             PaymentService.createPayment(
                     bookingId,
                     fullName,
@@ -457,11 +472,162 @@ public class BookingView {
         return -1;
     }
 
+//    private static void loadBookingsFromXML(String fileName) {
+//        model.setRowCount(0);
+//        try {
+//            File xmlFile = new File(fileName);
+//            if (!xmlFile.exists()) return;
+//
+//            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//            Document doc = dBuilder.parse(xmlFile);
+//            doc.getDocumentElement().normalize();
+//
+//            NodeList nList = doc.getElementsByTagName("Booking");
+//
+//            String keyword = keywordField.getText().trim().toLowerCase();
+//            String type = (String) searchTypeCombo.getSelectedItem();
+//            String statusFilter = (String) statusCombo.getSelectedItem();
+//
+//            List<Element> elements = new ArrayList<>();
+//            for (int i = 0; i < nList.getLength(); i++) {
+//                elements.add((Element) nList.item(i));
+//            }
+//
+//            elements.sort(Comparator.comparing(e -> {
+//                try {
+//                    return new SimpleDateFormat("yyyy-MM-dd").parse(getTagValue(e, "checkIn"));
+//                } catch (ParseException ex) {
+//                    return new Date(0);
+//                }
+//            }));
+//
+//            for (Element e : elements) {
+//                String amountStr = getTagValue(e, "amount");
+//                double amount = amountStr.isEmpty() ? 0.0 : Double.parseDouble(amountStr);
+//                String[] rowData = {
+//                        getTagValue(e, "bookingId"),
+//                        getTagValue(e, "userName"),
+//                        getTagValue(e, "fullName"),
+//                        getTagValue(e, "phone"),
+//                        getTagValue(e, "email"),
+//                        getTagValue(e, "roomId"),
+//                        getTagValue(e, "checkIn"),
+//                        getTagValue(e, "checkOut"),
+//                        String.format("%,.0f", amount),
+//                        getTagValue(e, "status")
+//                };
+//
+//                boolean matches = keyword.isEmpty();
+//                if (!matches) {
+//                    switch (type) {
+//                        case "Mã đơn": matches = rowData[0].toLowerCase().contains(keyword); break;
+//                        case "Tài khoản": matches = rowData[1].toLowerCase().contains(keyword); break;
+//                        case "Họ tên": matches = rowData[2].toLowerCase().contains(keyword); break;
+//                        case "SĐT": matches = rowData[3].toLowerCase().contains(keyword); break;
+//                        case "Gmail": matches = rowData[4].toLowerCase().contains(keyword); break;
+//                        case "Tất cả":
+//                            matches = Arrays.stream(rowData).anyMatch(s -> s.toLowerCase().contains(keyword));
+//                            break;
+//                    }
+//                }
+//
+//                // Bỏ qua nếu trạng thái là "Check-out"
+//                if (rowData[9].equalsIgnoreCase("Check-out")
+//                ||  rowData[9].equalsIgnoreCase("Đã bị hủy")
+//                ||  rowData[9].equalsIgnoreCase("Vắng mặt")) {
+//                    continue;
+//                }
+//
+//                boolean statusMatch = statusFilter.equals("Tất cả") || rowData[9].equalsIgnoreCase(statusFilter);
+//
+//
+//                if (matches && statusMatch) {
+//                    model.addRow(rowData);
+//                }
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
     private static void loadBookingsFromXML(String fileName) {
         model.setRowCount(0);
         try {
             File xmlFile = new File(fileName);
-            if (!xmlFile.exists()) return;
+            if (!xmlFile.exists()) {
+                JOptionPane.showMessageDialog(null,
+                        "Không thể đọc dữ liệu đơn đặt phòng!",
+                        "Lỗi",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            String keyword = keywordField.getText().trim();
+            String type = (String) searchTypeCombo.getSelectedItem();
+            String statusFilter = (String) statusCombo.getSelectedItem();
+
+            // Check if keyword is empty
+            if (keyword.isEmpty()) {
+                if (!type.equals("Tất cả")) {
+                    JOptionPane.showMessageDialog(null,
+                            "Vui lòng nhập từ khóa tìm kiếm!",
+                            "Lỗi",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                // For "Tất cả", empty keyword shows all bookings (filtered by status)
+            }
+
+            // Validate keyword format based on search type
+            if (type.equals("SĐT") && !keyword.matches("0\\d{9}")) {
+                JOptionPane.showMessageDialog(null,
+                        "Số điện thoại phải chứa đúng 10 chữ số và bắt đầu bằng 0!",
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            } else if (type.equals("Gmail") && !keyword.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                JOptionPane.showMessageDialog(null,
+                        "Email không đúng định dạng!",
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            } else if (type.equals("Mã đơn") && !keyword.matches("BK[A-Za-z0-9]{2,}")) {
+                JOptionPane.showMessageDialog(null,
+                        "Mã đơn phải bắt đầu bằng 'BK' và chứa ít nhất 2 chữ cái hoặc số tiếp theo!",
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            } else if (type.equals("Tài khoản") && !keyword.matches("[a-z0-9]{8,}")) {
+                JOptionPane.showMessageDialog(null,
+                        "Tài khoản phải chứa ít nhất 8 chữ cái thường hoặc số!",
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            } else if (type.equals("Họ tên") && keyword.length() < 2) {
+                JOptionPane.showMessageDialog(null,
+                        "Họ tên phải chứa ít nhất 2 ký tự!",
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            } else if (type.equals("Tất cả") && !keyword.isEmpty()) {
+                // For "Tất cả", validate that keyword matches at least one field format or is at least 2 characters
+                if (!keyword.matches("0\\d{9}") && // Valid phone number
+                        !keyword.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") && // Valid email
+                        !keyword.matches("[A-Za-z0-9]{2,}") && // Valid booking ID/username
+                        keyword.length() < 2) { // Valid name (minimum 2 characters)
+                    JOptionPane.showMessageDialog(null,
+                            "Từ khóa phải là số điện thoại (10 chữ số bắt đầu bằng 0), email hợp lệ, hoặc ít nhất 2 ký tự!",
+                            "Lỗi",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+
+            // Convert keyword to lowercase for case-insensitive search
+            String searchKeyword = keyword.toLowerCase();
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -469,10 +635,6 @@ public class BookingView {
             doc.getDocumentElement().normalize();
 
             NodeList nList = doc.getElementsByTagName("Booking");
-
-            String keyword = keywordField.getText().trim().toLowerCase();
-            String type = (String) searchTypeCombo.getSelectedItem();
-            String statusFilter = (String) statusCombo.getSelectedItem();
 
             List<Element> elements = new ArrayList<>();
             for (int i = 0; i < nList.getLength(); i++) {
@@ -487,7 +649,11 @@ public class BookingView {
                 }
             }));
 
+            boolean hasResults = false;
+
             for (Element e : elements) {
+                String amountStr = getTagValue(e, "amount");
+                double amount = amountStr.isEmpty() ? 0.0 : Double.parseDouble(amountStr);
                 String[] rowData = {
                         getTagValue(e, "bookingId"),
                         getTagValue(e, "userName"),
@@ -497,41 +663,63 @@ public class BookingView {
                         getTagValue(e, "roomId"),
                         getTagValue(e, "checkIn"),
                         getTagValue(e, "checkOut"),
-                        getTagValue(e, "amount"),
+                        String.format("%,.0f", amount),
                         getTagValue(e, "status")
                 };
 
-                boolean matches = keyword.isEmpty();
+                // Skip bookings with excluded statuses
+                if (rowData[9].equalsIgnoreCase("Check-out") ||
+                        rowData[9].equalsIgnoreCase("Đã bị hủy") ||
+                        rowData[9].equalsIgnoreCase("Vắng mặt")) {
+                    continue;
+                }
+
+                boolean matches = type.equals("Tất cả") && keyword.isEmpty();
                 if (!matches) {
                     switch (type) {
-                        case "Mã đơn": matches = rowData[0].toLowerCase().contains(keyword); break;
-                        case "Tài khoản": matches = rowData[1].toLowerCase().contains(keyword); break;
-                        case "Họ tên": matches = rowData[2].toLowerCase().contains(keyword); break;
-                        case "SĐT": matches = rowData[3].toLowerCase().contains(keyword); break;
-                        case "Gmail": matches = rowData[4].toLowerCase().contains(keyword); break;
+                        case "Mã đơn":
+                            matches = rowData[0].toLowerCase().contains(searchKeyword);
+                            break;
+                        case "Tài khoản":
+                            matches = rowData[1].toLowerCase().contains(searchKeyword);
+                            break;
+                        case "Họ tên":
+                            matches = rowData[2].toLowerCase().contains(searchKeyword);
+                            break;
+                        case "SĐT":
+                            matches = rowData[3].toLowerCase().contains(searchKeyword);
+                            break;
+                        case "Gmail":
+                            matches = rowData[4].toLowerCase().contains(searchKeyword);
+                            break;
                         case "Tất cả":
-                            matches = Arrays.stream(rowData).anyMatch(s -> s.toLowerCase().contains(keyword));
+                            matches = Arrays.stream(rowData).anyMatch(s -> s.toLowerCase().contains(searchKeyword));
                             break;
                     }
                 }
 
-                // Bỏ qua nếu trạng thái là "Check-out"
-                if (rowData[9].equalsIgnoreCase("Check-out")
-                ||  rowData[9].equalsIgnoreCase("Đã bị hủy")
-                ||  rowData[9].equalsIgnoreCase("Vắng mặt")) {
-                    continue;
-                }
-
                 boolean statusMatch = statusFilter.equals("Tất cả") || rowData[9].equalsIgnoreCase(statusFilter);
-
 
                 if (matches && statusMatch) {
                     model.addRow(rowData);
+                    hasResults = true;
                 }
+            }
+
+            // Check if no results were found
+            if (!hasResults) {
+                JOptionPane.showMessageDialog(null,
+                        "Không tìm thấy đơn đặt phòng phù hợp với từ khóa!",
+                        "Thông báo",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null,
+                    "Lỗi khi đọc dữ liệu đơn đặt phòng: " + e.getMessage(),
+                    "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 

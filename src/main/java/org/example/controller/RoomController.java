@@ -59,21 +59,168 @@ public class RoomController {
         }
     }
 
+//    public void handleSearch() {
+//        String tieuChi = (String) cbTieuChi.getSelectedItem();
+//        String loaiPhong = (String) cbLoaiPhong.getSelectedItem();
+//        String tuKhoa = tieuChi.equals("Trạng thái phòng") ?
+//                cbTrangThai.getSelectedItem().toString() : tfTuKhoa.getText().trim();
+//
+//        String error = CheckRoomSearch.validateSearch(tieuChi, tuKhoa, loaiPhong);
+//        if (error != null) {
+//            JOptionPane.showMessageDialog(null, error, "Lỗi", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//
+//        tableModel.setRowCount(0);
+//        List<Room> rooms = roomService.getAllRooms();
+//        Map<String, String> roomStatusMap = getRoomStatusMap("bookings.xml");
+//        for (Room room : rooms) {
+//            String roomId = room.getRoomId();
+//            String soPhong = room.getRoomNumber();
+//            String kieuPhong = room.getType();
+//            String giaTien = String.format("%,.0f", room.getPrice());
+//            String trangThai = roomStatusMap.getOrDefault(roomId, "Đang trống");
+//            String moTa = room.getDescription();
+//
+//            boolean matchTieuChi;
+//            if (tieuChi.equals("Trạng thái phòng")) {
+//                matchTieuChi = trangThai.equalsIgnoreCase(tuKhoa);
+//            } else if (tieuChi.equals("Giá phòng")) {
+//                try {
+//                    if (tuKhoa.contains("-")) {
+//                        String[] range = tuKhoa.split("-");
+//                        double minPrice = Double.parseDouble(range[0].trim().replace(",", ""));
+//                        double maxPrice = Double.parseDouble(range[1].trim().replace(",", ""));
+//                        matchTieuChi = room.getPrice() >= minPrice && room.getPrice() <= maxPrice;
+//                    } else {
+//                        double inputPrice = Double.parseDouble(tuKhoa.replace(",", ""));
+//                        matchTieuChi = Math.abs(room.getPrice() - inputPrice) < 0.01;
+//                    }
+//                } catch (NumberFormatException ex) {
+//                    matchTieuChi = false;
+//                }
+//            } else {
+//                String value = tieuChi.equals("Mã phòng") ? roomId : soPhong;
+//                matchTieuChi = tuKhoa.isEmpty() || value.toLowerCase().contains(tuKhoa.toLowerCase());
+//            }
+//
+//            boolean matchLoaiPhong = loaiPhong.equals("Tất cả") || kieuPhong.equalsIgnoreCase(loaiPhong);
+//            if (matchTieuChi && matchLoaiPhong) {
+//                tableModel.addRow(new Object[]{roomId, soPhong, kieuPhong, giaTien, trangThai, moTa});
+//            }
+//        }
+//    }
+
+//    public void handleSearch() {
+//        String tieuChi = (String) cbTieuChi.getSelectedItem();
+//        String loaiPhong = (String) cbLoaiPhong.getSelectedItem();
+//        String tuKhoa = tieuChi.equals("Trạng thái phòng") ?
+//                cbTrangThai.getSelectedItem().toString() : tfTuKhoa.getText().trim();
+//
+//        String error = CheckRoomSearch.validateSearch(tieuChi, tuKhoa, loaiPhong);
+//        if (error != null) {
+//            JOptionPane.showMessageDialog(null, error, "Lỗi", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//
+//        tableModel.setRowCount(0);
+//        List<Room> rooms = roomService.getAllRooms();
+//        Map<String, String> roomStatusMap = getRoomStatusMap("bookings.xml");
+//        for (Room room : rooms) {
+//            String roomId = room.getRoomId();
+//            String soPhong = room.getRoomNumber();
+//            String kieuPhong = room.getType();
+//            String giaTien = String.format("%,.0f", room.getPrice());
+//            String trangThai = roomStatusMap.getOrDefault(roomId, "Đang trống");
+//            String moTa = room.getDescription();
+//
+//            boolean matchTieuChi;
+//            if (tieuChi.equals("Trạng thái phòng")) {
+//                matchTieuChi = trangThai.equalsIgnoreCase(tuKhoa);
+//            } else if (tieuChi.equals("Giá phòng")) {
+//                try {
+//                    // Xóa dấu phẩy trong từ khóa
+//                    String cleanedTuKhoa = tuKhoa.replace(",", "");
+//                    if (cleanedTuKhoa.contains("-")) {
+//                        String[] range = cleanedTuKhoa.split("-");
+//                        double minPrice = Double.parseDouble(range[0].trim());
+//                        double maxPrice = Double.parseDouble(range[1].trim());
+//                        matchTieuChi = room.getPrice() >= minPrice && room.getPrice() <= maxPrice;
+//                    } else {
+//                        double inputPrice = Double.parseDouble(cleanedTuKhoa);
+//                        matchTieuChi = Math.abs(room.getPrice() - inputPrice) < 0.01;
+//                    }
+//                } catch (NumberFormatException ex) {
+//                    matchTieuChi = false;
+//                }
+//            } else {
+//                String value = tieuChi.equals("Mã phòng") ? roomId : soPhong;
+//                matchTieuChi = tuKhoa.isEmpty() || value.toLowerCase().contains(tuKhoa.toLowerCase());
+//            }
+//
+//            boolean matchLoaiPhong = loaiPhong.equals("Tất cả") || kieuPhong.equalsIgnoreCase(loaiPhong);
+//            if (matchTieuChi && matchLoaiPhong) {
+//                tableModel.addRow(new Object[]{roomId, soPhong, kieuPhong, giaTien, trangThai, moTa});
+//            }
+//        }
+//    }
+
     public void handleSearch() {
         String tieuChi = (String) cbTieuChi.getSelectedItem();
         String loaiPhong = (String) cbLoaiPhong.getSelectedItem();
         String tuKhoa = tieuChi.equals("Trạng thái phòng") ?
                 cbTrangThai.getSelectedItem().toString() : tfTuKhoa.getText().trim();
 
-        String error = CheckRoomSearch.validateSearch(tieuChi, tuKhoa, loaiPhong);
-        if (error != null) {
-            JOptionPane.showMessageDialog(null, error, "Lỗi", JOptionPane.ERROR_MESSAGE);
+        if (!tieuChi.equals("Trạng thái phòng") && tuKhoa.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập từ khóa tìm kiếm!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        // Kiểm tra điều kiện theo tiêu chí
+        if (tieuChi.equals("Giá phòng")) {
+            String cleanedTuKhoa = tuKhoa.replace(" ", "").replace(",", "");
+
+            if (!tuKhoa.matches("^\\d{1,3}(,\\d{3})*(\\s*-\\s*\\d{1,3}(,\\d{3})*)?$")) {
+                JOptionPane.showMessageDialog(null, "Giá phòng không đúng định dạng! Ví dụ hợp lệ: 350,000 hoặc 350,000 - 500,000", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (cleanedTuKhoa.contains("-")) {
+                String[] range = cleanedTuKhoa.split("-");
+                if (range.length != 2 || !isNumeric(range[0].trim()) || !isNumeric(range[1].trim())) {
+                    JOptionPane.showMessageDialog(null, "Khoảng giá không hợp lệ! Nhập theo định dạng '350,000 - 500,000'", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                double min = Double.parseDouble(range[0].trim());
+                double max = Double.parseDouble(range[1].trim());
+                if (min >= max) {
+                    JOptionPane.showMessageDialog(null, "Giá min phải nhỏ hơn giá max!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } else {
+                if (!isNumeric(cleanedTuKhoa)) {
+                    JOptionPane.showMessageDialog(null, "Giá phòng phải là số hợp lệ! Ví dụ: 350,000", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+        } else if (tieuChi.equals("Mã phòng")) {
+            if (!tuKhoa.matches("R\\d{3,4}")) {
+                JOptionPane.showMessageDialog(null, "Mã phòng phải bắt đầu bằng 'R' và theo sau là 3 đến 4 chữ số! Ví dụ: R100, R1056", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } else if (tieuChi.equals("Số phòng")) {
+            if (!tuKhoa.matches("\\d+") || tuKhoa.length() > 5 || Integer.parseInt(tuKhoa) <= 100) {
+                JOptionPane.showMessageDialog(null, "Số phòng phải là số nguyên dương lớn hơn 100, tối đa 5 chữ số! Ví dụ: 1000", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        // Tìm kiếm phòng
         tableModel.setRowCount(0);
         List<Room> rooms = roomService.getAllRooms();
         Map<String, String> roomStatusMap = getRoomStatusMap("bookings.xml");
+        boolean hasResult = false;
+
         for (Room room : rooms) {
             String roomId = room.getRoomId();
             String soPhong = room.getRoomNumber();
@@ -87,29 +234,53 @@ public class RoomController {
                 matchTieuChi = trangThai.equalsIgnoreCase(tuKhoa);
             } else if (tieuChi.equals("Giá phòng")) {
                 try {
-                    if (tuKhoa.contains("-")) {
-                        String[] range = tuKhoa.split("-");
-                        double minPrice = Double.parseDouble(range[0].trim().replace(",", ""));
-                        double maxPrice = Double.parseDouble(range[1].trim().replace(",", ""));
+                    String cleanedTuKhoa = tuKhoa.replace(" ", "").replace(",", "");
+                    if (cleanedTuKhoa.contains("-")) {
+                        String[] range = cleanedTuKhoa.split("-");
+                        double minPrice = Double.parseDouble(range[0].trim());
+                        double maxPrice = Double.parseDouble(range[1].trim());
                         matchTieuChi = room.getPrice() >= minPrice && room.getPrice() <= maxPrice;
                     } else {
-                        double inputPrice = Double.parseDouble(tuKhoa.replace(",", ""));
+                        double inputPrice = Double.parseDouble(cleanedTuKhoa);
                         matchTieuChi = Math.abs(room.getPrice() - inputPrice) < 0.01;
                     }
                 } catch (NumberFormatException ex) {
                     matchTieuChi = false;
                 }
+            } else if (tieuChi.equals("Mã phòng")) {
+                matchTieuChi = roomId.toLowerCase().contains(tuKhoa.toLowerCase());
+            } else if (tieuChi.equals("Số phòng")) {
+                matchTieuChi = soPhong.toLowerCase().contains(tuKhoa.toLowerCase());
+            } else if (tieuChi.equals("Loại phòng")) {
+                matchTieuChi = kieuPhong.toLowerCase().contains(tuKhoa.toLowerCase());
+            } else if (tieuChi.equals("Mô tả")) {
+                matchTieuChi = moTa.toLowerCase().contains(tuKhoa.toLowerCase());
             } else {
-                String value = tieuChi.equals("Mã phòng") ? roomId : soPhong;
-                matchTieuChi = tuKhoa.isEmpty() || value.toLowerCase().contains(tuKhoa.toLowerCase());
+                matchTieuChi = false;
             }
 
             boolean matchLoaiPhong = loaiPhong.equals("Tất cả") || kieuPhong.equalsIgnoreCase(loaiPhong);
             if (matchTieuChi && matchLoaiPhong) {
                 tableModel.addRow(new Object[]{roomId, soPhong, kieuPhong, giaTien, trangThai, moTa});
+                hasResult = true;
             }
         }
+
+        if (!hasResult) {
+            JOptionPane.showMessageDialog(null, "Không có phòng nào khớp với tiêu chí tìm kiếm!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
+
+    // Hàm kiểm tra số
+    private boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
 
     public void handleAdd() {
         JTextField tfRoomId = new JTextField(10);

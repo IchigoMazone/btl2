@@ -63,10 +63,10 @@ public class RoomView {
         };
 
         JTable table = new JTable(tableModel);
-        Font bigFont = new Font("Arial", Font.PLAIN, 14);
-        table.setFont(bigFont);
+        Font defaultFont = UIManager.getFont("Table.font");
+        table.setFont(defaultFont);
         table.setRowHeight(28);
-        table.getTableHeader().setFont(bigFont);
+        table.getTableHeader().setFont(UIManager.getFont("TableHeader.font"));
         table.getTableHeader().setResizingAllowed(false);
         table.getTableHeader().setReorderingAllowed(false);
 
@@ -112,7 +112,7 @@ public class RoomView {
                 cl.show(keywordPanel, "text");
                 if (selected.equals("Giá phòng")) {
                     tfTuKhoa.setText(""); // Xóa nội dung để tránh lỗi định dạng
-                    tfTuKhoa.setToolTipText("Nhập giá (ví dụ: 350000 hoặc 300000-500000)");
+                    tfTuKhoa.setToolTipText("Nhập giá (ví dụ: 350,000 hoặc 300,000-500,000)");
                 } else {
                     tfTuKhoa.setToolTipText(null);
                 }

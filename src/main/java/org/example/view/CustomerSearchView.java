@@ -6,12 +6,13 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import org.example.entity.Room;
 import org.example.entity.SelectedRoomInfo;
 import org.example.service.RoomFinderService;
-
+import org.example.service.BookingService;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -134,6 +135,12 @@ public class CustomerSearchView {
                     return;
                 }
 
+                Duration duration = Duration.between(LocalDateTime.now(), checkIn);
+                if (!checkIn.isBefore(LocalDateTime.now()) && duration.toHours() < 4) {
+                    JOptionPane.showMessageDialog(panel, "Đặt phòng cần trước check-in ít nhất 4 giờ");
+                    return;
+                }
+
                 String loaiPhong = cbLoaiPhong.getSelectedItem().toString();
                 List<Room> rooms = finder.findAvailableRooms(checkIn, checkOut, loaiPhong);
 
@@ -146,7 +153,7 @@ public class CustomerSearchView {
                                 room.getRoomId(),
                                 room.getDescription(),
                                 room.getType(),
-                                currencyFormat.format(room.getPrice())
+                                currencyFormat.format(BookingService.getAmount(checkIn, checkOut, room.getPrice()))
                         });
                     }
                 }
