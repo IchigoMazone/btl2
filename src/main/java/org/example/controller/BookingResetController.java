@@ -12,7 +12,7 @@ import java.util.List;
 public class BookingResetController {
 
     public static void updateAbsentBookings() {
-        // Đọc từ bookings.xml
+
         BookingXML bookingXML = FileUtils.readFromFile("bookings.xml", BookingXML.class);
         List<Booking> allBookings = bookingXML.getBookings();
         LocalDateTime now = LocalDateTime.now();
@@ -24,7 +24,6 @@ public class BookingResetController {
 
 
             if ("Đã đặt".equalsIgnoreCase(status) && checkIn != null) {
-                // Quá 1 tiếng sau check-in vẫn chưa đến => vắng mặt
                 if (now.isAfter(checkIn.plusHours(1))) {
                     BookingService.updateBookingStatus("bookings.xml", booking.getBookingId(), "Vắng mặt");
                     NotificationService.createNotification(
@@ -38,7 +37,6 @@ public class BookingResetController {
             }
 
             if ("Check-in".equalsIgnoreCase(status) && checkOut != null) {
-                // Quá giờ check-out => chờ thanh toán
                 if (!now.isBefore(checkOut)) {
                     BookingService.updateBookingStatus("bookings.xml", booking.getBookingId(), "Chờ thanh toán");
                     NotificationService.createNotification(

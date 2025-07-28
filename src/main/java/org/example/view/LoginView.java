@@ -25,7 +25,6 @@ public class LoginView extends JPanel {
         setLayout(null);
         initComponents();
 
-        // Gắn controller vào các nút
         btnLogin.addActionListener(e -> LoginController.handleLogin(this));
         btnRegister.addActionListener(e -> LoginController.openRegister(this));
         btnForgotPassword.addActionListener(e -> LoginController.openForgotPassword(this));

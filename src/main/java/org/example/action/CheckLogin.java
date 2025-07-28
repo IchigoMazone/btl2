@@ -1,5 +1,6 @@
 package org.example.action;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.example.entity.UserInfo;
 import org.example.service.UserInfoService;
 import java.util.List;
@@ -41,7 +42,7 @@ public class CheckLogin {
 
         for (UserInfo info : list) {
             if (info.getUserName().equals(userName)
-                    && info.getPassword().equals(password)) {
+                    && info.getPassword().equals(DigestUtils.sha256Hex(password))) {
                 return null;
             }
         }

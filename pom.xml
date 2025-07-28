@@ -48,6 +48,11 @@
             <artifactId>ikonli-core</artifactId>
             <version>12.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>24</maven.compiler.source>

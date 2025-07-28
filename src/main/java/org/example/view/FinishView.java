@@ -31,7 +31,6 @@ public class FinishView extends JPanel {
     }
 
     private void openLogin() {
-        // Đóng panel hiện tại, chuyển về panel đăng nhập trong MainFrame
         mainFrame.showLoginPanel();
     }
 }

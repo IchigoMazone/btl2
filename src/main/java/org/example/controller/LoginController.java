@@ -27,8 +27,6 @@ public class LoginController {
     public static void openRegister(LoginView view) {
         view.getMainFrame().showRegisterPanel();
     }
-
-    // Mở trang Quên mật khẩu
     public static void openForgotPassword(LoginView view) {
         view.getMainFrame().showForgotPasswordPanel();
     }

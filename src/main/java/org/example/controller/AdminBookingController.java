@@ -1,48 +1,43 @@
 package org.example.controller;
 
-import org.example.view.CustomerBookingView;
+import org.example.view.AdminBookingView;
 import org.example.view.MainFrameView;
-import org.example.action.CheckCustomerBooking;
+import org.example.action.CheckAdminBooking;
 import org.example.entity.SelectedRoomInfo;
 import javax.swing.JPanel;
 
-public class CustomerBookingController {
-    private CustomerBookingView view;
+public class AdminBookingController {
+    private AdminBookingView view;
     private MainFrameView mainFrame;
-    private String username;
     private SelectedRoomInfo selectedRoom;
-    private CheckCustomerBooking bookingAction;
+    private CheckAdminBooking bookingAction;
 
-    public CustomerBookingController(CustomerBookingView view, MainFrameView mainFrame, String username, SelectedRoomInfo selectedRoom) {
+    public AdminBookingController(AdminBookingView view, MainFrameView mainFrame, SelectedRoomInfo selectedRoom) {
         this.view = view;
         this.mainFrame = mainFrame;
-        this.username = username;
         this.selectedRoom = selectedRoom;
-        this.bookingAction = new CheckCustomerBooking(this);
+        this.bookingAction = new CheckAdminBooking(this);
         initializeListeners();
     }
 
     private void initializeListeners() {
         view.getCbLoaiChung().addActionListener(e -> bookingAction.updateMaChungField());
         view.getCbSoNguoi().addActionListener(e -> bookingAction.updateGuestFields());
-        for (int i = 0; i < 3; i++) {
+        for (int i = 1; i < 4; i++) {
             int index = i;
             view.getLoaiCombos()[i].addActionListener(e -> bookingAction.updateMaField(index));
         }
+        view.getBtnRandom().addActionListener(e -> bookingAction.handleRandomUsername());
         view.getBtnQuayLai().addActionListener(e -> bookingAction.handleQuayLai());
         view.getBtnXacNhan().addActionListener(e -> bookingAction.handleXacNhan());
     }
 
-    public CustomerBookingView getView() {
+    public AdminBookingView getView() {
         return view;
     }
 
     public MainFrameView getMainFrame() {
         return mainFrame;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public SelectedRoomInfo getSelectedRoom() {

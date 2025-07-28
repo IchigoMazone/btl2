@@ -1,197 +1,16 @@
-//package org.example.service;
-//
-//import org.example.entity.*;
-//import org.example.utils.FileUtils;
-//
-//import java.time.LocalDateTime;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//public class BookingService {
-//
-//    // Tạo booking mới
-//    public static void createBooking(String filePath,
-//                                     String bookingId,
-//                                     String requestId,
-//                                     String userName,
-//                                     String fullName,
-//                                     String email,
-//                                     String phone,
-//                                     String roomId,
-//                                     LocalDateTime checkIn,
-//                                     LocalDateTime checkOut,
-//                                     double amount,
-//                                     List<Person> persons) {
-//
-//        BookingXML bookingXML = FileUtils.readFromFile(filePath, BookingXML.class);
-//        if (bookingXML == null) {
-//            bookingXML = new BookingXML();
-//        }
-//
-//        List<Booking> bookings = bookingXML.getBookings();
-//        if (bookings == null) {
-//            bookings = new ArrayList<>();
-//        }
-//
-//        LocalDateTime now = LocalDateTime.now();
-//
-//        // Khởi tạo lịch sử chỉ 1 trạng thái ban đầu
-//        List<HistoryEntry> historyList = new ArrayList<>();
-//        historyList.add(new HistoryEntry(now, "Đã tạo booking"));
-//
-//        // Tạo đối tượng Booking mới với trạng thái ban đầu "Chờ duyệt" hoặc "Đã tạo booking"
-//        Booking newBooking = new Booking(
-//                bookingId,
-//                requestId,
-//                userName,
-//                fullName,
-//                email,
-//                phone,
-//                roomId,
-//                checkIn,
-//                checkOut,
-//                amount,
-//                now,
-//                "Đã đặt", // trạng thái ban đầu
-//                persons,
-//                historyList
-//        );
-//
-//        bookings.add(0, newBooking); // Thêm booking mới lên đầu danh sách
-//        bookingXML.setBookings(bookings);
-//        FileUtils.writeToFile(filePath, bookingXML);
-//
-//        System.out.println("Tạo booking thành công: " + bookingId);
-//    }
-//
-//    // Cập nhật trạng thái booking theo bookingId
-//    public static void updateBookingStatus(String filePath, String bookingId, String newStatus) {
-//        BookingXML bookingXML = FileUtils.readFromFile(filePath, BookingXML.class);
-//        if (bookingXML == null || bookingXML.getBookings() == null) {
-//            System.out.println("Không có dữ liệu booking.");
-//            return;
-//        }
-//
-//        boolean updated = false;
-//        for (Booking booking : bookingXML.getBookings()) {
-//            if (booking.getBookingId().equals(bookingId)) {
-//                booking.setStatus(newStatus);
-//                booking.addBookingHistory(newStatus, LocalDateTime.now());
-//                updated = true;
-//                break;
-//            }
-//        }
-//
-//        if (updated) {
-//            FileUtils.writeToFile(filePath, bookingXML);
-//            System.out.println("Cập nhật trạng thái thành công: " + bookingId);
-//        } else {
-//            System.out.println("Không tìm thấy booking với ID: " + bookingId);
-//        }
-//    }
-//
-//    // Liệt kê danh sách khách đang lưu trú với số điện thoại và email đại diện
-//    public static void listCurrentGuests(LocalDateTime currentTime, String filePath) {
-//        BookingXML bookingXML = FileUtils.readFromFile(filePath, BookingXML.class);
-//        if (bookingXML == null || bookingXML.getBookings() == null) {
-//            System.out.println("Không có dữ liệu booking.");
-//            return;
-//        }
-//
-//        List<Booking> currentBookings = bookingXML.getBookings().stream()
-//                .filter(b -> !b.getCheckIn().isAfter(currentTime) && !b.getCheckOut().isBefore(currentTime))
-//                .toList();
-//
-//        if (currentBookings.isEmpty()) {
-//            System.out.println("Không có khách nào đang lưu trú vào thời điểm " + currentTime);
-//            return;
-//        }
-//
-//        System.out.println("Danh sách khách đang lưu trú tại " + currentTime + ":");
-//        for (Booking booking : currentBookings) {
-//            String phone = booking.getPhone();
-//            String email = booking.getEmail();
-//
-//            List<Person> persons = booking.getPersons();
-//            for (Person person : persons) {
-//                System.out.println("- " + person.getName()
-//                        + " | SĐT đại diện: " + phone
-//                        + " | Email đại diện: " + email
-//                        + " | Phòng: " + booking.getRoomId()
-//                        + " | Check-in: " + booking.getCheckIn()
-//                        + " | Check-out: " + booking.getCheckOut());
-//            }
-//        }
-//    }
-//
-//    // Kiểm tra trạng thái hoạt động của các phòng
-//    public static void checkBookingStatus(String bookingFilePath, String roomFilePath) {
-//        BookingXML bookingXML = FileUtils.readFromFile(bookingFilePath, BookingXML.class);
-//        RoomXML roomXML = FileUtils.readFromFile(roomFilePath, RoomXML.class);
-//
-//        if (roomXML == null || roomXML.getRooms() == null || roomXML.getRooms().isEmpty()) {
-//            System.out.println("Không có dữ liệu phòng.");
-//            return;
-//        }
-//
-//        List<Room> rooms = roomXML.getRooms();
-//        List<Booking> bookings = bookingXML != null && bookingXML.getBookings() != null ? bookingXML.getBookings() : new ArrayList<>();
-//        LocalDateTime now = LocalDateTime.now();
-//
-//        for (Room room : rooms) {
-//            boolean isActive = false;
-//
-//            for (Booking booking : bookings) {
-//                if (booking.getRoomId().equals(room.getRoomId())
-//                        && "Check-in".equalsIgnoreCase(booking.getStatus())
-//                        && !now.isBefore(booking.getCheckIn())
-//                        && !now.isAfter(booking.getCheckOut())) {
-//                    isActive = true;
-//                    break;
-//                }
-//            }
-//
-//            System.out.println("Phòng " + room.getRoomId() + ": " + (isActive ? "Đang hoạt động" : "Không hoạt động"));
-//        }
-//
-//        public static Booking getBookingById(String bookingId) {
-//            BookingXML bookingXML = FileUtils.readFromFile(BOOKINGS_XML_PATH, BookingXML.class);
-//            if (bookingXML == null) {
-//                return null;
-//            }
-//            return bookingXML.getBookings().stream()
-//                    .filter(b -> b.getBookingId().equals(bookingId))
-//                    .findFirst()
-//                    .orElse(null);
-//        }
-//    }
-//}
-
 
 package org.example.service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.OutputKeys;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -200,29 +19,12 @@ import org.example.utils.FileUtils;
 import org.example.entity.Booking;
 import org.example.entity.Person;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.File;
 
 public class BookingService {
     private static final String BOOKINGS_XML_PATH = "bookings.xml";
-
     private static final String FILE_PATH = "bookings.xml";
 
     public void addPerson(String bookingId, Person person) {
@@ -238,7 +40,7 @@ public class BookingService {
 
         booking.getPersons().add(person);
 
-        FileUtils.writeToFile(FILE_PATH, bookingXML); // ⬅ Ghi file sau khi thêm
+        FileUtils.writeToFile(FILE_PATH, bookingXML);
     }
 
     public void updatePerson(String bookingId, String oldDocumentCode, String oldFullName, Person updatedPerson) {
@@ -257,7 +59,7 @@ public class BookingService {
             Person p = persons.get(i);
             if (p.getDocumentCode().equals(oldDocumentCode) && p.getFullName().equals(oldFullName)) {
                 persons.set(i, updatedPerson);
-                FileUtils.writeToFile(FILE_PATH, bookingXML); // ⬅ Ghi file sau khi cập nhật
+                FileUtils.writeToFile(FILE_PATH, bookingXML);
                 return;
             }
         }
@@ -284,10 +86,9 @@ public class BookingService {
             throw new RuntimeException("Không tìm thấy người cần xóa.");
         }
 
-        FileUtils.writeToFile(FILE_PATH, bookingXML); // ⬅ Ghi file sau khi xóa
+        FileUtils.writeToFile(FILE_PATH, bookingXML);
     }
 
-    // Tạo booking mới
     public static void createBooking(String filePath,
                                      String bookingId,
                                      String requestId,
@@ -313,11 +114,9 @@ public class BookingService {
 
         LocalDateTime now = LocalDateTime.now();
 
-        // Khởi tạo lịch sử chỉ 1 trạng thái ban đầu
         List<HistoryEntry> historyList = new ArrayList<>();
         historyList.add(new HistoryEntry(now, "Đã tạo booking"));
 
-        // Tạo đối tượng Booking mới với trạng thái ban đầu "Chờ duyệt" hoặc "Đã tạo booking"
         Booking newBooking = new Booking(
                 bookingId,
                 requestId,
@@ -330,19 +129,18 @@ public class BookingService {
                 checkOut,
                 amount,
                 now,
-                "Đã đặt", // trạng thái ban đầu
+                "Đã đặt",
                 persons,
                 historyList
         );
 
-        bookings.add(0, newBooking); // Thêm booking mới lên đầu danh sách
+        bookings.add(0, newBooking);
         bookingXML.setBookings(bookings);
         FileUtils.writeToFile(filePath, bookingXML);
 
         System.out.println("Tạo booking thành công: " + bookingId);
     }
 
-    // Cập nhật trạng thái booking theo bookingId
     public static void updateBookingStatus(String filePath, String bookingId, String newStatus) {
         BookingXML bookingXML = FileUtils.readFromFile(filePath, BookingXML.class);
         if (bookingXML == null || bookingXML.getBookings() == null) {
@@ -368,40 +166,6 @@ public class BookingService {
         }
     }
 
-    // Liệt kê danh sách khách đang lưu trú với số điện thoại và email đại diện
-//    public static void listCurrentGuests(LocalDateTime currentTime, String filePath) {
-//        BookingXML bookingXML = FileUtils.readFromFile(filePath, BookingXML.class);
-//        if (bookingXML == null || bookingXML.getBookings() == null) {
-//            System.out.println("Không có dữ liệu booking.");
-//            return;
-//        }
-//
-//        List<Booking> currentBookings = bookingXML.getBookings().stream()
-//                .filter(b -> !b.getCheckIn().isAfter(currentTime) && !b.getCheckOut().isBefore(currentTime))
-//                .toList();
-//
-//        if (currentBookings.isEmpty()) {
-//            System.out.println("Không có khách nào đang lưu trú vào thời điểm " + currentTime);
-//            return;
-//        }
-//
-//        System.out.println("Danh sách khách đang lưu trú tại " + currentTime + ":");
-//        for (Booking booking : currentBookings) {
-//            String phone = booking.getPhone();
-//            String email = booking.getEmail();
-//
-//            List<Person> persons = booking.getPersons();
-//            for (Person person : persons) {
-//                System.out.println("- " + person.getFullName()
-//                        + " | SĐT đại diện: " + phone
-//                        + " | Email đại diện: " + email
-//                        + " | Phòng: " + booking.getRoomId()
-//                        + " | Check-in: " + booking.getCheckIn()
-//                        + " | Check-out: " + booking.getCheckOut());
-//            }
-//        }
-//    }
-
     public static void listCurrentGuests(LocalDateTime currentTime, String filePath) {
         BookingXML bookingXML = FileUtils.readFromFile(filePath, BookingXML.class);
         if (bookingXML == null || bookingXML.getBookings() == null) {
@@ -422,7 +186,7 @@ public class BookingService {
         for (Booking booking : currentBookings) {
             String phone = booking.getPhone();
             String email = booking.getEmail();
-            String account = booking.getUserName(); // ⚠️ Cần đảm bảo Booking có field này
+            String account = booking.getUserName();
 
             List<Person> persons = booking.getPersons();
             for (Person person : persons) {
@@ -476,7 +240,6 @@ public class BookingService {
     }
 
 
-    // Kiểm tra trạng thái hoạt động của các phòng
     public static void checkBookingStatus(String bookingFilePath, String roomFilePath) {
         BookingXML bookingXML = FileUtils.readFromFile(bookingFilePath, BookingXML.class);
         RoomXML roomXML = FileUtils.readFromFile(roomFilePath, RoomXML.class);
@@ -507,7 +270,6 @@ public class BookingService {
         }
     }
 
-    // Lấy thông tin booking theo bookingId
     public static Booking findBookingById(String bookingId) {
         BookingXML bookingXML = FileUtils.readFromFile(BOOKINGS_XML_PATH, BookingXML.class);
         if (bookingXML == null || bookingXML.getBookings() == null) {
@@ -519,70 +281,6 @@ public class BookingService {
                 .orElse(null);
     }
 
-    public static int countActiveRooms(String bookingFilePath, String roomFilePath) {
-        BookingXML bookingXML = FileUtils.readFromFile(bookingFilePath, BookingXML.class);
-        RoomXML roomXML = FileUtils.readFromFile(roomFilePath, RoomXML.class);
-
-        if (roomXML == null || roomXML.getRooms() == null || roomXML.getRooms().isEmpty()) {
-            return 0;
-        }
-
-        List<Room> rooms = roomXML.getRooms();
-        List<Booking> bookings = bookingXML != null && bookingXML.getBookings() != null ? bookingXML.getBookings() : new ArrayList<>();
-        LocalDateTime now = LocalDateTime.now();
-
-        int count = 0;
-        for (Room room : rooms) {
-            for (Booking booking : bookings) {
-                if (booking.getRoomId().equals(room.getRoomId())
-                        && "Check-in".equalsIgnoreCase(booking.getStatus())
-                        && !now.isBefore(booking.getCheckIn())
-                        && !now.isAfter(booking.getCheckOut())) {
-                    count++;
-                    break;
-                }
-            }
-        }
-
-        return count;
-    }
-
-    public static int countEmptyRooms(String bookingFilePath, String roomFilePath) {
-        BookingXML bookingXML = FileUtils.readFromFile(bookingFilePath, BookingXML.class);
-        RoomXML roomXML = FileUtils.readFromFile(roomFilePath, RoomXML.class);
-
-        if (roomXML == null || roomXML.getRooms() == null) return 0;
-        List<Room> rooms = roomXML.getRooms();
-        List<Booking> bookings = bookingXML != null && bookingXML.getBookings() != null
-                ? bookingXML.getBookings()
-                : new ArrayList<>();
-
-        LocalDateTime now = LocalDateTime.now();
-        int count = 0;
-
-        for (Room room : rooms) {
-            String roomId = room.getRoomId().trim();
-            boolean isOccupied = false;
-
-            for (Booking booking : bookings) {
-                String bookedRoomId = booking.getRoomId().trim();
-
-                if (roomId.equalsIgnoreCase(bookedRoomId)
-                        && !"Check-in".equalsIgnoreCase(booking.getStatus())
-                        && !now.isBefore(booking.getCheckIn())
-                        && !now.isAfter(booking.getCheckOut())) {
-                    isOccupied = true;
-                    break;
-                }
-            }
-
-            if (!isOccupied) {
-                count++;
-            }
-        }
-
-        return count;
-    }
 
     public static double getAmount(LocalDateTime checkIn, LocalDateTime checkOut, double giaNiemYet) {
         if (checkOut.isBefore(checkIn)) {
@@ -611,58 +309,13 @@ public class BookingService {
 
         for (Booking booking : bookings) {
             if (booking.getBookingId().equals(bookingId)) {
-                return booking.getNumberOfGuests(); // Sử dụng getNumberOfGuests() từ Booking
+                return booking.getNumberOfGuests();
             }
         }
-        return 0; // Trả về 0 nếu không tìm thấy bookingId
+        return 0;
     }
 
-    // Xóa Person dựa trên chỉ số dòng và bookingId
-//    public void deletePersonByRow(int rowIndex, String bookingId) throws Exception {
-//        // Kiểm tra số lượng người trong bookingId
-//        int personCount = countPersonsByBookingId(bookingId);
-//        if (personCount <= 1) {
-//            throw new Exception("Không thể xóa: Phòng phải có ít nhất một người.");
-//        }
-//
-//        File xmlFile = new File("bookings.xml");
-//        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-//        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-//        Document doc = dBuilder.parse(xmlFile);
-//        doc.getDocumentElement().normalize();
-//
-//        // Tìm Booking với bookingId
-//        NodeList bookingList = doc.getElementsByTagName("Booking");
-//        Element targetBooking = null;
-//        for (int i = 0; i < bookingList.getLength(); i++) {
-//            Element bookingElement = (Element) bookingList.item(i);
-//            String currentBookingId = bookingElement.getElementsByTagName("bookingId").item(0).getTextContent();
-//            if (currentBookingId.equals(bookingId)) {
-//                targetBooking = bookingElement;
-//                break;
-//            }
-//        }
-//
-//        if (targetBooking == null) {
-//            throw new Exception("Không tìm thấy Booking với bookingId: " + bookingId);
-//        }
-//
-//        // Lấy danh sách Person trong Booking
-//        NodeList personList = targetBooking.getElementsByTagName("Person");
-//        if (rowIndex < 0 || rowIndex >= personList.getLength()) {
-//            throw new Exception("Chỉ số dòng không hợp lệ: " + rowIndex);
-//        }
-//
-//        // Xóa phần tử Person tại rowIndex
-//        personList.item(rowIndex).getParentNode().removeChild(personList.item(rowIndex));
-//
-//        // Lưu lại tệp XML
-//        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-//        Transformer transformer = transformerFactory.newTransformer();
-//        DOMSource source = new DOMSource(doc);
-//        StreamResult result = new StreamResult(xmlFile);
-//        transformer.transform(source, result);
-//    }
+
     public void deletePersonByRow(int rowIndex, String bookingId) throws Exception {
         int personCount = countPersonsByBookingId(bookingId);
         if (personCount <= 1) {
@@ -671,15 +324,13 @@ public class BookingService {
 
         File xmlFile = new File("bookings.xml");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        dbFactory.setIgnoringElementContentWhitespace(true); // quan trọng
+        dbFactory.setIgnoringElementContentWhitespace(true);
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(xmlFile);
         doc.getDocumentElement().normalize();
 
-        // XÓA WHITESPACE NODE gây lỗi format
         removeWhitespaceNodes(doc.getDocumentElement());
 
-        // Tìm booking cần xóa
         NodeList bookingList = doc.getElementsByTagName("Booking");
         Element targetBooking = null;
         for (int i = 0; i < bookingList.getLength(); i++) {
@@ -703,19 +354,17 @@ public class BookingService {
         Node personNode = personList.item(rowIndex);
         personNode.getParentNode().removeChild(personNode);
 
-        // Ghi lại file XML sạch sẽ, không thụt dòng
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes"); // Không xuống dòng
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no"); // giữ dòng khai báo
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
 
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(xmlFile);
         transformer.transform(source, result);
     }
 
-    // Xóa các TEXT_NODE trắng rác (xuống dòng, khoảng trắng)
     private void removeWhitespaceNodes(Node node) {
         NodeList children = node.getChildNodes();
         for (int i = children.getLength() - 1; i >= 0; i--) {

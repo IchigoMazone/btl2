@@ -1,4 +1,5 @@
 //
+//
 //package org.example.view;
 //
 //import org.example.entity.Person;
@@ -6,21 +7,36 @@
 //import org.example.service.BookingService;
 //import javax.swing.*;
 //import javax.swing.border.TitledBorder;
-//import java.time.temporal.ChronoUnit;
 //import java.awt.*;
 //import java.time.LocalDateTime;
 //import java.time.format.DateTimeFormatter;
+//import java.time.temporal.ChronoUnit;
 //import java.util.ArrayList;
+//import java.util.HashSet;
 //import java.util.List;
 //import java.util.Random;
+//import java.util.Set;
+//import java.util.regex.Pattern;
 //
 //public class AdminBookingView {
-//
 //    private static JTextField tfTaiKhoan, tfSdt, tfGmail;
 //    private static JTextField[] hoTenFields = new JTextField[4];
 //    private static JComboBox<String>[] loaiCombos = new JComboBox[4];
-//    private static JTextField[] maFields = new JTextField[4];
+//    private static JTextField[] maTextFields = new JTextField[4];
+//    private static JComboBox<String>[] maComboFields = new JComboBox[4];
+//    private static CardLayout[] maCardLayouts = new CardLayout[4];
+//    private static JPanel[] maPanels = new JPanel[4];
 //    private static JComboBox<Integer> cbSoNguoi;
+//    private static JComboBox<String> cbLoaiChung;
+//    private static JComboBox<String> cbMaChung;
+//    private static JTextField tfMaChung;
+//    private static JPanel panelMaChung;
+//    private static CardLayout cardLayoutMaChung;
+//
+//    private static final Pattern MA_DINH_DANH_PATTERN = Pattern.compile("\\d{12}");
+//    private static final Pattern HO_CHIEU_PATTERN = Pattern.compile("[A-Za-z0-9]{8}");
+//    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
+//    private static final Pattern PHONE_PATTERN = Pattern.compile("^0\\d{9}$");
 //
 //    public static JPanel createBookingPanel(MainFrameView mainFrame, SelectedRoomInfo selectedRoom) {
 //        JPanel panel = new JPanel();
@@ -50,7 +66,6 @@
 //        gbc.fill = GridBagConstraints.HORIZONTAL;
 //        gbc.weightx = 1.0;
 //
-//        // Số người
 //        gbc.gridy = 0;
 //        gbc.gridx = 0;
 //        formPanel.add(new JLabel("Số người:"), gbc);
@@ -61,7 +76,6 @@
 //        formPanel.add(cbSoNguoi, gbc);
 //        gbc.gridwidth = 1;
 //
-//        // Tài khoản
 //        gbc.gridy++;
 //        gbc.gridx = 0;
 //        formPanel.add(new JLabel("Tài khoản:"), gbc);
@@ -79,7 +93,6 @@
 //            tfTaiKhoan.setText(randomStr);
 //        });
 //
-//        // SĐT
 //        gbc.gridy++;
 //        gbc.gridx = 0;
 //        formPanel.add(new JLabel("SĐT:"), gbc);
@@ -88,7 +101,6 @@
 //        tfSdt = new JTextField();
 //        formPanel.add(tfSdt, gbc);
 //
-//        // Gmail
 //        gbc.gridy++;
 //        gbc.gridx = 0;
 //        formPanel.add(new JLabel("Gmail:"), gbc);
@@ -96,11 +108,57 @@
 //        tfGmail = new JTextField();
 //        formPanel.add(tfGmail, gbc);
 //
-//        // Danh sách người đi cùng
-//        String[] loaiOptions = {"Không có", "Mã định danh", "Hộ chiếu"};
+//        gbc.gridy++;
+//        gbc.gridx = 0;
+//        formPanel.add(new JLabel("Họ tên người đại diện:"), gbc);
+//        gbc.gridx = 1;
+//        gbc.gridwidth = 3;
+//        hoTenFields[0] = new JTextField();
+//        formPanel.add(hoTenFields[0], gbc);
+//        gbc.gridwidth = 1;
 //
-//        for (int i = 0; i < 4; i++) {
-//            int row = gbc.gridy + 1 + i * 2;
+//        gbc.gridy++;
+//        gbc.gridx = 0;
+//        formPanel.add(new JLabel("Loại giấy tờ:"), gbc);
+//        gbc.gridx = 1;
+//        cbLoaiChung = new JComboBox<>(new String[]{"Không có", "Mã định danh", "Hộ chiếu"});
+//        formPanel.add(cbLoaiChung, gbc);
+//        gbc.gridx = 2;
+//        formPanel.add(new JLabel("Mã:"), gbc);
+//        gbc.gridx = 3;
+//        cardLayoutMaChung = new CardLayout();
+//        panelMaChung = new JPanel(cardLayoutMaChung);
+//
+//        Dimension fixedSize = new Dimension(150, 25);
+//        cbMaChung = new JComboBox<>(new String[]{"Không xác định", "Dưới 14 tuổi"});
+//        cbMaChung.setPreferredSize(fixedSize);
+//        tfMaChung = new JTextField();
+//        tfMaChung.setPreferredSize(fixedSize);
+//
+//        panelMaChung.add(cbMaChung, "combo");
+//        panelMaChung.add(tfMaChung, "text");
+//        formPanel.add(panelMaChung, gbc);
+//
+//        Runnable updateMaChungField = () -> {
+//            String selected = (String) cbLoaiChung.getSelectedItem();
+//            if ("Không có".equals(selected)) {
+//                cbMaChung.setSelectedItem("Không xác định");
+//                cardLayoutMaChung.show(panelMaChung, "combo");
+//            } else {
+//                tfMaChung.setText("");
+//                cardLayoutMaChung.show(panelMaChung, "text");
+//            }
+//        };
+//
+//        updateMaChungField.run();
+//        cbLoaiChung.addActionListener(e -> updateMaChungField.run());
+//
+//        String[] loaiOptions = {"Không có", "Mã định danh", "Hộ chiếu"};
+//        String[] comboOptions = {"Không xác định", "Dưới 14 tuổi"};
+//        Dimension maFieldSize = new Dimension(150, 25);
+//
+//        for (int i = 1; i < 4; i++) {
+//            int row = gbc.gridy + 1 + (i - 1) * 2;
 //
 //            gbc.gridy = row;
 //            gbc.gridx = 0;
@@ -109,9 +167,9 @@
 //            gbc.gridwidth = 3;
 //            hoTenFields[i] = new JTextField();
 //            formPanel.add(hoTenFields[i], gbc);
+//            gbc.gridwidth = 1;
 //
 //            gbc.gridy = row + 1;
-//            gbc.gridwidth = 1;
 //            gbc.gridx = 0;
 //            formPanel.add(new JLabel("Loại giấy tờ:"), gbc);
 //            gbc.gridx = 1;
@@ -120,39 +178,143 @@
 //            gbc.gridx = 2;
 //            formPanel.add(new JLabel("Mã:"), gbc);
 //            gbc.gridx = 3;
-//            maFields[i] = new JTextField();
-//            formPanel.add(maFields[i], gbc);
+//            maCardLayouts[i] = new CardLayout();
+//            maPanels[i] = new JPanel(maCardLayouts[i]);
+//
+//            maComboFields[i] = new JComboBox<>(comboOptions);
+//            maComboFields[i].setPreferredSize(maFieldSize);
+//            maTextFields[i] = new JTextField();
+//            maTextFields[i].setPreferredSize(maFieldSize);
+//
+//            maPanels[i].add(maComboFields[i], "combo");
+//            maPanels[i].add(maTextFields[i], "text");
+//            formPanel.add(maPanels[i], gbc);
 //
 //            int index = i;
 //            loaiCombos[i].addActionListener(e -> {
 //                String selected = (String) loaiCombos[index].getSelectedItem();
 //                if ("Không có".equals(selected)) {
-//                    maFields[index].setText("Trẻ em");
-//                    maFields[index].setEditable(false);
+//                    maComboFields[index].setSelectedItem("Không xác định");
+//                    maCardLayouts[index].show(maPanels[index], "combo");
 //                } else {
-//                    maFields[index].setText("");
-//                    maFields[index].setEditable(true);
+//                    maTextFields[index].setText("");
+//                    maCardLayouts[index].show(maPanels[index], "text");
 //                }
 //            });
+//
+//            loaiCombos[i].setSelectedIndex(0);
 //        }
 //
-//        // Kích hoạt đúng số người
 //        cbSoNguoi.addActionListener(e -> {
 //            int selected = (int) cbSoNguoi.getSelectedItem();
-//            for (int i = 0; i < 4; i++) {
+//            for (int i = 1; i < 4; i++) {
 //                boolean enable = i < selected;
 //                hoTenFields[i].setEnabled(enable);
 //                loaiCombos[i].setEnabled(enable);
-//                maFields[i].setEnabled(enable);
+//                maComboFields[i].setEnabled(enable);
+//                maTextFields[i].setEnabled(enable);
+//
 //                if (!enable) {
 //                    hoTenFields[i].setText("");
-//                    maFields[i].setText("");
+//                    maTextFields[i].setText("");
+//                    maComboFields[i].setSelectedIndex(0);
 //                }
+//
+//                String selectedLoai = (String) loaiCombos[i].getSelectedItem();
+//                maCardLayouts[i].show(maPanels[i], "Không có".equals(selectedLoai) ? "combo" : "text");
 //            }
 //        });
 //
 //        cbSoNguoi.setSelectedIndex(0);
 //        return formPanel;
+//    }
+//
+//    private static boolean isValidMaGiayTo(String loai, String ma) {
+//        if ("Không có".equals(loai)) {
+//            return ma.equals("Không xác định") || ma.equals("Dưới 14 tuổi");
+//        } else if ("Mã định danh".equals(loai)) {
+//            return MA_DINH_DANH_PATTERN.matcher(ma).matches();
+//        } else if ("Hộ chiếu".equals(loai)) {
+//            return HO_CHIEU_PATTERN.matcher(ma).matches();
+//        }
+//        return false;
+//    }
+//
+//    private static String validateInput(MainFrameView mainFrame, int soNguoi, String username, String sdt, String gmail, String hoTenDaiDien, String loaiDaiDien, String maDaiDien) {
+//
+//        if (username.isEmpty()) {
+//            return "Tài khoản không được để trống!";
+//        }
+//        if (!PHONE_PATTERN.matcher(sdt).matches()) {
+//            return "Số điện thoại phải là 10 chữ số và bắt đầu bằng 0!";
+//        }
+//        if (!EMAIL_PATTERN.matcher(gmail).matches()) {
+//            return "Định dạng Gmail không hợp lệ!";
+//        }
+//
+//        if (hoTenDaiDien.isEmpty()) {
+//            return "Họ tên người đại diện không được để trống!";
+//        }
+//
+//        if (!"Không có".equals(loaiDaiDien) && maDaiDien.isEmpty()) {
+//            return "Mã giấy tờ người đại diện không được để trống!";
+//        }
+//        if (!isValidMaGiayTo(loaiDaiDien, maDaiDien)) {
+//            return "Mã giấy tờ người đại diện không đúng định dạng!\n" +
+//                    "Mã định danh: 12 chữ số\nHộ chiếu: 8 ký tự chữ hoặc số";
+//        }
+//        if ("Mã định danh".equals(loaiDaiDien) && "Dưới 14 tuổi".equals(maDaiDien)) {
+//            return "Người đại diện dưới 14 tuổi không được phép sử dụng Mã định danh!";
+//        }
+//
+//        int validGuests = 1;
+//        Set<String> maDinhDanhSet = new HashSet<>();
+//        Set<String> hoChieuSet = new HashSet<>();
+//
+//        if ("Mã định danh".equals(loaiDaiDien)) {
+//            maDinhDanhSet.add(maDaiDien);
+//        } else if ("Hộ chiếu".equals(loaiDaiDien)) {
+//            hoChieuSet.add(maDaiDien);
+//        }
+//
+//        for (int i = 1; i < soNguoi; i++) {
+//            String ten = hoTenFields[i].getText().trim();
+//            String loai = (String) loaiCombos[i].getSelectedItem();
+//            String ma = "Không có".equals(loai) ? (String) maComboFields[i].getSelectedItem() : maTextFields[i].getText().trim();
+//
+//            if (ten.isEmpty() && !ma.isEmpty()) {
+//                return "Họ tên người " + (i + 1) + " không được để trống khi đã nhập mã!";
+//            }
+//            if (!ten.isEmpty() && !"Không có".equals(loai) && ma.isEmpty()) {
+//                return "Mã giấy tờ người " + (i + 1) + " không được để trống!";
+//            }
+//            if (!ten.isEmpty() && !isValidMaGiayTo(loai, ma)) {
+//                return "Mã giấy tờ người " + (i + 1) + " không đúng định dạng!\n" +
+//                        "Mã định danh: 12 chữ số\nHộ chiếu: 8 ký tự chữ hoặc số";
+//            }
+//            if (!ten.isEmpty() && "Mã định danh".equals(loai) && "Dưới 14 tuổi".equals(ma)) {
+//                return "Người " + (i + 1) + " dưới 14 tuổi không được phép sử dụng Mã định danh!";
+//            }
+//            if (!ten.isEmpty()) {
+//                validGuests++;
+//
+//                if ("Mã định danh".equals(loai)) {
+//                    if (!maDinhDanhSet.add(ma)) {
+//                        return "Mã định danh của người " + (i + 1) + " trùng với mã đã nhập trước đó!";
+//                    }
+//                } else if ("Hộ chiếu".equals(loai)) {
+//                    if (!hoChieuSet.add(ma)) {
+//                        return "Hộ chiếu của người " + (i + 1) + " trùng với mã đã nhập trước đó!";
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (validGuests < soNguoi) {
+//            return "Số lượng khách hợp lệ (" + validGuests + ") không khớp với số người đã chọn (" + soNguoi + ")!";
+//        }
+//
+//        return null;
 //    }
 //
 //    private static JPanel createButtonPanel(MainFrameView mainFrame, SelectedRoomInfo selectedRoom) {
@@ -169,108 +331,65 @@
 //
 //        btnXacNhan.addActionListener(e -> {
 //            int soNguoi = (int) cbSoNguoi.getSelectedItem();
-//
 //            String username = tfTaiKhoan.getText().trim();
 //            String sdt = tfSdt.getText().trim();
 //            String gmail = tfGmail.getText().trim();
-//
-//            if (username.isEmpty() || gmail.isEmpty() || sdt.isEmpty()) {
-//                JOptionPane.showMessageDialog(mainFrame, "Vui lòng điền đầy đủ thông tin người đại diện!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
-//
 //            String hoTenDaiDien = hoTenFields[0].getText().trim();
-//            String loaiDaiDien = (String) loaiCombos[0].getSelectedItem();
-//            String maDaiDien = maFields[0].getText().trim();
+//            String loaiDaiDien = (String) cbLoaiChung.getSelectedItem();
+//            String maDaiDien = "Không có".equals(loaiDaiDien) ? (String) cbMaChung.getSelectedItem() : tfMaChung.getText().trim();
 //
-//            if (hoTenDaiDien.isEmpty() || maDaiDien.isEmpty()) {
-//                JOptionPane.showMessageDialog(mainFrame, "Vui lòng điền đầy đủ họ tên và mã giấy tờ người đại diện!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//            String errorMessage = validateInput(mainFrame, soNguoi, username, sdt, gmail, hoTenDaiDien, loaiDaiDien, maDaiDien);
+//            if (errorMessage != null) {
+//                JOptionPane.showMessageDialog(mainFrame, errorMessage, "Lỗi nhập liệu", JOptionPane.ERROR_MESSAGE);
 //                return;
 //            }
-//
-//            List<Person> danhSach = new ArrayList<>();
-//            danhSach.add(new Person(hoTenDaiDien, loaiDaiDien, maDaiDien));
 //
 //            StringBuilder danhSachKhach = new StringBuilder();
 //            danhSachKhach.append("- ").append(hoTenDaiDien)
 //                    .append(" [").append(loaiDaiDien).append(": ").append(maDaiDien).append("]\n");
 //
+//            List<Person> danhSach = new ArrayList<>();
+//            danhSach.add(new Person(hoTenDaiDien, loaiDaiDien, maDaiDien));
+//
 //            for (int i = 1; i < soNguoi; i++) {
 //                String ten = hoTenFields[i].getText().trim();
 //                String loai = (String) loaiCombos[i].getSelectedItem();
-//                String ma = maFields[i].getText().trim();
+//                String ma = "Không có".equals(loai) ? (String) maComboFields[i].getSelectedItem() : maTextFields[i].getText().trim();
 //
-//                if (ten.isEmpty() || ma.isEmpty()) continue;
-//                danhSach.add(new Person(ten, loai, ma));
-//
-//                danhSachKhach.append("- ").append(ten)
-//                        .append(" [").append(loai).append(": ").append(ma).append("]\n");
+//                if (!ten.isEmpty()) {
+//                    danhSachKhach.append("- ").append(ten)
+//                            .append(" [").append(loai).append(": ").append(ma).append("]\n");
+//                    danhSach.add(new Person(ten, loai, ma));
+//                }
 //            }
 //
 //            String thoiGianTao = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-////            String info = String.format("""
-////THÔNG TIN ĐẶT PHÒNG
-////
-////Tài khoản: %s
-////SĐT: %s
-////Gmail: %s
-////Người đại diện: %s
-////
-////Số người: %d
-////Danh sách khách:
-////%s
-////Phòng: %s
-////Mô tả: %s
-////Loại: %s
-////Giá: %,.0f VND
-////
-////Check-in: %s
-////Check-out: %s
-////Thời gian tạo: %s
-////Trạng thái: Đã gửi yêu cầu
-////""",
-////                    username, sdt, gmail, hoTenDaiDien, soNguoi, danhSachKhach.toString(),
-////                    selectedRoom.getRoomId(), selectedRoom.getDescription(), selectedRoom.getType(),
-////                    selectedRoom.getPrice(),
-////                    selectedRoom.getCheckIn(), selectedRoom.getCheckOut(),
-////                    thoiGianTao
-////            );
-////
-////            int confirm = JOptionPane.showOptionDialog(
-////                    mainFrame, info, "Xác nhận đặt phòng",
-////                    JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
-////                    null, new String[]{"Quay lại", "Xác nhận"}, "Xác nhận"
-////            );
-//
 //            String info = String.format("""
-//THÔNG TIN ĐẶT PHÒNG
+//                    THÔNG TIN ĐẶT PHÒNG
 //
-//Tài khoản: %s
-//SĐT: %s
-//Gmail: %s
-//Người đại diện: %s
+//                    Tài khoản: %s
+//                    SĐT: %s
+//                    Gmail: %s
+//                    Người đại diện: %s
 //
-//Số người: %d
-//Danh sách khách:
-//%s
-//Phòng: %s
-//Mô tả: %s
-//Loại: %s
-//Giá: %,.0f VND
+//                    Số người: %d
+//                    Danh sách khách:
+//                    %s
+//                    Phòng: %s
+//                    Mô tả: %s
+//                    Loại: %s
+//                    Giá: %,.0f VND
 //
-//Check-in: %s
-//Check-out: %s
-//Thời gian tạo: %s
-//Trạng thái: Đã gửi yêu cầu
-//""",
+//                    Check-in: %s
+//                    Check-out: %s
+//                    Thời gian tạo: %s
+//                    Trạng thái: Đã gửi yêu cầu
+//                    """,
 //                    username, sdt, gmail, hoTenDaiDien, soNguoi, danhSachKhach.toString(),
 //                    selectedRoom.getRoomId(), selectedRoom.getDescription(), selectedRoom.getType(),
-//                    selectedRoom.getPrice(),
-//                    selectedRoom.getCheckIn(), selectedRoom.getCheckOut(),
-//                    thoiGianTao
-//            );
+//                    selectedRoom.getPrice(), selectedRoom.getCheckIn(), selectedRoom.getCheckOut(),
+//                    thoiGianTao);
 //
-//// Tạo JTextArea để hiển thị thông tin
 //            JTextArea textArea = new JTextArea(info);
 //            textArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 //            textArea.setEditable(false);
@@ -278,31 +397,25 @@
 //            textArea.setWrapStyleWord(true);
 //            textArea.setMargin(new Insets(10, 10, 10, 10));
 //
-//// Đặt trong JScrollPane để hiện đẹp hơn
 //            JScrollPane scrollPane = new JScrollPane(textArea);
 //            scrollPane.setPreferredSize(new Dimension(500, 400));
 //
-//// Tạo JPanel chứa scroll pane
 //            JPanel content = new JPanel(new BorderLayout());
 //            content.add(scrollPane, BorderLayout.CENTER);
 //
-//// Hiển thị JOptionPane không có icon, với hai nút
 //            int confirm = JOptionPane.showOptionDialog(
 //                    mainFrame,
 //                    content,
 //                    "Xác nhận đặt phòng",
 //                    JOptionPane.YES_NO_OPTION,
-//                    JOptionPane.PLAIN_MESSAGE, // Không icon xanh
+//                    JOptionPane.PLAIN_MESSAGE,
 //                    null,
 //                    new String[]{"Quay lại", "Xác nhận"},
-//                    "Xác nhận"
-//            );
-//
+//                    "Xác nhận");
 //
 //            if (confirm == 1) {
-//                // Sinh mã booking ngẫu nhiên
-//                String bookingId = "BK" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ((int)(Math.random() * 99999) + 10000);
-//                String requestId = "REQ0000X";
+//                String bookingId = "BK" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + String.format("%05d", new Random().nextInt(100000));
+//                String requestId = "REQ" + String.format("%04d", new Random().nextInt(10000));
 //
 //                BookingService.createBooking(
 //                        "bookings.xml",
@@ -330,72 +443,64 @@
 //            }
 //        });
 //
-//
 //        btnPanel.add(btnQuayLai);
 //        btnPanel.add(btnXacNhan);
 //        return btnPanel;
 //    }
 //}
-//
-//
-
-
 
 package org.example.view;
 
-import org.example.entity.Person;
+import org.example.controller.AdminBookingController;
 import org.example.entity.SelectedRoomInfo;
-import org.example.service.BookingService;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.regex.Pattern;
 
 public class AdminBookingView {
-    private static JTextField tfTaiKhoan, tfSdt, tfGmail;
-    private static JTextField[] hoTenFields = new JTextField[4];
-    private static JComboBox<String>[] loaiCombos = new JComboBox[4];
-    private static JTextField[] maTextFields = new JTextField[4];
-    private static JComboBox<String>[] maComboFields = new JComboBox[4];
-    private static CardLayout[] maCardLayouts = new CardLayout[4];
-    private static JPanel[] maPanels = new JPanel[4];
-    private static JComboBox<Integer> cbSoNguoi;
-    private static JComboBox<String> cbLoaiChung;
-    private static JComboBox<String> cbMaChung;
-    private static JTextField tfMaChung;
-    private static JPanel panelMaChung;
-    private static CardLayout cardLayoutMaChung;
+    private JPanel panel;
+    private JTextField tfTaiKhoan, tfSdt, tfGmail;
+    private JTextField[] hoTenFields = new JTextField[4];
+    private JComboBox<String>[] loaiCombos = new JComboBox[4];
+    private JTextField[] maTextFields = new JTextField[4];
+    private JComboBox<String>[] maComboFields = new JComboBox[4];
+    private CardLayout[] maCardLayouts = new CardLayout[4];
+    private JPanel[] maPanels = new JPanel[4];
+    private JComboBox<Integer> cbSoNguoi;
+    private JComboBox<String> cbLoaiChung;
+    private JComboBox<String> cbMaChung;
+    private JTextField tfMaChung;
+    private JPanel panelMaChung;
+    private CardLayout cardLayoutMaChung;
+    private JButton btnRandom;
+    private JButton btnXacNhan;
+    private JButton btnQuayLai;
 
-    // Regex cho mã định danh, hộ chiếu, email và số điện thoại
-    private static final Pattern MA_DINH_DANH_PATTERN = Pattern.compile("\\d{12}");
-    private static final Pattern HO_CHIEU_PATTERN = Pattern.compile("[A-Za-z0-9]{8}");
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
-    private static final Pattern PHONE_PATTERN = Pattern.compile("^0\\d{9}$");
+    private AdminBookingView(MainFrameView mainFrame, SelectedRoomInfo selectedRoom) {
+        initializeComponents();
+    }
 
     public static JPanel createBookingPanel(MainFrameView mainFrame, SelectedRoomInfo selectedRoom) {
-        JPanel panel = new JPanel();
+        AdminBookingView view = new AdminBookingView(mainFrame, selectedRoom);
+        AdminBookingController controller = new AdminBookingController(view, mainFrame, selectedRoom);
+        return view.getPanel();
+    }
+
+    private void initializeComponents() {
+        panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.WHITE);
 
         JPanel formPanel = createFormPanel();
-        JPanel buttonPanel = createButtonPanel(mainFrame, selectedRoom);
+        JPanel buttonPanel = createButtonPanel();
 
         panel.add(formPanel);
         panel.add(Box.createVerticalStrut(10));
         panel.add(buttonPanel);
-
-        return panel;
     }
 
-    private static JPanel createFormPanel() {
+    private JPanel createFormPanel() {
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setBackground(UIManager.getColor("Panel.background"));
         formPanel.setBorder(BorderFactory.createTitledBorder(
@@ -408,7 +513,6 @@ public class AdminBookingView {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
 
-        // Số người
         gbc.gridy = 0;
         gbc.gridx = 0;
         formPanel.add(new JLabel("Số người:"), gbc);
@@ -419,7 +523,6 @@ public class AdminBookingView {
         formPanel.add(cbSoNguoi, gbc);
         gbc.gridwidth = 1;
 
-        // Tài khoản
         gbc.gridy++;
         gbc.gridx = 0;
         formPanel.add(new JLabel("Tài khoản:"), gbc);
@@ -429,15 +532,9 @@ public class AdminBookingView {
         formPanel.add(tfTaiKhoan, gbc);
         gbc.gridx = 3;
         gbc.gridwidth = 1;
-        JButton btnRandom = new JButton("Sinh ngẫu nhiên");
+        btnRandom = new JButton("Sinh ngẫu nhiên");
         formPanel.add(btnRandom, gbc);
 
-        btnRandom.addActionListener(e -> {
-            String randomStr = "user" + String.format("%08d", new Random().nextInt(100_000_000));
-            tfTaiKhoan.setText(randomStr);
-        });
-
-        // SĐT
         gbc.gridy++;
         gbc.gridx = 0;
         formPanel.add(new JLabel("SĐT:"), gbc);
@@ -446,7 +543,6 @@ public class AdminBookingView {
         tfSdt = new JTextField();
         formPanel.add(tfSdt, gbc);
 
-        // Gmail
         gbc.gridy++;
         gbc.gridx = 0;
         formPanel.add(new JLabel("Gmail:"), gbc);
@@ -454,7 +550,6 @@ public class AdminBookingView {
         tfGmail = new JTextField();
         formPanel.add(tfGmail, gbc);
 
-        // Loại giấy tờ và mã giấy tờ người đại diện
         gbc.gridy++;
         gbc.gridx = 0;
         formPanel.add(new JLabel("Họ tên người đại diện:"), gbc);
@@ -486,21 +581,6 @@ public class AdminBookingView {
         panelMaChung.add(tfMaChung, "text");
         formPanel.add(panelMaChung, gbc);
 
-        Runnable updateMaChungField = () -> {
-            String selected = (String) cbLoaiChung.getSelectedItem();
-            if ("Không có".equals(selected)) {
-                cbMaChung.setSelectedItem("Không xác định");
-                cardLayoutMaChung.show(panelMaChung, "combo");
-            } else {
-                tfMaChung.setText("");
-                cardLayoutMaChung.show(panelMaChung, "text");
-            }
-        };
-
-        updateMaChungField.run();
-        cbLoaiChung.addActionListener(e -> updateMaChungField.run());
-
-        // Danh sách người đi cùng
         String[] loaiOptions = {"Không có", "Mã định danh", "Hộ chiếu"};
         String[] comboOptions = {"Không xác định", "Dưới 14 tuổi"};
         Dimension maFieldSize = new Dimension(150, 25);
@@ -538,270 +618,97 @@ public class AdminBookingView {
             maPanels[i].add(maTextFields[i], "text");
             formPanel.add(maPanels[i], gbc);
 
-            int index = i;
-            loaiCombos[i].addActionListener(e -> {
-                String selected = (String) loaiCombos[index].getSelectedItem();
-                if ("Không có".equals(selected)) {
-                    maComboFields[index].setSelectedItem("Không xác định");
-                    maCardLayouts[index].show(maPanels[index], "combo");
-                } else {
-                    maTextFields[index].setText("");
-                    maCardLayouts[index].show(maPanels[index], "text");
-                }
-            });
-
             loaiCombos[i].setSelectedIndex(0);
         }
 
-        // Kích hoạt đúng số người
-        cbSoNguoi.addActionListener(e -> {
-            int selected = (int) cbSoNguoi.getSelectedItem();
-            for (int i = 1; i < 4; i++) {
-                boolean enable = i < selected;
-                hoTenFields[i].setEnabled(enable);
-                loaiCombos[i].setEnabled(enable);
-                maComboFields[i].setEnabled(enable);
-                maTextFields[i].setEnabled(enable);
-
-                if (!enable) {
-                    hoTenFields[i].setText("");
-                    maTextFields[i].setText("");
-                    maComboFields[i].setSelectedIndex(0);
-                }
-
-                String selectedLoai = (String) loaiCombos[i].getSelectedItem();
-                maCardLayouts[i].show(maPanels[i], "Không có".equals(selectedLoai) ? "combo" : "text");
-            }
-        });
-
-        cbSoNguoi.setSelectedIndex(0);
         return formPanel;
     }
 
-    // Hàm kiểm tra định dạng mã giấy tờ
-    private static boolean isValidMaGiayTo(String loai, String ma) {
-        if ("Không có".equals(loai)) {
-            return ma.equals("Không xác định") || ma.equals("Dưới 14 tuổi");
-        } else if ("Mã định danh".equals(loai)) {
-            return MA_DINH_DANH_PATTERN.matcher(ma).matches();
-        } else if ("Hộ chiếu".equals(loai)) {
-            return HO_CHIEU_PATTERN.matcher(ma).matches();
-        }
-        return false;
-    }
-
-    // Hàm kiểm tra thông tin đầu vào
-    private static String validateInput(MainFrameView mainFrame, int soNguoi, String username, String sdt, String gmail, String hoTenDaiDien, String loaiDaiDien, String maDaiDien) {
-        // Kiểm tra thông tin tài khoản, SĐT, Gmail
-        if (username.isEmpty()) {
-            return "Tài khoản không được để trống!";
-        }
-        if (!PHONE_PATTERN.matcher(sdt).matches()) {
-            return "Số điện thoại phải là 10 chữ số và bắt đầu bằng 0!";
-        }
-        if (!EMAIL_PATTERN.matcher(gmail).matches()) {
-            return "Định dạng Gmail không hợp lệ!";
-        }
-
-        // Kiểm tra họ tên người đại diện
-        if (hoTenDaiDien.isEmpty()) {
-            return "Họ tên người đại diện không được để trống!";
-        }
-
-        // Kiểm tra mã giấy tờ người đại diện
-        if (!"Không có".equals(loaiDaiDien) && maDaiDien.isEmpty()) {
-            return "Mã giấy tờ người đại diện không được để trống!";
-        }
-        if (!isValidMaGiayTo(loaiDaiDien, maDaiDien)) {
-            return "Mã giấy tờ người đại diện không đúng định dạng!\n" +
-                    "Mã định danh: 12 chữ số\nHộ chiếu: 8 ký tự chữ hoặc số";
-        }
-        if ("Mã định danh".equals(loaiDaiDien) && "Dưới 14 tuổi".equals(maDaiDien)) {
-            return "Người đại diện dưới 14 tuổi không được phép sử dụng Mã định danh!";
-        }
-
-        // Kiểm tra thông tin các khách và trùng lặp mã
-        int validGuests = 1; // Người đại diện luôn hợp lệ
-        Set<String> maDinhDanhSet = new HashSet<>();
-        Set<String> hoChieuSet = new HashSet<>();
-
-        // Thêm mã của người đại diện vào tập hợp kiểm tra
-        if ("Mã định danh".equals(loaiDaiDien)) {
-            maDinhDanhSet.add(maDaiDien);
-        } else if ("Hộ chiếu".equals(loaiDaiDien)) {
-            hoChieuSet.add(maDaiDien);
-        }
-
-        for (int i = 1; i < soNguoi; i++) {
-            String ten = hoTenFields[i].getText().trim();
-            String loai = (String) loaiCombos[i].getSelectedItem();
-            String ma = "Không có".equals(loai) ? (String) maComboFields[i].getSelectedItem() : maTextFields[i].getText().trim();
-
-            if (ten.isEmpty() && !ma.isEmpty()) {
-                return "Họ tên người " + (i + 1) + " không được để trống khi đã nhập mã!";
-            }
-            if (!ten.isEmpty() && !"Không có".equals(loai) && ma.isEmpty()) {
-                return "Mã giấy tờ người " + (i + 1) + " không được để trống!";
-            }
-            if (!ten.isEmpty() && !isValidMaGiayTo(loai, ma)) {
-                return "Mã giấy tờ người " + (i + 1) + " không đúng định dạng!\n" +
-                        "Mã định danh: 12 chữ số\nHộ chiếu: 8 ký tự chữ hoặc số";
-            }
-            if (!ten.isEmpty() && "Mã định danh".equals(loai) && "Dưới 14 tuổi".equals(ma)) {
-                return "Người " + (i + 1) + " dưới 14 tuổi không được phép sử dụng Mã định danh!";
-            }
-            if (!ten.isEmpty()) {
-                validGuests++;
-                // Kiểm tra trùng mã
-                if ("Mã định danh".equals(loai)) {
-                    if (!maDinhDanhSet.add(ma)) {
-                        return "Mã định danh của người " + (i + 1) + " trùng với mã đã nhập trước đó!";
-                    }
-                } else if ("Hộ chiếu".equals(loai)) {
-                    if (!hoChieuSet.add(ma)) {
-                        return "Hộ chiếu của người " + (i + 1) + " trùng với mã đã nhập trước đó!";
-                    }
-                }
-            }
-        }
-
-        // Kiểm tra số người hợp lệ
-        if (validGuests < soNguoi) {
-            return "Số lượng khách hợp lệ (" + validGuests + ") không khớp với số người đã chọn (" + soNguoi + ")!";
-        }
-
-        return null; // Không có lỗi
-    }
-
-    private static JPanel createButtonPanel(MainFrameView mainFrame, SelectedRoomInfo selectedRoom) {
+    private JPanel createButtonPanel() {
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnPanel.setBackground(UIManager.getColor("Panel.background"));
 
-        JButton btnXacNhan = new JButton("Xác nhận");
-        JButton btnQuayLai = new JButton("Quay lại");
-
-        btnQuayLai.addActionListener(e -> {
-            JPanel searchPanel = AdminSearchView.createSearchPanel(mainFrame);
-            mainFrame.setAdminDynamicContent(searchPanel);
-        });
-
-        btnXacNhan.addActionListener(e -> {
-            int soNguoi = (int) cbSoNguoi.getSelectedItem();
-            String username = tfTaiKhoan.getText().trim();
-            String sdt = tfSdt.getText().trim();
-            String gmail = tfGmail.getText().trim();
-            String hoTenDaiDien = hoTenFields[0].getText().trim();
-            String loaiDaiDien = (String) cbLoaiChung.getSelectedItem();
-            String maDaiDien = "Không có".equals(loaiDaiDien) ? (String) cbMaChung.getSelectedItem() : tfMaChung.getText().trim();
-
-            // Kiểm tra dữ liệu đầu vào
-            String errorMessage = validateInput(mainFrame, soNguoi, username, sdt, gmail, hoTenDaiDien, loaiDaiDien, maDaiDien);
-            if (errorMessage != null) {
-                JOptionPane.showMessageDialog(mainFrame, errorMessage, "Lỗi nhập liệu", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            StringBuilder danhSachKhach = new StringBuilder();
-            danhSachKhach.append("- ").append(hoTenDaiDien)
-                    .append(" [").append(loaiDaiDien).append(": ").append(maDaiDien).append("]\n");
-
-            List<Person> danhSach = new ArrayList<>();
-            danhSach.add(new Person(hoTenDaiDien, loaiDaiDien, maDaiDien));
-
-            for (int i = 1; i < soNguoi; i++) {
-                String ten = hoTenFields[i].getText().trim();
-                String loai = (String) loaiCombos[i].getSelectedItem();
-                String ma = "Không có".equals(loai) ? (String) maComboFields[i].getSelectedItem() : maTextFields[i].getText().trim();
-
-                if (!ten.isEmpty()) {
-                    danhSachKhach.append("- ").append(ten)
-                            .append(" [").append(loai).append(": ").append(ma).append("]\n");
-                    danhSach.add(new Person(ten, loai, ma));
-                }
-            }
-
-            String thoiGianTao = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            String info = String.format("""
-                    THÔNG TIN ĐẶT PHÒNG
-
-                    Tài khoản: %s
-                    SĐT: %s
-                    Gmail: %s
-                    Người đại diện: %s
-
-                    Số người: %d
-                    Danh sách khách:
-                    %s
-                    Phòng: %s
-                    Mô tả: %s
-                    Loại: %s
-                    Giá: %,.0f VND
-
-                    Check-in: %s
-                    Check-out: %s
-                    Thời gian tạo: %s
-                    Trạng thái: Đã gửi yêu cầu
-                    """,
-                    username, sdt, gmail, hoTenDaiDien, soNguoi, danhSachKhach.toString(),
-                    selectedRoom.getRoomId(), selectedRoom.getDescription(), selectedRoom.getType(),
-                    selectedRoom.getPrice(), selectedRoom.getCheckIn(), selectedRoom.getCheckOut(),
-                    thoiGianTao);
-
-            JTextArea textArea = new JTextArea(info);
-            textArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-            textArea.setEditable(false);
-            textArea.setLineWrap(true);
-            textArea.setWrapStyleWord(true);
-            textArea.setMargin(new Insets(10, 10, 10, 10));
-
-            JScrollPane scrollPane = new JScrollPane(textArea);
-            scrollPane.setPreferredSize(new Dimension(500, 400));
-
-            JPanel content = new JPanel(new BorderLayout());
-            content.add(scrollPane, BorderLayout.CENTER);
-
-            int confirm = JOptionPane.showOptionDialog(
-                    mainFrame,
-                    content,
-                    "Xác nhận đặt phòng",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    new String[]{"Quay lại", "Xác nhận"},
-                    "Xác nhận");
-
-            if (confirm == 1) {
-                String bookingId = "BK" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + String.format("%05d", new Random().nextInt(100000));
-                String requestId = "REQ" + String.format("%04d", new Random().nextInt(10000));
-
-                BookingService.createBooking(
-                        "bookings.xml",
-                        bookingId,
-                        requestId,
-                        username,
-                        hoTenDaiDien,
-                        gmail,
-                        sdt,
-                        selectedRoom.getRoomId(),
-                        selectedRoom.getCheckIn(),
-                        selectedRoom.getCheckOut(),
-                        selectedRoom.getPrice(),
-                        danhSach
-                );
-                long minutesUntilCheckIn = ChronoUnit.MINUTES.between(LocalDateTime.now(), selectedRoom.getCheckIn());
-
-                if (minutesUntilCheckIn <= 15 && minutesUntilCheckIn >= 0) {
-                    BookingService.updateBookingStatus("bookings.xml", bookingId, "Check-in");
-                }
-
-                JOptionPane.showMessageDialog(mainFrame, "Gửi yêu cầu thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                mainFrame.setAdminDynamicContent(AdminDashboardView.createDashboardPanel());
-                mainFrame.setAdminSelectedMenu("Trang chủ");
-            }
-        });
+        btnXacNhan = new JButton("Xác nhận");
+        btnQuayLai = new JButton("Quay lại");
 
         btnPanel.add(btnQuayLai);
         btnPanel.add(btnXacNhan);
         return btnPanel;
+    }
+
+    public JPanel getPanel() {
+        return panel;
+    }
+
+    public JTextField getTfTaiKhoan() {
+        return tfTaiKhoan;
+    }
+
+    public JTextField getTfSdt() {
+        return tfSdt;
+    }
+
+    public JTextField getTfGmail() {
+        return tfGmail;
+    }
+
+    public JTextField[] getHoTenFields() {
+        return hoTenFields;
+    }
+
+    public JComboBox<String>[] getLoaiCombos() {
+        return loaiCombos;
+    }
+
+    public JTextField[] getMaTextFields() {
+        return maTextFields;
+    }
+
+    public JComboBox<String>[] getMaComboFields() {
+        return maComboFields;
+    }
+
+    public CardLayout[] getMaCardLayouts() {
+        return maCardLayouts;
+    }
+
+    public JPanel[] getMaPanels() {
+        return maPanels;
+    }
+
+    public JComboBox<Integer> getCbSoNguoi() {
+        return cbSoNguoi;
+    }
+
+    public JComboBox<String> getCbLoaiChung() {
+        return cbLoaiChung;
+    }
+
+    public JComboBox<String> getCbMaChung() {
+        return cbMaChung;
+    }
+
+    public JTextField getTfMaChung() {
+        return tfMaChung;
+    }
+
+    public JPanel getPanelMaChung() {
+        return panelMaChung;
+    }
+
+    public CardLayout getCardLayoutMaChung() {
+        return cardLayoutMaChung;
+    }
+
+    public JButton getBtnRandom() {
+        return btnRandom;
+    }
+
+    public JButton getBtnXacNhan() {
+        return btnXacNhan;
+    }
+
+    public JButton getBtnQuayLai() {
+        return btnQuayLai;
     }
 }

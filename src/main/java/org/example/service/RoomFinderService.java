@@ -61,11 +61,6 @@ public class RoomFinderService {
                     continue;
                 }
 
-                LocalDateTime checkIn = booking.getCheckIn();
-                LocalDateTime checkOut = booking.getCheckOut();
-
-//                if ((currentTime.isEqual(checkIn) || currentTime.isAfter(checkIn)) &&
-//                        currentTime.isBefore(checkOut) && status.equalsIgnoreCase("Check-in")) {
                 if (status.equalsIgnoreCase("Check-in")) {
                     isAvailable = false;
                     break;
@@ -101,6 +96,7 @@ public class RoomFinderService {
                 if (status.equalsIgnoreCase("Check-out") ||
                         status.equalsIgnoreCase("Đã bị hủy") ||
                         status.equalsIgnoreCase("Gửi yêu cầu") ||
+                        status.equalsIgnoreCase("Vắng mặt") ||
                         status.equalsIgnoreCase("Đã đọc")) {
                     continue;
                 }
@@ -129,17 +125,13 @@ public class RoomFinderService {
     }
 
     public static int countActiveRoomsAt(LocalDateTime time) {
-        List<Booking> allBookings = layTatCaBooking();  // Lấy tất cả các đơn đặt phòng
+        List<Booking> allBookings = layTatCaBooking();
 
         int count = 0;
         for (Booking booking : allBookings) {
             String status = booking.getStatus();
-//            LocalDateTime checkIn = booking.getCheckIn();
-//            LocalDateTime checkOut = booking.getCheckOut();
 
             if ("Check-in".equalsIgnoreCase(status)) {
-//                    && (time.isEqual(checkIn) || time.isAfter(checkIn))
-//                    && (time.isBefore(checkOut) || time.isEqual(checkOut))) {
                 count++;
             }
         }
@@ -152,7 +144,6 @@ public class RoomFinderService {
 
         return bookingXML.getBookings().stream()
                 .filter(b -> "Check-in".equalsIgnoreCase(b.getStatus()))
-                //.filter(b -> !b.getCheckIn().isAfter(now) && b.getCheckOut().isAfter(now))
                 .mapToInt(b -> b.getPersons() != null ? b.getPersons().size() : 0)
                 .sum();
     }
@@ -199,7 +190,7 @@ public class RoomFinderService {
                 .mapToDouble(Booking::getAmount)
                 .sum();
 
-        DecimalFormat df = new DecimalFormat("#,###"); // phân cách hàng nghìn bằng dấu ,
+        DecimalFormat df = new DecimalFormat("#,###");
         return df.format(total);
     }
 
@@ -297,7 +288,7 @@ public class RoomFinderService {
         double rate = countOthers > 0 ? (double) countCheckOut / countOthers * 100 : 0.0;
 
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setDecimalSeparator(',');  // Dấu thập phân là dấu phẩy
+        symbols.setDecimalSeparator(',');
 
         DecimalFormat df = new DecimalFormat("#0.00", symbols);
 
@@ -311,7 +302,7 @@ public class RoomFinderService {
         for (Booking booking : bookings) {
             if (booking.getCheckIn() != null) {
                 LocalDate date = booking.getCheckIn().toLocalDate();
-                int guests = booking.getNumberOfGuests(); // lấy số khách từ thuộc tính
+                int guests = booking.getNumberOfGuests();
                 guestCountPerDay.put(date, guestCountPerDay.getOrDefault(date, 0) + guests);
             }
         }

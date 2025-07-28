@@ -174,7 +174,6 @@ public class Booking {
         this.history = history;
     }
 
-    // Thêm lịch sử trạng thái
     public void addBookingHistory(String status, LocalDateTime timestamp) {
         if (history == null) {
             history = new ArrayList<>();
@@ -182,7 +181,6 @@ public class Booking {
         history.add(new HistoryEntry(timestamp, status));
     }
 
-    // Trả về số lượng khách trong booking (dựa vào danh sách Person)
     public int getNumberOfGuests() {
         return persons != null ? persons.size() : 0;
     }

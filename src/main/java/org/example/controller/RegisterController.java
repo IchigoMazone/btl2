@@ -1,4 +1,6 @@
 package org.example.controller;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.example.action.CheckRegister;
 import org.example.entity.UserInfo;
 import org.example.service.UserInfoService;
@@ -19,6 +21,7 @@ public class RegisterController {
         if (error != null) {
             view.showError(error);
         } else {
+            info.setPassword(DigestUtils.sha256Hex(password));
             UserInfoService.saveUser(info, "userinfos.xml");
             view.getMainFrame().showFinishPanel();
         }

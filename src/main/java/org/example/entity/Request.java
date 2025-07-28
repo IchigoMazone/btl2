@@ -137,7 +137,6 @@ public class Request {
         this.history = history;
     }
 
-    // Thêm lịch sử trạng thái
     public void addRequestHistory(String status, LocalDateTime timestamp) {
         if (history == null) {
             history = new ArrayList<>();

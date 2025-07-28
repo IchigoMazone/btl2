@@ -130,7 +130,7 @@
         <roomId>R019</roomId>
         <roomNumber>404</roomNumber>
         <type>Phòng đặc biệt</type>
-        <price>8000.0</price>
+        <price>800000.0</price>
         <description>Phòng đặc biệt với cửa kính toàn cảnh</description>
     </Room>
     <Room>
@@ -139,5 +139,19 @@
         <type>Phòng đặc biệt</type>
         <price>800000.0</price>
         <description>Phòng đặc biệt có minibar và máy pha cà phê</description>
+    </Room>
+    <Room>
+        <roomId>R021</roomId>
+        <roomNumber>501</roomNumber>
+        <type>Phòng đơn</type>
+        <price>100000.0</price>
+        <description>A</description>
+    </Room>
+    <Room>
+        <roomId>R022</roomId>
+        <roomNumber>502</roomNumber>
+        <type>Phòng đơn</type>
+        <price>10000.0</price>
+        <description>B</description>
     </Room>
 </Rooms>

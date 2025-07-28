@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.example.action.CheckAccount;
 import org.example.service.UserInfoService;
 import org.example.view.PasswordResetView;
@@ -15,7 +16,7 @@ public class PasswordResetController {
         if (error != null) {
             view.showError(error);
         } else {
-            UserInfoService.updatePassword("userinfos.xml", username, password);
+            UserInfoService.updatePassword("userinfos.xml", username, DigestUtils.sha256Hex(password));
             view.clearFields();
             view.clearError();
             view.getMainFrame().showFinishPanel();

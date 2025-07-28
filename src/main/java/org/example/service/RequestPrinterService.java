@@ -13,7 +13,7 @@ public class RequestPrinterService {
     public static void printAllRequests(String xmlFilePath) {
         RequestXML requestXML = FileUtils.readFromFile(xmlFilePath, RequestXML.class);
         if (requestXML == null || requestXML.getRequests().isEmpty()) {
-            System.out.println("⚠️ Không có yêu cầu nào được tìm thấy trong file.");
+            System.out.println("Không có yêu cầu nào được tìm thấy trong file.");
             return;
         }
 
@@ -23,7 +23,7 @@ public class RequestPrinterService {
             List<Person> guests = r.getPersons();
             if (guests.isEmpty()) continue;
 
-            Person daiDien = guests.get(0); // người đại diện là người đầu tiên
+            Person daiDien = guests.get(0);
             int soNguoi = guests.size();
 
             StringBuilder danhSachKhach = new StringBuilder();
@@ -36,7 +36,7 @@ public class RequestPrinterService {
 
             String output = String.format("""
                     -------------------------------
-                    🛎️  THÔNG TIN ĐẶT PHÒNG
+                      THÔNG TIN ĐẶT PHÒNG
                     -------------------------------
                     Người dùng: %s
                     Người đại diện: %s

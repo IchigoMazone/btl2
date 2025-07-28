@@ -62,9 +62,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Person {
-    private String fullName;     // Full name
-    private String documentType; // "ID card", "Passport", or "None"
-    private String documentCode; // Document code (if any)
+    private String fullName;
+    private String documentType;
+    private String documentCode;
 
     public Person() {
     }
