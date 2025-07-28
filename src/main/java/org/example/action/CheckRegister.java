@@ -14,9 +14,6 @@ public class CheckRegister {
         if (fullName.length() < 8) {
             return "Họ tên phải có ít nhất 8 ký tự.";
         }
-        if (!fullName.matches("^[a-zA-Z ]+$")) {
-            return "Họ tên chỉ được chứa chữ cái và khoảng trắng.";
-        }
         return null;
     }
 
