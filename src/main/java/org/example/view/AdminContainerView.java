@@ -18,7 +18,7 @@ public class AdminContainerView extends JPanel {
     private JButton selectedButton = null;
     private final JPanel mainContentPanel;
     private final JPanel drawerMenu;
-    private static final int LEFT_PADDING = 65;
+    private static final int LEFT_PADDING = 70;
 
     public AdminContainerView(MainFrameView mainFrame) {
         this.mainFrame = mainFrame;

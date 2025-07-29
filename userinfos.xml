@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <UserInfos>
     <UserInfo>
+        <userName>bao1122z</userName>
+        <password>fc0271477ab51a7b622df9778f24cc449e58b2866c875f50d122b06eb31a8596</password>
+        <fullName>Nguyễn Duy Bảo</fullName>
+        <email>bao99@gmail.com</email>
+        <phoneNumber>0978232112</phoneNumber>
+    </UserInfo>
+    <UserInfo>
         <userName>catly612</userName>
-        <password>8cae1d5084a442258e4c803138ec7cbe550a28de180f9c437d9847bab967cc81</password>
+        <password>0175db74d06cf6d365eeb38afc141db157775c1bd4a99f24672e51eb730dc941</password>
         <fullName>Nguyễn Diệu Lynh</fullName>
         <email>qw3@gmail.com</email>
         <phoneNumber>0123231123</phoneNumber>

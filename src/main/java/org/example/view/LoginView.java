@@ -89,7 +89,7 @@ public class LoginView extends JPanel {
         lblSpace = new JLabel("||");
         lblSpace.setFont(new Font("Arial", Font.BOLD, 20));
         lblSpace.setForeground(new Color(240, 240, 240));
-        lblSpace.setBounds(590, 620, 20, 30);
+        lblSpace.setBounds(590, 625, 20, 30);
         imgBackground.add(lblSpace);
     }
 

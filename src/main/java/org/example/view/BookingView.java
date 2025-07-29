@@ -189,6 +189,7 @@ public class BookingView {
             String checkInStr = table.getValueAt(row, getColumnIndex(table, "Ngày đến")).toString();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
             LocalDateTime checkInTime = LocalDateTime.parse(checkInStr, formatter);
+            String userName = model.getValueAt(row, getColumnIndex(table, "Tài khoản")).toString();
             LocalDateTime now = LocalDateTime.now();
             long hoursUntilCheckIn = ChronoUnit.HOURS.between(now, checkInTime);
 
@@ -200,8 +201,14 @@ public class BookingView {
             }
 
             table.setValueAt("Check-in", row, getColumnIndex(table, "Trạng thái"));
-            System.out.println("Đã xác nhận Check-in cho đơn: " + bookingId);
             BookingService.updateBookingStatus("bookings.xml", bookingId, "Check-in");
+            NotificationService.createNotification(
+                    bookingId,
+                    "Giao dịch trực tiếp",
+                    userName,
+                    "Check-in",
+                    "Đã gửi"
+            );
             dialog.dispose();
         });
 

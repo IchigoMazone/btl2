@@ -175,7 +175,7 @@ public class RequestView {
                 return null;
             }
             return notificationXML.getNotifications().stream()
-                    .filter(n -> "Đã được duyệt".equalsIgnoreCase(n.getContent()) &&
+                    .filter(n -> "Gửi yêu cầu hủy".equalsIgnoreCase(n.getContent()) &&
                             n.getRequestId().equals(requestId))
                     .map(Notification::getBookingId)
                     .findFirst()
@@ -198,7 +198,6 @@ public class RequestView {
 
                     Người dùng: %s
                     Người đại diện: %s
-                    CCCD: %s
                     Gmail: %s
                     SĐT: %s
 
@@ -215,7 +214,8 @@ public class RequestView {
                     Trạng thái: %s
                     """,
                     Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                    daiDien.getFullName(), daiDien.getDocumentCode(),
+                    daiDien.getFullName(),
+//                    daiDien.getDocumentCode(),
                     Objects.requireNonNullElse(r.getEmail(), "Không rõ"),
                     Objects.requireNonNullElse(r.getPhone(), "Không rõ"),
                     soNguoi, danhSach,
@@ -266,7 +266,7 @@ public class RequestView {
                         "Bạn có chắc chắn muốn hủy yêu cầu này?",
                         "Xác nhận hủy", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
-                    String bookingId = "BK00000001";
+                    String bookingId = "Booking chưa được tạo";
                     if ("Gửi yêu cầu hủy".equalsIgnoreCase(r.getStatus())) {
                         bookingId = getBookingIdForCancelRequest(r.getRequestId());
                         if (bookingId == null) {
@@ -308,6 +308,7 @@ public class RequestView {
                                         JOptionPane.showMessageDialog(null, "Bạn đã hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
                                     } else if ("Gửi yêu cầu hủy".equalsIgnoreCase(previousStatus)) {
+                                        bookingId = getBookingIdForCancelRequest(r.getRequestId());
                                         RequestService.updateStatus(r.getRequestId(), "Đã bị hủy");
                                         NotificationService.createNotification(
                                                 bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
@@ -383,7 +384,7 @@ public class RequestView {
                                 if (histories.size() > 1) {
                                     HistoryEntry previous = histories.get(histories.size() - 2);
                                     String previousStatus = previous.getStatus() != null ? previous.getStatus().trim() : "";
-                                    if ("Gửi yêu cầu".equalsIgnoreCase(previousStatus)) {
+                                    if ("Gửi yêu cầu hủy".equalsIgnoreCase(previousStatus)) {
                                         String bookingId = getBookingIdForCancelRequest(r.getRequestId());
                                         if (bookingId == null) {
                                             JOptionPane.showMessageDialog(null, "Không tìm thấy booking liên quan để xác nhận hủy.", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -393,11 +394,11 @@ public class RequestView {
                                         BookingService.updateBookingStatus(BOOKINGS_XML_PATH, bookingId, "Đã bị hủy");
                                         NotificationService.createNotification(
                                                 bookingId, r.getRequestId(), Objects.requireNonNullElse(r.getUserName(), "Không rõ"),
-                                                "Đã bị hủy", "Đã gửi"
+                                                "Đã được hủy", "Đã gửi"
                                         );
                                         JOptionPane.showMessageDialog(null, "Bạn đã xác nhận hủy yêu cầu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
-                                    } else if ("Gửi yêu cầu hủy".equalsIgnoreCase(previousStatus)) {
+                                    } else if ("Gửi yêu cầu".equalsIgnoreCase(previousStatus)) {
                                         String newBookingId = generateBookingId();
                                         RequestService.updateStatus(r.getRequestId(), "Đã được duyệt");
                                         try {

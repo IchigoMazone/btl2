@@ -8,6 +8,7 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import org.example.entity.Booking;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class NotificationView {
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
     private static final String XML_PATH = "notifications.xml";
     private static final String REQUESTS_XML_PATH = "requests.xml";
     private static final String[] TABLE_COLUMNS = {"Thông báo cá nhân"};
@@ -92,6 +93,9 @@ public class NotificationView {
                         n.getBookingId(), n.getTime().format(TIME_FORMATTER));
             } else if ("Đã được hủy".equalsIgnoreCase(n.getContent())) {
                 msg = String.format(" %s đã được hủy lúc %s",
+                        n.getBookingId(), n.getTime().format(TIME_FORMATTER));
+            } else if ("Check-in".equalsIgnoreCase(n.getContent())) {
+                msg = String.format(" %s đã check-in lúc %s",
                         n.getBookingId(), n.getTime().format(TIME_FORMATTER));
             } else if ("Check-out".equalsIgnoreCase(n.getContent())) {
                 msg = String.format(" %s đã check-out lúc %s",
@@ -230,7 +234,7 @@ public class NotificationView {
                     if (request != null && ("Gửi yêu cầu".equalsIgnoreCase(request.getStatus()) || "Đã đọc".equalsIgnoreCase(request.getStatus()))) {
                         JButton btnCancel = new JButton("Hủy");
                         btnCancel.addActionListener(e -> {
-                            RequestService.updateStatus(notification.getRequestId(), "Đã từ chối");
+                            RequestService.updateStatus(notification.getRequestId(), "Đã bị hủy");
                             NotificationService.createNotification(
                                     notification.getBookingId(),
                                     notification.getRequestId(),
@@ -258,7 +262,8 @@ public class NotificationView {
             if ("Đã được duyệt".equalsIgnoreCase(notification.getContent())) {
                 Booking booking = BookingService.findBookingById(notification.getBookingId());
                 if (booking != null && booking.getCheckIn() != null) {
-                    long hoursUntilCheckIn = ChronoUnit.HOURS.between(notification.getTime(), booking.getCheckIn());
+                    LocalDateTime now = LocalDateTime.now();
+                    long hoursUntilCheckIn = ChronoUnit.HOURS.between(now, booking.getCheckIn());
                     if (hoursUntilCheckIn >= 2) {
                         RequestXML requestXML = FileUtils.readFromFile(REQUESTS_XML_PATH, RequestXML.class);
                         if (requestXML != null) {

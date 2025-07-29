@@ -37,7 +37,7 @@ public class RequestResetController {
             if ("Gửi yêu cầu".equalsIgnoreCase(requestStatus) && minutesUntilCheckIn < 180) {
                 RequestService.updateStatus(req.getRequestId(), "Hết hiệu lực");
                 NotificationService.createNotification(
-                        "BK00000001",
+                        "Request Hết hiệu lực",
                         req.getRequestId(),
                         req.getUserName(),
                         "Đã bị hủy",
@@ -46,7 +46,7 @@ public class RequestResetController {
             } else if ("Gửi yêu cầu hủy".equalsIgnoreCase(requestStatus) && minutesUntilCheckIn < 60) {
                 RequestService.updateStatus(req.getRequestId(), "Hết hiệu lực");
                 NotificationService.createNotification(
-                        "BK00000001",
+                        "Request Hết hiệu lực",
                         req.getRequestId(),
                         req.getUserName(),
                         "Đã bị hủy",
@@ -63,7 +63,7 @@ public class RequestResetController {
                             if ("Gửi yêu cầu".equalsIgnoreCase(previousStatus) && minutesUntilCheckIn < 180) {
                                 RequestService.updateStatus(req.getRequestId(), "Hết hiệu lực");
                                 NotificationService.createNotification(
-                                        "BK00000001",
+                                        "Request Hết hiệu lực",
                                         req.getRequestId(),
                                         req.getUserName(),
                                         "Đã bị hủy",
@@ -72,7 +72,7 @@ public class RequestResetController {
                             } else if ("Gửi yêu cầu hủy".equalsIgnoreCase(previousStatus) && minutesUntilCheckIn < 60) {
                                 RequestService.updateStatus(req.getRequestId(), "Hết hiệu lực");
                                 NotificationService.createNotification(
-                                        "BK0000000X",
+                                        "Request Hết hiệu lực",
                                         req.getRequestId(),
                                         req.getUserName(),
                                         "Đã bị hủy",
