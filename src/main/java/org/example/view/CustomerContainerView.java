@@ -1,9 +1,4 @@
-
-
 package org.example.view;
-
-import org.kordamp.ikonli.materialdesign.MaterialDesign;
-import org.kordamp.ikonli.swing.FontIcon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,26 +40,26 @@ public class CustomerContainerView extends JPanel {
         drawerMenu.setPreferredSize(new Dimension(250, 800));
         drawerMenu.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
-        JButton accountBtn = createNavButton("account-circle", username, true);
+        JButton accountBtn = createNavButton("\uD83D\uDD75\u200D", username, true);
         accountBtn.setEnabled(false);
         drawerMenu.add(accountBtn);
         drawerMenu.add(Box.createVerticalStrut(20));
 
-        drawerMenu.add(createNavButton("home", "Trang chủ", false, () -> CustomerDashboardView.createUserHomePanel()));
+        drawerMenu.add(createNavButton("\uD83C\uDFE0", "Trang chủ", false, () -> CustomerDashboardView.createUserHomePanel()));
         drawerMenu.add(Box.createVerticalStrut(8));
 
-        drawerMenu.add(createNavButton("magnify", "Tìm kiếm", false,
+        drawerMenu.add(createNavButton("\uD83D\uDD0D", "Tìm kiếm", false,
                 () -> CustomerSearchView.createSearchPanel(mainFrame)));
         drawerMenu.add(Box.createVerticalStrut(8));
 
-        drawerMenu.add(createNavButton("clipboard-check", "Thông báo", false,
+        drawerMenu.add(createNavButton("\uD83D\uDECE\uFE0F", "Thông báo", false,
                 () -> {
                     String currentUsername = mainFrame.getLoggedInUsername() != null ? mainFrame.getLoggedInUsername() : username;
                     return NotificationView.createUserNotificationPanel(currentUsername);
                 }));
         drawerMenu.add(Box.createVerticalStrut(8));
 
-        drawerMenu.add(createNavButton("calendar-check", "Lịch sử", false,
+        drawerMenu.add(createNavButton("\uD83D\uDCCB", "Lịch sử", false,
                 () -> {
                     String currentUsername = mainFrame.getLoggedInUsername() != null ? mainFrame.getLoggedInUsername() : username;
                     return HistoryView.createPaymentHistoryPanel(currentUsername);
@@ -72,7 +67,11 @@ public class CustomerContainerView extends JPanel {
         drawerMenu.add(Box.createVerticalStrut(8));
 
         drawerMenu.add(Box.createVerticalGlue());
-        drawerMenu.add(createNavButton("logout", "Đăng xuất", false, this::handleLogout));
+
+        // Nút Đăng xuất xử lý riêng
+        JButton logoutButton = createNavButton("\uD83D\uDD12", "Đăng xuất", false);
+        logoutButton.addActionListener(e -> handleLogout());
+        drawerMenu.add(logoutButton);
 
         mainContentPanel = new JPanel(new BorderLayout());
         mainContentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -86,7 +85,7 @@ public class CustomerContainerView extends JPanel {
         setSelectedMenu("Trang chủ");
     }
 
-    private JPanel handleLogout() {
+    private void handleLogout() {
         int response = JOptionPane.showConfirmDialog(
                 this,
                 "Bạn có chắc chắn muốn đăng xuất?",
@@ -96,36 +95,24 @@ public class CustomerContainerView extends JPanel {
         );
         if (response == JOptionPane.YES_OPTION) {
             mainFrame.showLoginPanel();
-            return new JPanel();
+            setDynamicContent(new JPanel());
         }
-        return mainContentPanel;
+        // Không làm gì nếu chọn "Không"
     }
 
-    private JButton createNavButton(String iconName, String text, boolean centerAligned) {
-        return createNavButton(iconName, text, centerAligned, null);
+    private JButton createNavButton(String unicodeIcon, String text, boolean centerAligned) {
+        return createNavButton(unicodeIcon, text, centerAligned, null);
     }
 
-    private JButton createNavButton(String iconName, String text, boolean centerAligned, Supplier<JPanel> panelSupplier) {
-        JButton button = new JButton(text);
+    private JButton createNavButton(String unicodeIcon, String text, boolean centerAligned, Supplier<JPanel> panelSupplier) {
+        JButton button = new JButton(unicodeIcon + " " + text);
         button.setFocusPainted(false);
         button.setBackground(backgroundColor);
         button.setForeground(normalTextColor);
-        button.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        button.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 15));
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.setOpaque(true);
         button.setMaximumSize(new Dimension(250, 40));
-
-        MaterialDesign mdiIcon;
-        try {
-            mdiIcon = MaterialDesign.valueOf("MDI_" + iconName.toUpperCase().replace("-", "_"));
-        } catch (IllegalArgumentException e) {
-            mdiIcon = MaterialDesign.MDI_HELP_CIRCLE_OUTLINE;
-        }
-
-        FontIcon icon = FontIcon.of(mdiIcon, 20);
-        icon.setIconColor(normalTextColor);
-        button.setIcon(icon);
-        button.setIconTextGap(10);
 
         if (centerAligned) {
             button.setHorizontalAlignment(SwingConstants.CENTER);
@@ -136,7 +123,7 @@ public class CustomerContainerView extends JPanel {
             button.setBorder(BorderFactory.createEmptyBorder(10, LEFT_PADDING, 10, 0));
         }
 
-        if (button.isEnabled()) {
+        if (button.isEnabled() && panelSupplier != null) {
             button.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent e) {
                     if (button != selectedButton) button.setBackground(hoverColor);
@@ -157,9 +144,7 @@ public class CustomerContainerView extends JPanel {
 
             button.addActionListener(e -> {
                 selectButton(button);
-                if (panelSupplier != null) {
-                    setDynamicContent(panelSupplier.get());
-                }
+                setDynamicContent(panelSupplier.get());
             });
         }
 
@@ -170,11 +155,9 @@ public class CustomerContainerView extends JPanel {
         if (selectedButton != null) {
             selectedButton.setBackground(backgroundColor);
             selectedButton.setForeground(normalTextColor);
-            ((FontIcon) selectedButton.getIcon()).setIconColor(normalTextColor);
         }
         button.setBackground(backgroundColor);
         button.setForeground(selectedTextColor);
-        ((FontIcon) button.getIcon()).setIconColor(selectedTextColor);
         selectedButton = button;
     }
 
@@ -207,4 +190,3 @@ public class CustomerContainerView extends JPanel {
         setDynamicContent(CustomerDashboardView.createUserHomePanel());
     }
 }
-

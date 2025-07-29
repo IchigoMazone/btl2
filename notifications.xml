@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Notifications>
     <Notification>
+        <bookingId>BK2025072967623</bookingId>
+        <requestId>Đơn đặt trực tiếp</requestId>
+        <userName>user61624648</userName>
+        <content>Đã thanh toán</content>
+        <time>2025-07-29T14:23:21</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK2025072932232</bookingId>
+        <requestId>REQ6EF59</requestId>
+        <userName>catly612</userName>
+        <content>Vắng mặt</content>
+        <time>2025-07-29T11:00:54</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
+        <bookingId>BK2025072967623</bookingId>
+        <requestId>REQ8373</requestId>
+        <userName>user61624648</userName>
+        <content>Check-out</content>
+        <time>2025-07-29T10:21:18</time>
+        <status>Đã gửi</status>
+    </Notification>
+    <Notification>
         <bookingId>BK2025072932232</bookingId>
         <requestId>REQ6EF59</requestId>
         <userName>catly612</userName>

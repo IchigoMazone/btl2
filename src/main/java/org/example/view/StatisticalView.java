@@ -1,8 +1,6 @@
 package org.example.view;
 
 import org.example.service.RoomFinderService;
-import org.kordamp.ikonli.materialdesign.MaterialDesign;
-import org.kordamp.ikonli.swing.FontIcon;
 import org.example.entity.BookingXML;
 import org.example.utils.FileUtils;
 
@@ -31,10 +29,10 @@ public class StatisticalView {
         String totalGuests = RoomFinderService.getMonthlyCustomerCountFormatted(bookingXML);
         String maxGuests = RoomFinderService.getMaxGuestCountInOneDay(bookingXML);
 
-        grid.add(createStatCard(MaterialDesign.MDI_CALENDAR_RANGE, "Doanh thu tháng này", doanhThu, new Color(0, 123, 255)));
-        grid.add(createStatCard(MaterialDesign.MDI_ACCOUNT_MULTIPLE, "Lượt khách tháng", luotKhachx, new Color(40, 167, 69)));
-        grid.add(createStatCard(MaterialDesign.MDI_CHART_LINE, "Tỉ lệ đặt phòng", totalGuests, new Color(255, 193, 7)));
-        grid.add(createStatCard(MaterialDesign.MDI_CHART_ARC, "Lượt khách cao nhất", maxGuests, new Color(220, 53, 69)));
+        grid.add(createStatCard("\uD83D\uDCB0", "Doanh thu tháng này", doanhThu, new Color(0, 123, 255)));
+        grid.add(createStatCard("\uD83D\uDCE6", "Lượt khách tháng", luotKhachx, new Color(40, 167, 69)));
+        grid.add(createStatCard("\uD83D\uDCCA", "Tỉ lệ đặt phòng", totalGuests, new Color(255, 193, 7)));
+        grid.add(createStatCard("\uD83D\uDCC8", "Lượt khách cao nhất", maxGuests, new Color(220, 53, 69)));
 
         mainContent.add(grid, BorderLayout.CENTER);
 
@@ -46,14 +44,16 @@ public class StatisticalView {
         return wrapper;
     }
 
-    private static JPanel createStatCard(MaterialDesign iconCode, String label, String value, Color accentColor) {
+    private static JPanel createStatCard(String unicodeIcon, String label, String value, Color accentColor) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(Color.WHITE);
         card.putClientProperty("JComponent.roundRect", true);
         card.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        JLabel iconLabel = new JLabel(FontIcon.of(iconCode, 36, accentColor));
+        JLabel iconLabel = new JLabel(unicodeIcon);
+        iconLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 36));
+        iconLabel.setForeground(accentColor);
         iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel titleLabel = new JLabel(label);

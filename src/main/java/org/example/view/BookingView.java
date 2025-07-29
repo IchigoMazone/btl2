@@ -1,4 +1,3 @@
-
 package org.example.view;
 
 import org.example.service.BookingService;
@@ -60,7 +59,6 @@ public class BookingView {
                 "Tất cả", "Mã đơn", "Tài khoản", "Họ tên", "SĐT", "Gmail"
         });
         keywordField = new JTextField(18);
-
         statusCombo = new JComboBox<>(new String[]{
                 "Tất cả", "Đã đặt", "Check-in", "Chờ thanh toán"
         });
@@ -118,7 +116,7 @@ public class BookingView {
             column.setPreferredWidth(widths[i]);
         }
 
-        loadBookingsFromXML("bookings.xml");
+        loadBookingsFromXML("bookings.xml", false); // Tải dữ liệu ban đầu, không hiển thị thông báo
 
         JScrollPane scrollPane = new JScrollPane(table,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -136,7 +134,7 @@ public class BookingView {
         JButton searchBtn = new JButton("Tìm kiếm");
         JButton updateBtn = new JButton("Cập nhật");
 
-        searchBtn.addActionListener(e -> loadBookingsFromXML("bookings.xml"));
+        searchBtn.addActionListener(e -> loadBookingsFromXML("bookings.xml", true)); // Tìm kiếm với thông báo
         updateBtn.addActionListener(e -> handleUpdateAction());
 
         panel.add(searchBtn);
@@ -181,10 +179,9 @@ public class BookingView {
         infoPanel.add(infoArea, BorderLayout.CENTER);
         infoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
+        JPanel buttonPanel = new JPanel();
         JButton confirmBtn = new JButton("Xác nhận");
         JButton cancelBtn = new JButton("Quay lại");
-
-        JPanel buttonPanel = new JPanel();
         buttonPanel.add(confirmBtn);
         buttonPanel.add(cancelBtn);
 
@@ -202,7 +199,7 @@ public class BookingView {
                 return;
             }
 
-            table.setValueAt("Check-in", row, getColumnIndex("Trạng thái"));
+            table.setValueAt("Check-in", row, getColumnIndex(table, "Trạng thái"));
             System.out.println("Đã xác nhận Check-in cho đơn: " + bookingId);
             BookingService.updateBookingStatus("bookings.xml", bookingId, "Check-in");
             dialog.dispose();
@@ -365,7 +362,6 @@ public class BookingView {
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             String bookingId = model.getValueAt(row, getColumnIndex(table, "Mã đơn")).toString();
             String userName = model.getValueAt(row, getColumnIndex(table, "Tài khoản")).toString();
-
             String method = paymentCombo.getSelectedItem().toString();
             String code = codeField.getText().trim();
 
@@ -388,25 +384,17 @@ public class BookingView {
                 model.setValueAt("Check-out", row, statusCol);
             }
 
-            String fullName = model.getValueAt(row, getColumnIndex(table, "Họ tên")).toString();
-            String room = model.getValueAt(row, getColumnIndex(table, "Phòng")).toString();
-            double amount = Double.parseDouble(model.getValueAt(row, getColumnIndex(table, "Tổng tiền")).toString().replace(",", ""));
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-            LocalDateTime checkIn = LocalDateTime.parse(model.getValueAt(row, getColumnIndex(table, "Ngày đến")).toString(), formatter);
-            LocalDateTime checkOut = LocalDateTime.parse(model.getValueAt(row, getColumnIndex(table, "Ngày đi")).toString(), formatter);
-
             BookingService.updateBookingStatus("bookings.xml", bookingId, "Check-out");
             PaymentService.createPayment(
                     bookingId,
-                    fullName,
+                    model.getValueAt(row, getColumnIndex(table, "Họ tên")).toString(),
                     userName,
-                    room,
-                    amount,
+                    model.getValueAt(row, getColumnIndex(table, "Phòng")).toString(),
+                    Double.parseDouble(model.getValueAt(row, getColumnIndex(table, "Tổng tiền")).toString().replace(",", "")),
                     method,
                     code,
-                    checkIn,
-                    checkOut
+                    LocalDateTime.parse(model.getValueAt(row, getColumnIndex(table, "Ngày đến")).toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")),
+                    LocalDateTime.parse(model.getValueAt(row, getColumnIndex(table, "Ngày đi")).toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
             );
 
             NotificationService.createNotification(
@@ -461,7 +449,6 @@ public class BookingView {
         return -1;
     }
 
-
     private static String getBookingDetails(int row) {
         StringBuilder sb = new StringBuilder();
         sb.append("Mã đơn       : ").append(model.getValueAt(row, 0)).append("\n");
@@ -486,15 +473,17 @@ public class BookingView {
         return -1;
     }
 
-    private static void loadBookingsFromXML(String fileName) {
+    private static void loadBookingsFromXML(String fileName, boolean showMessages) {
         model.setRowCount(0);
         try {
             File xmlFile = new File(fileName);
             if (!xmlFile.exists()) {
-                JOptionPane.showMessageDialog(null,
-                        "Không thể đọc dữ liệu đơn đặt phòng!",
-                        "Lỗi",
-                        JOptionPane.ERROR_MESSAGE);
+                if (showMessages) {
+                    JOptionPane.showMessageDialog(null,
+                            "Không thể đọc dữ liệu đơn đặt phòng!",
+                            "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
+                }
                 return;
             }
 
@@ -502,56 +491,56 @@ public class BookingView {
             String type = (String) searchTypeCombo.getSelectedItem();
             String statusFilter = (String) statusCombo.getSelectedItem();
 
-            if (keyword.isEmpty()) {
-                if (!type.equals("Tất cả")) {
-                    JOptionPane.showMessageDialog(null,
-                            "Vui lòng nhập từ khóa tìm kiếm!",
-                            "Lỗi",
-                            JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
+            if (showMessages && keyword.isEmpty() && !type.equals("Tất cả")) {
+                JOptionPane.showMessageDialog(null,
+                        "Vui lòng nhập từ khóa tìm kiếm!",
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
             }
 
-            if (type.equals("SĐT") && !keyword.matches("0\\d{9}")) {
-                JOptionPane.showMessageDialog(null,
-                        "Số điện thoại phải chứa đúng 10 chữ số và bắt đầu bằng 0!",
-                        "Lỗi",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            } else if (type.equals("Gmail") && !keyword.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-                JOptionPane.showMessageDialog(null,
-                        "Email không đúng định dạng!",
-                        "Lỗi",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            } else if (type.equals("Mã đơn") && !keyword.matches("BK[A-Za-z0-9]{2,}")) {
-                JOptionPane.showMessageDialog(null,
-                        "Mã đơn phải bắt đầu bằng 'BK' và chứa ít nhất 2 chữ cái hoặc số tiếp theo!",
-                        "Lỗi",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            } else if (type.equals("Tài khoản") && !keyword.matches("[a-z0-9]{8,}")) {
-                JOptionPane.showMessageDialog(null,
-                        "Tài khoản phải chứa ít nhất 8 chữ cái thường hoặc số!",
-                        "Lỗi",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            } else if (type.equals("Họ tên") && keyword.length() < 2) {
-                JOptionPane.showMessageDialog(null,
-                        "Họ tên phải chứa ít nhất 2 ký tự!",
-                        "Lỗi",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            } else if (type.equals("Tất cả") && !keyword.isEmpty()) {
-                if (!keyword.matches("0\\d{9}") &&
-                        !keyword.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") &&
-                        !keyword.matches("[A-Za-z0-9]{2,}") &&
-                        keyword.length() < 2) {
+            if (showMessages && !keyword.isEmpty()) {
+                if (type.equals("SĐT") && !keyword.matches("0\\d{9}")) {
                     JOptionPane.showMessageDialog(null,
-                            "Từ khóa phải là số điện thoại (10 chữ số bắt đầu bằng 0), email hợp lệ, hoặc ít nhất 2 ký tự!",
+                            "Số điện thoại phải chứa đúng 10 chữ số và bắt đầu bằng 0!",
                             "Lỗi",
                             JOptionPane.WARNING_MESSAGE);
                     return;
+                } else if (type.equals("Gmail") && !keyword.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                    JOptionPane.showMessageDialog(null,
+                            "Email không đúng định dạng!",
+                            "Lỗi",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else if (type.equals("Mã đơn") && !keyword.matches("BK[A-Za-z0-9]{2,}")) {
+                    JOptionPane.showMessageDialog(null,
+                            "Mã đơn phải bắt đầu bằng 'BK' và chứa ít nhất 2 chữ cái hoặc số tiếp theo!",
+                            "Lỗi",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else if (type.equals("Tài khoản") && !keyword.matches("[a-z0-9]{8,}")) {
+                    JOptionPane.showMessageDialog(null,
+                            "Tài khoản phải chứa ít nhất 8 chữ cái thường hoặc số!",
+                            "Lỗi",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else if (type.equals("Họ tên") && keyword.length() < 2) {
+                    JOptionPane.showMessageDialog(null,
+                            "Họ tên phải chứa ít nhất 2 ký tự!",
+                            "Lỗi",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else if (type.equals("Tất cả")) {
+                    if (!keyword.matches("0\\d{9}") &&
+                            !keyword.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") &&
+                            !keyword.matches("[A-Za-z0-9]{2,}") &&
+                            keyword.length() < 2) {
+                        JOptionPane.showMessageDialog(null,
+                                "Từ khóa phải là số điện thoại (10 chữ số bắt đầu bằng 0), email hợp lệ, hoặc ít nhất 2 ký tự!",
+                                "Lỗi",
+                                JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
                 }
             }
 
@@ -595,13 +584,14 @@ public class BookingView {
                         getTagValue(e, "status")
                 };
 
+                // Lọc các trạng thái không mong muốn trong mọi trường hợp
                 if (rowData[9].equalsIgnoreCase("Check-out") ||
                         rowData[9].equalsIgnoreCase("Đã bị hủy") ||
                         rowData[9].equalsIgnoreCase("Vắng mặt")) {
                     continue;
                 }
 
-                boolean matches = type.equals("Tất cả") && keyword.isEmpty();
+                boolean matches = showMessages ? (type.equals("Tất cả") && keyword.isEmpty()) : true;
                 if (!matches) {
                     switch (type) {
                         case "Mã đơn":
@@ -633,7 +623,7 @@ public class BookingView {
                 }
             }
 
-            if (!hasResults) {
+            if (showMessages && !hasResults) {
                 JOptionPane.showMessageDialog(null,
                         "Không tìm thấy đơn đặt phòng phù hợp với từ khóa!",
                         "Thông báo",
@@ -642,10 +632,12 @@ public class BookingView {
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null,
-                    "Lỗi khi đọc dữ liệu đơn đặt phòng: " + e.getMessage(),
-                    "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
+            if (showMessages) {
+                JOptionPane.showMessageDialog(null,
+                        "Lỗi khi đọc dữ liệu đơn đặt phòng: " + e.getMessage(),
+                        "Lỗi",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -657,7 +649,3 @@ public class BookingView {
         return "";
     }
 }
-
-
-
-

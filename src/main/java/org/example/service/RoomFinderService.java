@@ -7,6 +7,7 @@ import java.util.List;
 import java.text.DecimalFormatSymbols;
 import org.example.entity.BookingXML;
 import org.example.utils.FileUtils;
+import java.time.YearMonth;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
@@ -295,23 +296,43 @@ public class RoomFinderService {
         return df.format(rate) + "%";
     }
 
+
     public static String getMaxGuestCountInOneDay(BookingXML bookingXML) {
         List<Booking> bookings = bookingXML.getBookings();
         Map<LocalDate, Integer> guestCountPerDay = new HashMap<>();
+        LocalDateTime now = LocalDateTime.now();
+
+        YearMonth currentMonth = YearMonth.from(now);
+        LocalDate startOfMonth = currentMonth.atDay(1);
+        LocalDate endOfMonth = currentMonth.atEndOfMonth();
 
         for (Booking booking : bookings) {
-            if (booking.getCheckIn() != null) {
-                LocalDate date = booking.getCheckIn().toLocalDate();
-                int guests = booking.getNumberOfGuests();
-                guestCountPerDay.put(date, guestCountPerDay.getOrDefault(date, 0) + guests);
+            String status = booking.getStatus();
+
+            if (status != null && !status.equalsIgnoreCase("Đã bị hủy")
+                    && !status.equalsIgnoreCase("Vắng mặt")) {
+                LocalDateTime checkIn = booking.getCheckIn();
+                LocalDateTime checkOut = booking.getCheckOut();
+
+                if (checkIn != null && checkOut != null) {
+                    LocalDate checkInDate = checkIn.toLocalDate();
+                    LocalDate checkOutDate = checkOut.toLocalDate();
+
+                    // Giới hạn trong tháng cần xét
+                    LocalDate startDate = checkInDate.isBefore(startOfMonth) ? startOfMonth : checkInDate;
+                    LocalDate endDate = checkOutDate.isAfter(endOfMonth) ? endOfMonth : checkOutDate;
+
+                    for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+                        int guests = booking.getNumberOfGuests();
+                        guestCountPerDay.put(date, guestCountPerDay.getOrDefault(date, 0) + guests);
+                    }
+                }
             }
         }
 
-        int max = 0;
-        for (int count : guestCountPerDay.values()) {
-            if (count > max) max = count;
-        }
+        int max = guestCountPerDay.values().stream().max(Integer::compareTo).orElse(0);
         return String.valueOf(max);
     }
+
 }
 

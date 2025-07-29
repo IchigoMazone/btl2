@@ -1,11 +1,7 @@
-
-
 package org.example.view;
 
 import org.example.entity.BookingXML;
 import org.example.service.RoomFinderService;
-import org.kordamp.ikonli.materialdesign.MaterialDesign;
-import org.kordamp.ikonli.swing.FontIcon;
 import org.example.utils.FileUtils;
 import org.example.entity.RequestXML;
 import javax.swing.*;
@@ -46,14 +42,14 @@ public class AdminDashboardView {
         String numberCreate = String.valueOf(countX);
         String yeucau = String.valueOf(countY);
 
-        grid.add(createStatCard(MaterialDesign.MDI_HOTEL, "Phòng trống", strPhongTrong, new Color(76, 175, 80)));
-        grid.add(createStatCard(MaterialDesign.MDI_ACCOUNT_MULTIPLE, "Khách hiện tại", strSoKhach, new Color(33, 150, 243)));
-        grid.add(createStatCard(MaterialDesign.MDI_CASH_MULTIPLE, "Doanh thu hôm nay", doanhThu, new Color(255, 152, 0)));
-        grid.add(createStatCard(MaterialDesign.MDI_CALENDAR_CHECK, "Đơn đặt hôm nay", numberCreate, new Color(156, 39, 176)));
-        grid.add(createStatCard(MaterialDesign.MDI_ACCOUNT_CHECK, "Phòng đang hoạt động", strHoatDong, new Color(0, 200, 83)));
-        grid.add(createStatCard(MaterialDesign.MDI_LOGIN, "Check-in hôm nay", strHomNayIn, new Color(0, 188, 212)));
-        grid.add(createStatCard(MaterialDesign.MDI_LOGOUT, "Check-out hôm nay", strHomNayOu, new Color(255, 87, 34)));
-        grid.add(createStatCard(MaterialDesign.MDI_EMAIL, "Yêu cầu hiện tại", yeucau, new Color(121, 85, 72)));
+        grid.add(createStatCard("\uD83D\uDECF", "Phòng trống", strPhongTrong, new Color(76, 175, 80)));
+        grid.add(createStatCard("\uD83D\uDCF7", "Khách hiện tại", strSoKhach, new Color(33, 150, 243)));
+        grid.add(createStatCard("\uD83D\uDCB0", "Doanh thu hôm nay", doanhThu, new Color(255, 152, 0)));
+        grid.add(createStatCard("\uD83D\uDD52", "Đơn đặt hôm nay", numberCreate, new Color(156, 39, 176)));
+        grid.add(createStatCard("\uD83D\uDCFA", "Phòng đang hoạt động", strHoatDong, new Color(0, 200, 83)));
+        grid.add(createStatCard("\u27A1", "Check-in hôm nay", strHomNayIn, new Color(0, 188, 212)));
+        grid.add(createStatCard("\u2B05", "Check-out hôm nay", strHomNayOu, new Color(255, 87, 34)));
+        grid.add(createStatCard("\u2709\uFE0F", "Yêu cầu hiện tại", yeucau, new Color(121, 85, 72)));
 
         mainContent.add(grid, BorderLayout.CENTER);
 
@@ -71,14 +67,16 @@ public class AdminDashboardView {
         return wrapper;
     }
 
-    private static JPanel createStatCard(MaterialDesign iconCode, String label, String value, Color accentColor) {
+    private static JPanel createStatCard(String unicodeIcon, String label, String value, Color accentColor) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(Color.WHITE);
         card.putClientProperty("JComponent.roundRect", true);
         card.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        JLabel iconLabel = new JLabel(FontIcon.of(iconCode, 36, accentColor));
+        JLabel iconLabel = new JLabel(unicodeIcon);
+        iconLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 36));
+        iconLabel.setForeground(accentColor);
         iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel titleLabel = new JLabel(label);
@@ -99,4 +97,3 @@ public class AdminDashboardView {
         return card;
     }
 }
-

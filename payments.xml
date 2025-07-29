@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Payments>
     <Payment>
+        <paymentId>PMT6E99F</paymentId>
+        <bookingId>BK2025072967623</bookingId>
+        <fullName>Nguyễn Xuân Huy</fullName>
+        <userName>user61624648</userName>
+        <room>R020</room>
+        <amount>100000.0</amount>
+        <method>Tiền mặt</method>
+        <code>Giao dịch trực tiếp</code>
+        <status>Đã thanh toán</status>
+        <checkIn>2025-07-29T00:35:00</checkIn>
+        <checkOut>2025-07-29T07:00:00</checkOut>
+        <paidAt>2025-07-29T14:23:21</paidAt>
+    </Payment>
+    <Payment>
         <paymentId>PMTEC449</paymentId>
         <bookingId>BK2025072824270</bookingId>
         <fullName>Hà Duy Kiên</fullName>

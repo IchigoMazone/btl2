@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><Bookings>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Bookings>
     <Booking>
         <bookingId>BK2025072932232</bookingId>
         <requestId>REQ6EF59</requestId>
@@ -11,7 +12,7 @@
         <checkOut>2025-07-30T00:00:00</checkOut>
         <amount>800000.0</amount>
         <submittedAt>2025-07-29T03:37:08</submittedAt>
-        <status>Đã đặt</status>
+        <status>Vắng mặt</status>
         <Person>
             <fullName>Nguyễn Diệu Lynh</fullName>
             <documentType>Không có</documentType>
@@ -20,6 +21,10 @@
         <History>
             <timestamp>2025-07-29T03:37:08</timestamp>
             <status>Đã tạo booking</status>
+        </History>
+        <History>
+            <timestamp>2025-07-29T11:00:54</timestamp>
+            <status>Vắng mặt</status>
         </History>
     </Booking>
     <Booking>
@@ -34,7 +39,7 @@
         <checkOut>2025-07-29T07:00:00</checkOut>
         <amount>100000.0</amount>
         <submittedAt>2025-07-29T00:34:51</submittedAt>
-        <status>Check-in</status>
+        <status>Check-out</status>
         <Person>
             <fullName>Nguyễn Xuân Huy</fullName>
             <documentType>Không có</documentType>
@@ -57,6 +62,14 @@
         <History>
             <timestamp>2025-07-29T00:34:51</timestamp>
             <status>Check-in</status>
+        </History>
+        <History>
+            <timestamp>2025-07-29T10:21:18</timestamp>
+            <status>Chờ thanh toán</status>
+        </History>
+        <History>
+            <timestamp>2025-07-29T14:23:21</timestamp>
+            <status>Check-out</status>
         </History>
     </Booking>
 </Bookings>
