@@ -1,146 +1,65 @@
-Phần mềm quản lý đặt phòng khách sạn
+# PHẦN MỀM QUẢN LÝ ĐẶT PHÒNG KHÁCH SẠN
 
-1. Mô tả bài toán
+## 1. Mô tả bài toán
 
-Phần mềm được thiết kế để quản lý quá trình đặt phòng khách sạn, bao gồm các chức năng như: đăng 
-ký người dùng, tạo đơn đặt phòng,kiểm tra trạng thái phòng,và quản lý thông tin khách hàng. Hệ
-thống có phân quyền người dùng với hai vai trò chính:
+Phần mềm được thiết kế để hỗ trợ quy trình quản lý khách sạn, với các chức năng chính sau:
 
-+ Admin: Quản lý phòng, người dùng, đơn đặt phòng,...
-+ Customer: Đặt phòng và theo dõi thông tin cá nhân,...
+* Đăng ký và quản lý người dùng
+* Tạo và xử lý đơn đặt phòng
+* Kiểm tra trạng thái phòng (còn trống, đã đặt, đang sử dụng)
+* Quản lý thông tin khách hàng
 
- 2. Giả thuyết và triển khai thực tế
+## Hệ thống có 2 vai trò người dùng chính:
 
-Phần mềm được xây dựng dựa trên giả thuyết rằng:
+* **Admin**:
 
-+ Dữ liệu được lưu trữ dưới dạng các tệp .xml đóng vai trò như cơ sở dữ liệu.
-+ Các tệp này nằm trên máy chủ trung tâm, nơi Admin và Customer kết nối tới để thực hiện thao tác.
+    * Quản lý danh sách phòng
+    * Quản lý tài khoản người dùng
+    * Duyệt và hủy đơn đặt phòng
+    * Cập nhật trạng thái phòng
 
-Tuy nhiên, trong quá trình triển khai thực tế, để đơn giản hóa mô hình, các tệp .xml sẽ được lưu trữ
-cục bộ ngay trên máy người dùng. Đồng thời, người dùng trong hệ thống có thể đảm nhận đồng thời vai
-trò của cả Admin và Customer, nhằm mục đích kiểm thử và mô phỏng hệ thống một cách thuận tiện trong
-môi trường đơn máy.
+* **Customer** (Khách hàng):
 
-3. Mô tả phần mềm
+    * Tìm kiếm và đặt phòng
+    * Xem và cập nhật thông tin cá nhân
+    * Theo dõi lịch sử đặt phòng
 
-Phần mềm được chia thành phần chính :
+## 2. Giả thuyết và Triển khai thực tế
 
-+ Giao diện liên kết: giao diện đăng nhâp, quên mật khẩu, tạo tài khoản,....
-+ Giao diện Admin (AdminContainerView): Là một bao đóng các giao được liên kết với nhau và có thể di
-chuyển qua lại linh hoạt (giao diên tìm kiếm, đặt phòng, quản lý phòng, thống kê,...)
-+ Giao diện Customer (CustomerContainerView) : tương tự giao diện này cũng được liên kết với nhau
-tạo ra một bao đóng (giao diện tìm kiếm, thông báo, lịch sử và giới thiệu)
+### Giả thuyết hệ thống
 
-3.1. Giao diện liên kết 
-Bao gồm : đăng nhập, quên tài khoản (Kiểm tra tài khoản và tạo lại mật khẩu), ngược lại là giao diện 
-Tạo tài khoản và giao diện trung gian thông báo Sửa hoặc tạo thành công. 
+* Dữ liệu được lưu dưới dạng các tệp `.xml` đóng vai trò như cơ sở dữ liệu phi quan hệ.
+* Các tệp XML này nằm trên máy chủ trung tâm, nơi người dùng (Admin, Customer) sẽ truy cập và thao tác từ xa.
 
-Sơ đồ minh họa :
+### Thực tế triển khai
 
-      |--------------------------------------------------------------------|
-      |                                                                    |
-      |                                                                    |
-      v                                                                    |
-[  Đăng nhập  ]<---->[Kiểm tra tài khoản]<---->[Tạo mật khẩu mới]<---->[Thông báo] 
-      ^                                                                    ^
-      |                                                                    |
-      v                                                                    |
-[Tạo tài khoản]------------------------------------------------------------|
+* Để đơn giản hóa việc thử nghiệm và kiểm tra:
 
+    * Các tệp `.xml` sẽ được lưu trữ cục bộ ngay trên máy người dùng.
+    * Người dùng có thể đồng thời đóng vai cả Admin và Customer để kiểm tra các chức năng của cả hai vai trò trên một thiết bị duy nhất.
 
-3.1.1. Đăng nhập : Đăng nhập để vào giao diện Admin, Customer chung một giao diện có quy tắc để không thể 
-trùng lặp
-3.1.2. Tạo tài khoản : Người dùng nhập thông tin để tạo tài khoản sử dụng trong phần mềm
-3.1.3. Quên tài khoản : Bao gồm 2 giao diện là Kiểm tra tài khoản và Tạo mật khẩu
-+ Kiểm tra tài khoản: Để chắc chắn tài khoản từng tồn tại trên hệ thống
-+ Tạo tài khoản mới: Cập nhật tài khoản mới khi quên hay có nhu cầu
+## 3. Thông tin tài khoản mặc định
 
-3.2. Giao diện Admin
-Bao gồm : Tìm kiếm, đặt phòng, phòng nghỉ, trang chủ, thống kê, khách hàng, yêu cầu
-3.2.1. Tìm kiếm: Chức năng tìm kiếm theo Check-in và Check-out với các loại phòng khác nhau với điều khoản 
-riêng vì đây là giao diện Admin nên nó sẽ là đặt phòng trực tiếp vì vậy sẽ có điều kiện như sau:
+* **Admin**
 
-[Tìm kiếm] ----> [Tạo Booking] : Sơ đồ 
+    * Tên đăng nhập: `admin`
+    * Mật khẩu: `123456`
 
-if ( Check-in - now <= 15p ) -> Trạng thái: Check-in
-ìf ( Check-in - now > 15p )  -> Trạng thái: Đã đặt
+* **Customer**
 
-Khách hàng có thể linh động về thời gian 
-3.2.2. Đặt phòng: Chức năng quản lý chuyển trạng thái các booking 
+    * Tên đăng nhập: `husky123`
+    * Mật khẩu: `nhat1234`
 
-Đã đặt     ---->   Check-in
-Check-in   ---->   Check-out : [Thanh toán]
-Check-in   ---->   Chờ thanh toán  ---->   Check-out : [Thanh toán]
+## 4. Công nghệ sử dụng
 
-Trạng thái: Đã đặt     ----> if (Check-in - now <= 60p ) -> Có thể : Check-in nhận phòng sớm
-                       ----> if (Check-in - now > 60p )  -> Không được Check-in
-                       ----> if (now - Check-in >= 60p ) -> No-show : Đã đăt ----> Vắng mặt
+### Ngôn ngữ lập trình: Java
 
-Trạng thái: Check-in   ----> Có thể thanh toán sớm ----> Check-out
-                       ----> if (now >= Check-out) ----> Chờ thanh toán : Trả phòng chưa thanh toán
-                       (Trống phòng để các khách có thể đến ngay sau đó)
+### Phiên bản JDK: 21 trở lên (JDK 21+)
 
-3.2.3. Phòng nghỉ      ----> Thêm, sửa, xóa, tìm kiếm phòng theo thông tin
-3.2.4. Trang chủ       ----> Thống kê : Số phòng trống, hoạt động, số khách lưu trú, số check-in, out
-                       hôm nay,...
+* Bảo đảm tính tương thích và hỗ trợ các tính năng mới trong Java 21 (LTS)
 
-3.2.5. Thống kê        ----> Thống kê : Lượt khách tháng náy, tổng lượt khách, tổng doanh thu, ngày có
-                       lượt khách cao nhất
+### Môi trường phát triển: Apache NetBeans
 
-3.2.6. Yêu cầu         ----> Duyệt các yêu cầu đặt, hủy phòng của khách
-
-3.3. Giao diện Customer
-Bao gồm : Tìm kiếm, giới thiệu, lịch sử, và thông báo
-3.3.1. Tìm kiếm: tương tự của Admin tìm kiếm theo Check-in, out và loại phòng
-
-[Tìm kiếm] ----> [Tạo yêu cầu] ----> [Yêu cầu (Admin)] : Sơ đồ
-
-if ( Check-in - now >= 240p ) ----> Tạo Request : Gửi yêu cầu
-if ( Check-in - now < 24p )   ----> Không thể tạo Request
-
-3.3.2. Giới thiệu: Trang giới thiệu các tiện ích của Khách sạn
-3.3.3. Lịch sử: Tổng hợp tất cả lịch sử booking
-3.3.4. Thông báo: Gửi về thông báo liên quan ví dụ như "Duyệt đặt phòng", "Bị hủy yêu cầu",...
-
-4. Liên kết giữa 3 database
-+ Xử lý yêu cầu   : requests.xml
-+ Xử lý thống báo : notifications.xml
-+ Xử lý đặt phòng : bookings.xml
-
-                                                (Tiếp : 1)
-[Customer] ------------> [Tạo yêu cầu] ------------------------------->
-             Tìm kiếm                      Request : Gửi yêu cầu
-                                      Notification : Yêu cầu duyệt
-
-
-
-                                                 Request : Đã được duyệt
-       (Tiếp : 1)                           Notification : Đã được duyệt
-----------------------> [Admin] -----> [Duyệt] ------------------------>
-                                |                    (Tiếp : 2)
-                                |
-                                |
-                                |                    Request : Đã bị hủy
-                                |               Notification : Đã bị hủy
-                                |----> [ Hủy ] ------------------------>
-                                                     (Tiếp : 3)
-                                                     
-
-
-     (Tiếp : 3)
-      
-[Admin] ---> [ Hủy ] : TH1 : |----->  Admin duyệt hủy vì một lý do nào đó 
-                             |
-                             |
-                       TH2 : |-----> Hệ thống duyệt hủy tự động 
-
-
-
-
-
-
-
-
-
-                   
-
+* Hỗ trợ tốt Java Maven project
+* Hệ thống giao diện đồ họa (nếu có) có thể phát triển bằng Java Swing hoặc JavaFX
+* Tích hợp dễ dàng với trình biên dịch JDK và công cụ quản lý thư viện (Maven)
